@@ -44,7 +44,7 @@ author:
   name  : "David Lim"
   avatar: "/assets/images/pikaroot-github.JPG"
   bio   : "Cyber Security Enthusiast @.@"
-  email : "asterlwx2001@gmail.com"
+  email : 
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -52,6 +52,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/pikaroot"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "asterlwx2001@gmail.com"
 
 atom_feed:
   hide: true
