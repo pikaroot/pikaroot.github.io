@@ -53,6 +53,9 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/pikaroot"
 
+atom_feed:
+  hide: true
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
