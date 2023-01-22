@@ -55,7 +55,7 @@ author:
       url: "https://github.com/pikaroot"
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "asterlwx2001@gmail.com"
+      url: "mailto:asterlwx2001@gmail.com"
 
 atom_feed:
   hide: true
