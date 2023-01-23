@@ -50,9 +50,6 @@ collections:
   ctfs:
     output: true
     # permalink: /:collection/:categories/:title
-  blogs:
-    output: true
-    # permalink: /:collection/:path
 
 category_archive:
   type: jekyll-archives
@@ -86,18 +83,6 @@ defaults:
     values:
       layout: category
       author_profile: true
-  # _about
-  - scope:
-      path: ""
-      type: about
-    values:
-      layout: single
-      classes: wide
-      author_profile: true
-      read_time: true
-      words_per_minute: 120
-      show_date: true
-      related: false
 
 # Site Author
 author:
