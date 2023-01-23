@@ -1,5 +1,5 @@
 ---
 layout: collection
-permalink: /about/
-collection: about
+permalink: /blogs/
+collection: blogs
 ---
