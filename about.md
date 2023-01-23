@@ -1,8 +1,8 @@
 ---
 layout: single
 author_profile: true
-title: About
+title: Introduction
 permalink: /about/
 ---
 
-# Hello
+### Hello
