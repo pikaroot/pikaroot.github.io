@@ -1,4 +1,4 @@
 ---
 layout: categories
-permalink: /Ctfs/
+permalink: /ctfs/
 ---
