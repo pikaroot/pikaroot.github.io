@@ -98,6 +98,7 @@ make[1]: Leaving directory '/home/kali/sage-9.7'
 ## ❌ Failed to build Sage
 
 >NOTE: This section only solves the errors I had encountered.
+
 ### Error 1
 
 ```
@@ -224,10 +225,10 @@ make -j4
 
 ## References
 
-1. Sagemath Installation Guide: http://sage.grad.hr:1234/doc/static/installation/source.html
-2. Install Prerequisites and Git: https://doc.sagemath.org/html/en/installation/source.html
-3. Quick Installation Guide: https://wiki.sagemath.org/DownloadAndInstallationGuide
-4. Sage Support: https://groups.google.com/g/sage-support
-5. Sage Devel: https://groups.google.com/g/Sage-Devel
-6. [sage-9.7] error - SOLVED: https://groups.google.com/g/sage-support/c/8JxNzxyVPxY
-7. [giac-1.9.015p0.log] error - SOLVED: https://groups.google.com/g/Sage-Devel/c/fXxCm4upgQI
+1. [Sagemath Installation Guide](http://sage.grad.hr:1234/doc/static/installation/source.html)
+2. [Install Prerequisites and Git](https://doc.sagemath.org/html/en/installation/source.html)
+3. [Quick Installation Guide](https://wiki.sagemath.org/DownloadAndInstallationGuide)
+4. [Sage Support](https://groups.google.com/g/sage-support)
+5. [Sage Devel](https://groups.google.com/g/Sage-Devel)
+6. [[sage-9.7] error - SOLVED](https://groups.google.com/g/sage-support/c/8JxNzxyVPxY)
+7. [[giac-1.9.015p0.log] error - SOLVED](https://groups.google.com/g/Sage-Devel/c/fXxCm4upgQI)
