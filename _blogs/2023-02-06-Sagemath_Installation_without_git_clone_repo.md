@@ -2,7 +2,7 @@
 title: How to install Sagemath in DebianOS
 ---
 
-## :o: Step-by-Step Installation Guide
+## ⭕ Step-by-Step Installation Guide
 
 1. Install prerequisites for Sagemath.
 
@@ -95,7 +95,7 @@ make[1]: Leaving directory '/home/kali/sage-9.7'
 ./sage
 ```
 
-## :x: Failed to build Sage
+## ❌ Failed to build Sage
 
 >NOTE: This section only solves the errors I had encountered.
 ### Error 1
