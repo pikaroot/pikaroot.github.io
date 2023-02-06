@@ -88,6 +88,7 @@ make
 Sage build/upgrade complete!
 make[1]: Leaving directory '/home/kali/sage-9.7'
 ```
+If not, you can refer to the [Failed to build Sage](https://pikaroot.github.io/blogs/2023-02-06-Sagemath_Installation_without_git_clone_repo#-failed-to-build-sage) section.
 
 9.. Run Sage.
 
@@ -97,7 +98,7 @@ make[1]: Leaving directory '/home/kali/sage-9.7'
 
 ## ❌ Failed to build Sage
 
->NOTE: This section only solves the errors I had encountered.
+>NOTE: This section only solves the errors I had encountered. If you had encountered other errors, you can search [Sage Support](https://groups.google.com/g/sage-support) or [Sage Devel](https://groups.google.com/g/Sage-Devel) for more information.
 
 ### Error 1
 
