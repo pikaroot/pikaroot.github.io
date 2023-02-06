@@ -1,2 +1,2 @@
 # Personal Website
-CONSTRUCTION IN PROGRESS :>
+Should be done I guess :mask:
