@@ -1,8 +1,8 @@
 ---
-title: How to install Sagemath in DebianOS (w/o Git Clone)
+title: How to install Sagemath in DebianOS
 ---
 
-# Step-by-Step Installation Guide
+## :o: Step-by-Step Installation Guide
 
 1. Install prerequisites for Sagemath.
 
@@ -23,7 +23,7 @@ sudo apt-get install default-jdk dvipng ffmpeg imagemagick latexmk libavdevice-d
 sudo apt-get install 4ti2 clang coinor-cbc coinor-libcbc-dev graphviz libfile-slurp-perl libgraphviz-dev libigraph-dev libisl-dev libjson-perl libmongodb-perl libnauty-dev libperl-dev libpolymake-dev libsvg-perl libterm-readkey-perl libterm-readline-gnu-perl libxml-libxslt-perl libxml-writer-perl libxml2-dev lrslib pari-gp2c pdf2svg polymake texinfo
 ```
 
-2. Go to Sagemath official page https://www.sagemath.org/download-source.html, look for **"Download source code distribution (stable)"**, and select the nearest mirror from your permanent location. In my case, I had selected **"KoDDoS Mirror, Hong Kong"**.
+2. Go to [Sagemath official page](https://www.sagemath.org/download-source.html), look for **"Download source code distribution (stable)"**, and select the nearest mirror from your permanent location. In my case, I select **"KoDDoS Mirror, Hong Kong"**.
 
 3. Look for **Filename**, select the latest Sage package. In my case, ***sage-9.7.tar.gz*** is the latest which is released in 19 September 2022. Copy the link address of the Sage package and use `wget` to retrieve the file from Kali Linux. 
 
@@ -80,7 +80,7 @@ Download the recommended packages and recheck the configurations.
 make
 ```
 
-**NOTE: The `make` process might take up to hours even a day.**
+>NOTE: The `make` process might take up to hours even a day.
 
 8. If Sage is successfully built, the last few lines of the output will look like the example below:
 
@@ -95,10 +95,9 @@ make[1]: Leaving directory '/home/kali/sage-9.7'
 ./sage
 ```
 
-# Failed to build Sage
+## :x: Failed to build Sage
 
-**NOTE: This section only solves the errors I had encountered.**
-
+>NOTE: This section only solves the errors I had encountered.
 ### Error 1
 
 ```
@@ -120,7 +119,7 @@ same version of the package will, by default, be deleted. Set the
 environment variable SAGE_KEEP_BUILT_SPKGS=yes to prevent this.
 
 make[1]: *** [Makefile:40: all-start] Error 1
-make[1]: Leaving directory '/home/kali/ctf/sage-9.7'
+make[1]: Leaving directory '/home/kali/sage-9.7'
 make: *** [Makefile:13: all] Error 2
 ```
 
@@ -191,9 +190,9 @@ make -j4
 [sagelib-9.7] user      50m23.241s
 [sagelib-9.7] sys       1m51.474s
 make[4]: *** [Makefile:3115: sagelib-SAGE_VENV-no-deps] Error 1
-make[3]: *** [Makefile:3115: /home/kali/ctf/sage-9.7/local/var/lib/sage/venv-python3.10/var/lib/sage/installed/sagelib-9.7] Error 2
+make[3]: *** [Makefile:3115: /home/kali/sage-9.7/local/var/lib/sage/venv-python3.10/var/lib/sage/installed/sagelib-9.7] Error 2
 make[2]: *** [Makefile:2647: all-start] Error 2
-make[2]: Leaving directory '/home/kali/ctf/sage-9.7/build/make'
+make[2]: Leaving directory '/home/kali/sage-9.7/build/make'
 
 real    91m23.529s
 user    92m43.689s
@@ -223,7 +222,7 @@ Solution:
 make -j4
 ```
 
-# References
+## References
 
 1. Sagemath Installation Guide: http://sage.grad.hr:1234/doc/static/installation/source.html
 2. Install Prerequisites and Git: https://doc.sagemath.org/html/en/installation/source.html
