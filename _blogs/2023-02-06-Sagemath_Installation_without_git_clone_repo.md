@@ -1,4 +1,8 @@
-# How to install Sagemath in Debian (w/o Git Clone)
+---
+title: How to install Sagemath in DebianOS (w/o Git Clone)
+---
+
+# Step-by-Step Installation Guide
 
 1. Install prerequisites for Sagemath.
 
