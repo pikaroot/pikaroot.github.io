@@ -1,7 +1,7 @@
 ---
-title: Sagemath Installation in DebianOS
+title: "Installation: SageMath in DebianOS"
 ---
-Developers are currently migrating SageMath development from Trac to GitHub. During the development, the `sage` git repository is private. Hence, here is an alternative of installing Sagemath.
+Here is a guide for installing SageMath if the developers had kept the Sage git repository into **private**.
 
 ## ⭕ Step-by-Step Installation Guide
 
