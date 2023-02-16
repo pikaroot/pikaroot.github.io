@@ -1,5 +1,5 @@
 ---
-title: 'Red Team Ops: HAVOC Framework'
+title: "[Red Teaming] HAVOC Framework"
 ---
 This is a simple guide on how to utilize Havoc C2 Framework.
 
