@@ -225,7 +225,7 @@ Solution:
 make -j4
 ```
 
-## References
+## 🟦 References
 
 1. [Sagemath Installation Guide](http://sage.grad.hr:1234/doc/static/installation/source.html)
 2. [Install Prerequisites and Git](https://doc.sagemath.org/html/en/installation/source.html)
