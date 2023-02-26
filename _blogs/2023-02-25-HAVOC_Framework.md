@@ -17,6 +17,8 @@ HAVOC C2, Active Directory, and Red Teaming.
 
 To be continue...
 
+[![Final](https://user-images.githubusercontent.com/107750005/221421404-a9db6825-7a17-4898-bf72-9a0b3b5cd3af.png)]([(https://www.youtube.com/watch?v=a8ghTH_fT_o&ab_channel=5pider) "SMB Pivoting")
+
 ## 🟦 References
 
 1. [Havoc Framework](https://github.com/HavocFramework/Havoc)
