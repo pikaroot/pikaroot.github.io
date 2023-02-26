@@ -5,11 +5,11 @@ HAVOC C2, Active Directory, and Red Teaming.
 
 ## ☁️ Before we start
 A short recap about the workshop. The **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that discusses about red teaming techniques and C2C concepts, and it is an honour to attend this session as a speaker with [Wesley](https://github.com/WesleyWong420). This workshop covers 3 main chapters:
-- Chapter 1: Introduction to Command & Control Framework.
+- Chapter 1: Introduction to Command & Control Framework
 - Chapter 2: OPSEC & Defense Evasion
-- Chapter 3: Compromise Active Directory Domain Services.
+- Chapter 3: Compromise Active Directory Domain Services
 
-[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had been conducted by Wesley. However, I was unable to complete the last chapter physically due to time limitation. Therefore, I decided to write an complete guide on how to compromise an simple AD network as an alternative. (This guide will be the same as what I want to share in the workshop)
+[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write an complete guide on how to compromise an simple AD network as an alternative. (This guide will be the same as what I want to share in the workshop)
 
 ## 🪟 Active Directory
 Some texts here...
