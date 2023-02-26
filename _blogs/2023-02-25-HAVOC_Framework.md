@@ -9,7 +9,7 @@ A short recap about the workshop. The **"Red Team Ops: HAVOC 101"** is a 3-hours
 - Chapter 2: OPSEC & Defense Evasion
 - Chapter 3: Compromise Active Directory Domain Services
 
-[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write an complete guide on how to compromise an simple AD network as an alternative. (This guide will be the same as what I want to share in the workshop)
+[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write a complete guide on how to compromise a simple AD network as an alternative. (This guide will be the same as what I want to share in the workshop)
 
 ## 🪟 Active Directory
 Some texts here...
