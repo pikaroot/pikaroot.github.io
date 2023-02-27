@@ -14,7 +14,7 @@ A short recap about the workshop. The **"Red Team Ops: HAVOC 101"** is a 3-hours
 ## 🪟 Active Directory
 In an organization or a university, you will realize you are able to login most of the domain computers with your own credentials and always able to get your desktop back to work even if the devices are located in places such as the library and other classrooms. This is the capability of **Active Directory (AD)**. 
 
-Active Directory is a database or set of services that connects users with the network resources they need to complete their daily work. Critical information is stored in AD such as **users**, **computers**, and **roles**. In terms of security configurations, AD provides different aspects of defense measures or services such as Group Policy Management, Key Distribution Center (KDC), User Access Permissions, and others for Administrators to reduce their workloads and get their work done efficiently.
+Active Directory is a database or set of services that connects users with the network resources they need to complete their daily work. Critical information is stored in AD such as **users**, **computers**, and **roles**. In terms of security configurations, AD provides flexibility on different aspects of defense measures and services such as Group Policy Management, Key Distribution Center (KDC), User Access Permissions, for Administrators to reduce their workloads and apply standard protection against potential threats.
 
 Some terminologies in an AD are good to know including:
 
