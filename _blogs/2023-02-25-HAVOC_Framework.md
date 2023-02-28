@@ -4,6 +4,9 @@ title: "Red Teaming: HAVOC 101 Workshop"
 HAVOC C2, Active Directory, and Red Teaming.
 
 ## ☁️ Before we start
+
+![image](https://user-images.githubusercontent.com/107750005/221825520-4e5e2a23-3deb-435d-8445-30bc0f17bad3.png)
+
 A short recap about the workshop. The **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that discusses about red teaming techniques and C2C concepts, and it is an honour to attend this session as a speaker with [Wesley](https://github.com/WesleyWong420). This workshop covers 3 main chapters:
 - Chapter 1: Introduction to Command & Control Framework
 - Chapter 2: OPSEC & Defense Evasion
@@ -49,8 +52,11 @@ Some texts here...
 Some texts here...
 
 ## 🗣️ Conclusion
-Some texts here...
+Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, ***pivoting attacks***, etc. and eventually compromise the whole domain.
+
+In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply them to your work such as education, certification exams, projects, home lab practice, and more. (but not attack other people plzzz...)
 
 ## 🟦 References
 
-1. [Havoc Framework](https://github.com/HavocFramework/Havoc)
+1. [GitHub - Havoc Framework](https://github.com/HavocFramework/Havoc)
+2. [GitHub - HAVOC 101 Workshop Course Material](https://github.com/WesleyWong420/RedTeamOps-Havoc-101)
