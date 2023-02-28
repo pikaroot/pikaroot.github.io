@@ -48,13 +48,15 @@ Some terminologies in an AD are good to know including:
 ## 💻 Network Verification
 Some texts here...
 
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzgzNWQxNzNlZjkzM2NlMjQwOGNkNDYwODIxMzQ2ODRjOTUyOTU1YSZjdD1n/Y8ogNVsD3sJlrO9AsO/giphy.gif)
+
 ## 💉 Compromise AD Walkthrough
 Some texts here...
 
 ## 🗣️ Conclusion
 Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, ***pivoting attacks***, etc. and eventually compromise the whole domain.
 
-In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply them to your work such as education, certification exams, projects, home lab practice, and more. (but not attack other people plzzz...)
+In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...)
 
 ## 🟦 References
 
