@@ -48,7 +48,8 @@ Some terminologies in an AD are good to know including:
 ## 💻 Network Verification
 Some texts here...
 
-![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzgzNWQxNzNlZjkzM2NlMjQwOGNkNDYwODIxMzQ2ODRjOTUyOTU1YSZjdD1n/Y8ogNVsD3sJlrO9AsO/giphy.gif)
+![WORKSTATION-01](https://media.giphy.com/media/eYMHsWjNsUiHcbexQa/giphy.gif)
+![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2RkODRmZGMzZjc3NTIyNGI5Yjk1OWExNDdlNmUxMGY1YTMxMGI5ZSZjdD1n/6Ruy61n5BLVgmsgSTD/giphy.gif)
 
 ## 💉 Compromise AD Walkthrough
 Some texts here...
