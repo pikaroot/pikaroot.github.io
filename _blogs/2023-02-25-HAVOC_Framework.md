@@ -48,9 +48,9 @@ Some terminologies in an AD are good to know including:
 ## 💻 Network Verification
 Before moving on to the walkthrough, I want to ensure the AD network (DC01, WORKSTATION-01, WORKSTATION-02) is connected as intended. Hence, it is recommended doing the following verifications:
 
-1) Ensure the Domain Computers are attached to the Domain Controller.
+**1) Ensure the Domain Computers are attached to the Domain Controller.**
 
-Type the following command `nltest /sc_query:havoc.local` in both workstations to ensure domain connection. If the output contains the wording **Flags: 30 HAS_IP HAS_TIMESERV** and **Trusted DC Name \\DC01.havoc.local**, the specific workstation is connected to the `DC01` successfully. Otherwise, it is not connected to `havoc.local` domain.
+Type the following command `nltest /sc_query:havoc.local` in both workstations to ensure domain connection. If the output contains the wording **Flags: 30 HAS_IP HAS_TIMESERV** and **Trusted DC Name \\\\DC01.havoc.local**, the specific workstation is connected to the `DC01` successfully. Otherwise, it is not connected to `havoc.local` domain.
 
 ![WORKSTATION-01](https://media.giphy.com/media/eYMHsWjNsUiHcbexQa/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2RkODRmZGMzZjc3NTIyNGI5Yjk1OWExNDdlNmUxMGY1YTMxMGI5ZSZjdD1n/6Ruy61n5BLVgmsgSTD/giphy.gif)
@@ -60,7 +60,7 @@ Next, go to ***Start Menu > Type "Firewall"***. At the Domain networks, please v
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTc0NDg3NmJiZmY4NTU2OWM5YzRiMzI5YzJhM2NmZDU2YmE0OTY0YyZjdD1n/K4eQBRdvfSqYfJ9IIK/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGExMTM3ODY1NDM2MmYwZGVmODFiOGZmN2EwZDQ3N2U3NGM2YTc3MSZjdD1n/mOihdfEJ33tWlmIELf/giphy.gif)
 
-2) Ensure the Domain Computers can communicated each other in the domain.
+**2) Ensure the Domain Computers can communicated each other in the domain.**
 
 In **WORKSTATION-01** Windows Defender Firewall, click ***Advanced settings > Inbound Rules > File and Printer Sharing (Echo Request - ICMPv4-In)***, enable all the rules with the ICMPv4-In **(Enabled: "Yes")**. Do the same verification in **WORKSTATION-02**.
 
@@ -72,7 +72,7 @@ In **WORKSTATION-01**, ping **DC01.havoc.local** and **WORKSTATION-02.havoc.loca
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmI2ZDViODI3NWUyNTk2NjUwMzYyNTJjYzk3Mzc3MGJlYTBkNDQ0OSZjdD1n/UORuqmjegfWLSCVaZu/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGVhYWJhZmQxNmRiNGRjZDU4NDBmMDc0MDdhMWE1Y2Y3OTY1ODUxYSZjdD1n/pVI71iGqUx3H9NONuR/giphy.gif)
 
-3) Ensure the VM Network Adapters are correctly applied.
+**3) Ensure the VM Network Adapters are correctly applied.**
 
 > **DC01.havoc.local** only has the static IP `10.10.101.131`.
 
