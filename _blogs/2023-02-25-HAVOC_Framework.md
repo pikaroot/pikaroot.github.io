@@ -87,6 +87,30 @@ Type the command `ipconfig` in both workstations to verify the number of adapter
 Once the verification is done, we can move on to the next section.
 
 ## 💉 Compromise AD Walkthrough
+
+![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
+
+For comprimising the domain, ***5 stages*** are included which are:
+
+- Initial Access (Callback Host)
+- Local Privilege Escalation
+- Kerberoasting
+- Lateral Movement
+- Pivoting
+
+### 📑 Initial Access
+Some texts here...
+
+### 🚩 Local Privilege Escalation
+Some texts here...
+
+### 💠 Kerberoasting
+Some texts here...
+
+### ⏫ Lateral Movement
+Some texts here...
+
+### ⛓️ Pivoting
 Some texts here...
 
 ## 🗣️ Conclusion
