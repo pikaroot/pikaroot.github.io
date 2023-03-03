@@ -114,8 +114,7 @@ Some texts here...
 
 Some texts here...
 
-[![](https://user-images.githubusercontent.com/107750005/222684306-90913157-b48b-4dd5-8f45-514111dad32d.mp4)](https://user-images.githubusercontent.com/107750005/222694364-dadd64a1-4727-45d9-8c8e-14a4494d2c47.mp4 "Custom Injector Bypass")
-
+{% include video id="1kGfNIbU_z9hiow_rkwunhNVZll3e7kgP" provider="google-drive" %}
 
 ### 🚩 Local Privilege Escalation
 Some texts here...
