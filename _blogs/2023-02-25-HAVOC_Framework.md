@@ -110,11 +110,11 @@ For comprimising the domain, ***5 stages*** are included which are:
 ### 📑 Initial Access
 Some texts here...
 
-[![](https://user-images.githubusercontent.com/107750005/222684306-90913157-b48b-4dd5-8f45-514111dad32d.mp4)](https://user-images.githubusercontent.com/107750005/222684306-90913157-b48b-4dd5-8f45-514111dad32d.mp4 "Setting Up Teamserver")
+{% include video id="15Alp0jLnW5TQwKB3FYc1yYVbr3Zb7tu1" provider="google-drive" %}
 
 Some texts here...
 
-{% include video id="1kGfNIbU_z9hiow_rkwunhNVZll3e7kgP" provider="google-drive" %}
+{% include video id="175RFCf8l1xa2F7MJVBKtFXeJcEw1XvVe" provider="google-drive" %}
 
 ### 🚩 Local Privilege Escalation
 Some texts here...
