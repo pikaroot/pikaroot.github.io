@@ -110,11 +110,12 @@ For comprimising the domain, ***5 stages*** are included which are:
 ### 📑 Initial Access
 Some texts here...
 
-[setup-teamserver](https://user-images.githubusercontent.com/107750005/222684306-90913157-b48b-4dd5-8f45-514111dad32d.mp4)
+[![]()](https://user-images.githubusercontent.com/107750005/222684306-90913157-b48b-4dd5-8f45-514111dad32d.mp4 "Setting Up Teamserver")
 
 Some texts here...
 
-[bypass](https://user-images.githubusercontent.com/107750005/222694364-dadd64a1-4727-45d9-8c8e-14a4494d2c47.mp4)
+[![]()](https://user-images.githubusercontent.com/107750005/222694364-dadd64a1-4727-45d9-8c8e-14a4494d2c47.mp4 "Custom Injector Bypass")
+
 
 ### 🚩 Local Privilege Escalation
 Some texts here...
