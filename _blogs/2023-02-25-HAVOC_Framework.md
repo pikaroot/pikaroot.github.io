@@ -92,12 +92,13 @@ Once the verification is done, we can move on to the next section.
 
 ![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
 
-In the scenario above, you are given 1 Attacker Linux box with Havoc Framework and essential tools pre-installed and 1 low-level user credentials in WORKSTATION-01. All user credentials including "Domain Admins" had also been given in the course material because it is used for troubleshooting purposes and it will not be utilized during the walkthrough as all machines need to be up in order to let the attacks functional. To let the machines to be powered on 24/7, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
+In the scenario above, you are given 1 Attacker Windows with essentials tools need to be compiled, 1 Attacker Linux box with Havoc Framework and essential tools pre-installed, and 1 low-level user credentials in WORKSTATION-01. All user credentials including "Domain Admins" had also been given in the course material because it is used for troubleshooting purposes and it will not be utilized during the walkthrough as all machines need to be up in order to let the attacks functional. To let the machines to be powered on 24/7, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
 
-| Machines       | Username    | Password       |
-|----------------|-------------|----------------|
-| Attacker Linux | `havoc`     | `havoc`        |
-| WORKSTATION-01 | `a.tarolli` | `Password123!` |
+| Machines         | Username    | Password       |
+|------------------|-------------|----------------|
+| Attacker Windows | `havoc`     | `havoc`        |
+| Attacker Linux   | `havoc`     | `havoc`        |
+| WORKSTATION-01   | `a.tarolli` | `Password123!` |
 
 For comprimising the domain, ***5 stages*** are included which are:
 
@@ -119,7 +120,7 @@ Some texts here...
 ### 🚩 Local Privilege Escalation
 Some texts here...
 
-{% include video id="" provider="google-drive" %}
+{% include video id="1F6P0cRCPE0gnMZvFYXgjSO8l49f99k_n" provider="google-drive" %}
 
 ### 💠 Kerberoasting
 Some texts here...
