@@ -151,3 +151,4 @@ In conclusion, I hope this article is detailed enough to benefit people for lear
 1. [GitHub - Havoc Framework](https://github.com/HavocFramework/Havoc)
 2. [GitHub - HAVOC 101 Workshop Course Material](https://github.com/WesleyWong420/RedTeamOps-Havoc-101)
 3. [HackTricks - Unconstrained Delegation](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/unconstrained-delegation)
+4. [RastaMouse - NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/)
