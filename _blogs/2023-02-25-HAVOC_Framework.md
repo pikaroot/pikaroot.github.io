@@ -130,6 +130,10 @@ Some texts here...
 ### ⏫ Lateral Movement
 Some texts here...
 
+![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
+
+{% include video id="4gy-3BAiQmY" provider="youtube" %}
+
 ### ⛓️ Pivoting
 Some texts here...
 
