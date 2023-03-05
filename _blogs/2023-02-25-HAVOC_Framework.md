@@ -132,10 +132,14 @@ Some texts here...
 
 ![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
 
+Some texts here...
+
 {% include video id="4gy-3BAiQmY" provider="youtube" %}
 
 ### ⛓️ Pivoting
 Some texts here...
+
+{% include video id="a8ghTH_fT_o" provider="youtube" %}
 
 ## 🗣️ Conclusion
 Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, ***pivoting attacks***, etc. and eventually compromise the whole domain.
