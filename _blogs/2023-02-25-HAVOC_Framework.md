@@ -115,17 +115,17 @@ Some texts here...
 
 Some texts here...
 
-{% include video id="17DZiqe008gfAoaYhSurSYnLiz98nS4Fb" provider="google-drive" %}
+{% include video id="gXnUztTydKk" provider="youtube" %}
 
 ### 🚩 Local Privilege Escalation
 Some texts here...
 
-{% include video id="1F6P0cRCPE0gnMZvFYXgjSO8l49f99k_n" provider="google-drive" %}
+{% include video id="TyFHmhjm5ig" provider="youtube" %}
 
 ### 💠 Kerberoasting
 Some texts here...
 
-{% include video id="" provider="google-drive" %}
+{% include video id="" provider="youtube" %}
 
 ### ⏫ Lateral Movement
 Some texts here...
