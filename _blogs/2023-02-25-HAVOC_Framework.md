@@ -111,7 +111,7 @@ For comprimising the domain, ***5 stages*** are included which are:
 ### 📑 Initial Access
 Some texts here...
 
-{% include video id="15Alp0jLnW5TQwKB3FYc1yYVbr3Zb7tu1" provider="google-drive" %}
+{% include video id="ORPrpKvO56M" provider="youtube" %}
 
 Some texts here...
 
