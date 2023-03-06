@@ -653,7 +653,7 @@ Here is the video walkthrough regarding Lateral Movement using default lateral m
 ### ⛓️ Pivoting
 Due to the maturity and stability of Havoc Framework, pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate. However, here is a simple way of getting the final flag out using **token impersonation** method. (Assume that you somehow successfully retrieve the password of one of the Domain Admins.)
 
-In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands. 
+In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands to retrieve the final flag without logging in the Domain Controller user interface. 
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\DC01.havoc.local\C$
@@ -727,15 +727,13 @@ HAVOC{c7394fc9e54b0e362b5a610e0ef6a3e0}
 
 Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue update this section if any method available without knowing the credentials of Domain Admins.
 
-The whole compromise process should be look such as the figure below.
+With NTLM Relaying applied, the whole compromise process should be look such as the figure below (but we unable to do it). This figure below is referenced from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
 
 ![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
 
-This image above is referenced to the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider). 
-
 ## 🗣️ Conclusion
-Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, ***pivoting attacks***, etc. and eventually compromise the whole domain.
+Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, and ***pivoting attacks***. and eventually compromise the whole domain.
 
 In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
 
