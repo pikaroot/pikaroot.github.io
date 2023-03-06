@@ -729,6 +729,7 @@ Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strik
 
 The whole compromise process should be look such as the figure below.
 
+![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
 
 This image above is referenced to the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider). 
