@@ -136,7 +136,7 @@ The Attack Chain is divided into ***5 stages*** as below:
 
 - Initial Access
 - Local Privilege Escalation
-- Kerberoasting
+- Kerberos
 - Lateral Movement
 - Pivoting
 
@@ -340,7 +340,7 @@ At this point, the first flag can be retrieved. Here is a video walkthrough cove
 
 > In the video, you might that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
 
-### 💠 Kerberoasting
+### 💠 Kerberos
 Delegation allows a user or machine to act on behalf of another user to another service.  A common implementation of this is where a user authenticates to a front-end web application that serves a back-end database. The front-end application needs to authenticate to the back-end database (using Kerberos) as the authenticated user.
 
 ![image](https://user-images.githubusercontent.com/107750005/223048931-fb1b0686-6abe-4130-bd27-122cd436f4af.png)
