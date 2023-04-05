@@ -45,6 +45,8 @@ permalink: /:collection/:categories/:title
 paginate: 5
 paginate_path: /page:num/
 
+favicon: assets/images/poke-red-team.png
+
 breadcrumbs: true
 
 collections:
