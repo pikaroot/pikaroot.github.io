@@ -1,5 +1,5 @@
 ---
 layout: categories
-title: "Write-Ups"
+title: "Ctfs"
 permalink: /ctfs/
 ---
