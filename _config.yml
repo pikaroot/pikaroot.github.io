@@ -105,8 +105,8 @@ defaults:
 # Site Author
 author:
   name  : "David Lim"
-  avatar: "/assets/images/pikaroot-github.JPG"
-  bio   : "Pokémon, Sudoku, CTFs :D"
+  avatar: "/assets/images/pikaroot.png"
+  bio   : "I like Pokémon."
   email : 
   links:
     - label: "Twitter"
