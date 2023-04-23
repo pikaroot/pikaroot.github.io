@@ -5,6 +5,5 @@ main:
     url: /blogs/
   - title: 'CTFs'
     url: /ctfs/
-  - title: ''
-    icon: "fa fa-file-text-o"
+  - title: 'CV'
     url: /cv/
