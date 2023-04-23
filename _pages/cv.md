@@ -6,4 +6,4 @@ permalink: /cv/
 author_profile: TRUE
 ---
 
-<embed src="https://pikaroot.github.io/assets/download/cv.pdf" width="640" height="480" type="application/pdf" />
+<embed src="https://pikaroot.github.io/assets/download/cv.pdf" width="800" height="1120" type="application/pdf" />
