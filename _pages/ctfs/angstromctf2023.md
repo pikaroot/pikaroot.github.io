@@ -1,5 +1,5 @@
 ---
-title: angstromCTF2023
-taxonomy: angstromCTF2023
+title: AngstromCTF2023
+taxonomy: AngstromCTF2023
 permalink: /ctfs/angstromctf2023
 ---
