@@ -1,5 +1,8 @@
 ---
 title: "HAVOC 101 Workshop [RedTeam]"
+toc: true
+toc_label: "cat contents.txt"
+toc_icon: "terminal"
 ---
 HAVOC C2, Active Directory, and Red Teaming.
 
