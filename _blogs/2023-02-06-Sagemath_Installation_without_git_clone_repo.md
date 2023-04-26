@@ -10,95 +10,95 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
 
 **STEP1:** Install prerequisites for Sagemath.
 
-    ```
-    sudo apt-get update
-    sudo apt-get upgrade
-    ```
+ ```
+ sudo apt-get update
+ sudo apt-get upgrade
+ ```
 
-    ```
-    sudo apt-get install bc binutils bzip2 ca-certificates cliquer cmake curl ecl eclib-tools fflas-ffpack flintqs g++ gcc gengetopt gfan gfortran glpk-utils gmp-ecm lcalc libatomic-ops-dev libboost-dev libbraiding-dev libbrial-dev libbrial-groebner-dev libbz2-dev libcdd-dev libcdd-tools libcliquer-dev libcurl4-openssl-dev libec-dev libecm-dev libffi-dev libflint-arb-dev libflint-dev libfplll-dev libfreetype6-dev libgc-dev libgd-dev libgf2x-dev libgiac-dev libgivaro-dev libglpk-dev libgmp-dev libgsl-dev libhomfly-dev libiml-dev liblfunction-dev liblinbox-dev liblrcalc-dev liblzma-dev libm4ri-dev libm4rie-dev libmpc-dev libmpfi-dev libmpfr-dev libncurses5-dev libntl-dev libopenblas-dev libpari-dev libpcre3-dev libplanarity-dev libppl-dev libprimesieve-dev libpython3-dev libqhull-dev libreadline-dev librw-dev libsingular4-dev libsqlite3-dev libssl-dev libsuitesparse-dev libsymmetrica2-dev libz-dev libzmq3-dev libzn-poly-dev m4 make nauty ninja-build openssl palp pari-doc pari-elldata pari-galdata pari-galpol pari-gp2c pari-seadata patch perl pkg-config planarity ppl-dev python3 python3-distutils python3-venv r-base-dev r-cran-lattice singular singular-doc sqlite3 sympow tachyon tar tox xcas xz-utils
-    ```
+ ```
+sudo apt-get install bc binutils bzip2 ca-certificates cliquer cmake curl ecl eclib-tools fflas-ffpack flintqs g++ gcc gengetopt gfan gfortran glpk-utils gmp-ecm lcalc libatomic-ops-dev libboost-dev libbraiding-dev libbrial-dev libbrial-groebner-dev libbz2-dev libcdd-dev libcdd-tools libcliquer-dev libcurl4-openssl-dev libec-dev libecm-dev libffi-dev libflint-arb-dev libflint-dev libfplll-dev libfreetype6-dev libgc-dev libgd-dev libgf2x-dev libgiac-dev libgivaro-dev libglpk-dev libgmp-dev libgsl-dev libhomfly-dev libiml-dev liblfunction-dev liblinbox-dev liblrcalc-dev liblzma-dev libm4ri-dev libm4rie-dev libmpc-dev libmpfi-dev libmpfr-dev libncurses5-dev libntl-dev libopenblas-dev libpari-dev libpcre3-dev libplanarity-dev libppl-dev libprimesieve-dev libpython3-dev libqhull-dev libreadline-dev librw-dev libsingular4-dev libsqlite3-dev libssl-dev libsuitesparse-dev libsymmetrica2-dev libz-dev libzmq3-dev libzn-poly-dev m4 make nauty ninja-build openssl palp pari-doc pari-elldata pari-galdata pari-galpol pari-gp2c pari-seadata patch perl pkg-config planarity ppl-dev python3 python3-distutils python3-venv r-base-dev r-cran-lattice singular singular-doc sqlite3 sympow tachyon tar tox xcas xz-utils
+```
 
-    ```
-    sudo apt-get install default-jdk dvipng ffmpeg imagemagick latexmk libavdevice-dev pandoc tex-gyre texlive-fonts-recommended texlive-lang-cyrillic texlive-lang-english texlive-lang-european texlive-lang-french texlive-lang-german texlive-lang-italian texlive-lang-japanese texlive-lang-polish texlive-lang-portuguese texlive-lang-spanish texlive-latex-extra texlive-xetex
-    ```
+```
+sudo apt-get install default-jdk dvipng ffmpeg imagemagick latexmk libavdevice-dev pandoc tex-gyre texlive-fonts-recommended texlive-lang-cyrillic texlive-lang-english texlive-lang-european texlive-lang-french texlive-lang-german texlive-lang-italian texlive-lang-japanese texlive-lang-polish texlive-lang-portuguese texlive-lang-spanish texlive-latex-extra texlive-xetex
+```
 
-    ```
-    sudo apt-get install 4ti2 clang coinor-cbc coinor-libcbc-dev graphviz libfile-slurp-perl libgraphviz-dev libigraph-dev libisl-dev libjson-perl libmongodb-perl libnauty-dev libperl-dev libpolymake-dev libsvg-perl libterm-readkey-perl libterm-readline-gnu-perl libxml-libxslt-perl libxml-writer-perl libxml2-dev lrslib pari-gp2c pdf2svg polymake texinfo
-    ```
+```
+sudo apt-get install 4ti2 clang coinor-cbc coinor-libcbc-dev graphviz libfile-slurp-perl libgraphviz-dev libigraph-dev libisl-dev libjson-perl libmongodb-perl libnauty-dev libperl-dev libpolymake-dev libsvg-perl libterm-readkey-perl libterm-readline-gnu-perl libxml-libxslt-perl libxml-writer-perl libxml2-dev lrslib pari-gp2c pdf2svg polymake texinfo
+```
 
 **STEP2:** Go to [Sagemath official page](https://www.sagemath.org/download-source.html), look for **"Download source code distribution (stable)"**, and select the nearest mirror from your permanent location. In my case, I select **"KoDDoS Mirror, Hong Kong"**.
 
 **STEP3:** Look for **Filename**, select the latest Sage package. In my case, ***sage-9.7.tar.gz*** is the latest which is released in 19 September 2022. Copy the link address of the Sage package and use `wget` to retrieve the file from Kali Linux. 
 
-    ```
-    wget https://mirror-hk.koddos.net/sagemath/src/sage-9.7.tar.gz
-    ```
+```
+wget https://mirror-hk.koddos.net/sagemath/src/sage-9.7.tar.gz
+```
 
 **STEP4:** Extract the file. Go to the Sage directory.
 
-    ```
-    tar xvf sage-9.7.tar.gz
-    cd sage-9.7/
-    ```
+```
+tar xvf sage-9.7.tar.gz
+cd sage-9.7/
+```
 
 **STEP5:** Inside the directory, configure Sage using `configure`. 
 
-    ```
-    ./configure
-    ```
+```
+./configure
+```
 
 **STEP6:** After the configuration process is completed, it will prompt you some recommended packages need to be install. For example:
 
-    ```
-    checking for the package system in use... debian
-    configure:
+```
+checking for the package system in use... debian
+configure:
 
-        hint: installing the following system packages, if not
-        already present, is recommended and may avoid having to
-        build them (though some may have to be built anyway):
+    hint: installing the following system packages, if not
+    already present, is recommended and may avoid having to
+    build them (though some may have to be built anyway):
 
-          $ sudo apt-get update 
-          $ sudo apt-get install  libec-dev eclib-tools fflas-ffpack libfplll-dev libgiac-dev xcas libgivaro-dev liblinbox-dev liblrcalc-dev libqhull-dev
+      $ sudo apt-get update 
+      $ sudo apt-get install  libec-dev eclib-tools fflas-ffpack libfplll-dev libgiac-dev xcas libgivaro-dev liblinbox-dev liblrcalc-dev libqhull-dev
 
-    configure:
+configure:
 
-        hint: installing the following system packages, if not
-        already present, may provide additional optional features:
+    hint: installing the following system packages, if not
+    already present, may provide additional optional features:
 
-          $ sudo apt-get update 
-          $ sudo apt-get install  4ti2 gpgconf openssh-client texinfo default-jdk libavdevice-dev
+      $ sudo apt-get update 
+      $ sudo apt-get install  4ti2 gpgconf openssh-client texinfo default-jdk libavdevice-dev
 
-    configure:
+configure:
 
-        hint: After installation, re-run configure using:
+    hint: After installation, re-run configure using:
 
-          $ ./config.status --recheck && ./config.status
-    ```
+      $ ./config.status --recheck && ./config.status
+```
 
     Download the recommended packages and recheck the configurations.
 
 **STEP7:** Build Sage using `make`. If you have 4 core processors in your devices, use `make -j4` instead of `make` to speed up the process of building the solution.
 
-    ```
-    make
-    ```
+```
+make
+```
 
-    >NOTE: The `make` process might take up to hours even a day.
+>NOTE: The `make` process might take up to hours even a day.
 
 **STEP8:** If Sage is successfully built, the last few lines of the output will look like the example below:
 
-    ```
-    Sage build/upgrade complete!
-    make[1]: Leaving directory '/home/kali/sage-9.7'
-    ```
-    If not, you can refer to the [Failed to build Sage](https://pikaroot.github.io/blogs/2023-02-06-Sagemath_Installation_without_git_clone_repo#-failed-to-build-sage) section.
+```
+Sage build/upgrade complete!
+make[1]: Leaving directory '/home/kali/sage-9.7'
+```
+If not, you can refer to the [Failed to build Sage](https://pikaroot.github.io/blogs/2023-02-06-Sagemath_Installation_without_git_clone_repo#-failed-to-build-sage) section.
 
 **STEP9:** Run Sage.
 
-    ```
-    ./sage
-    ```
+```
+./sage
+```
 
 ## ❌ Failed to build Sage
 
