@@ -76,7 +76,7 @@ configure:
       $ ./config.status --recheck && ./config.status
 ```
 
-    Download the recommended packages and recheck the configurations.
+Download the recommended packages and recheck the configurations.
 
 **STEP7:** Build Sage using `make`. If you have 4 core processors in your devices, use `make -j4` instead of `make` to speed up the process of building the solution.
 
