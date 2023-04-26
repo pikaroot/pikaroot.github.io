@@ -1,5 +1,5 @@
 ---
-title: "Red Team Ops: HAVOC 101 Workshop"
+title: "HAVOC 101 Workshop [RedTeam]"
 ---
 HAVOC C2, Active Directory, and Red Teaming.
 
