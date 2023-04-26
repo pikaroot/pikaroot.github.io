@@ -1,5 +1,5 @@
 ---
-title: "Installation: SageMath in DebianOS"
+title: "SageMath in DebianOS [Installation]"
 ---
 Here is a guide for installing SageMath if the developers had kept the Sage git repository into **private**.
 
