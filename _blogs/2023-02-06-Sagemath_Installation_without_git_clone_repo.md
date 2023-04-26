@@ -1,7 +1,7 @@
 ---
 title: "SageMath in DebianOS [Installation]"
 toc: true
-toc_label: "cat contents.txt"
+toc_label: "cat contents.md"
 toc_icon: "terminal"
 ---
 Here is a guide for installing SageMath if the developers had kept the Sage git repository into **private**.
