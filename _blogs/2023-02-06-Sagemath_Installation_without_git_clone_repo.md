@@ -8,7 +8,7 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
 
 ## ⭕ Step-by-Step Installation Guide
 
-1. Install prerequisites for Sagemath.
+**STEP1:** Install prerequisites for Sagemath.
 
     ```
     sudo apt-get update
@@ -27,28 +27,28 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
     sudo apt-get install 4ti2 clang coinor-cbc coinor-libcbc-dev graphviz libfile-slurp-perl libgraphviz-dev libigraph-dev libisl-dev libjson-perl libmongodb-perl libnauty-dev libperl-dev libpolymake-dev libsvg-perl libterm-readkey-perl libterm-readline-gnu-perl libxml-libxslt-perl libxml-writer-perl libxml2-dev lrslib pari-gp2c pdf2svg polymake texinfo
     ```
 
-2. Go to [Sagemath official page](https://www.sagemath.org/download-source.html), look for **"Download source code distribution (stable)"**, and select the nearest mirror from your permanent location. In my case, I select **"KoDDoS Mirror, Hong Kong"**.
+**STEP2:** Go to [Sagemath official page](https://www.sagemath.org/download-source.html), look for **"Download source code distribution (stable)"**, and select the nearest mirror from your permanent location. In my case, I select **"KoDDoS Mirror, Hong Kong"**.
 
-3. Look for **Filename**, select the latest Sage package. In my case, ***sage-9.7.tar.gz*** is the latest which is released in 19 September 2022. Copy the link address of the Sage package and use `wget` to retrieve the file from Kali Linux. 
+**STEP3:** Look for **Filename**, select the latest Sage package. In my case, ***sage-9.7.tar.gz*** is the latest which is released in 19 September 2022. Copy the link address of the Sage package and use `wget` to retrieve the file from Kali Linux. 
 
     ```
     wget https://mirror-hk.koddos.net/sagemath/src/sage-9.7.tar.gz
     ```
 
-4. Extract the file. Go to the Sage directory.
+**STEP4:** Extract the file. Go to the Sage directory.
 
     ```
     tar xvf sage-9.7.tar.gz
     cd sage-9.7/
     ```
 
-5. Inside the directory, configure Sage using `configure`. 
+**STEP5:** Inside the directory, configure Sage using `configure`. 
 
     ```
     ./configure
     ```
 
-6. After the configuration process is completed, it will prompt you some recommended packages need to be install. For example:
+**STEP6:** After the configuration process is completed, it will prompt you some recommended packages need to be install. For example:
 
     ```
     checking for the package system in use... debian
@@ -78,7 +78,7 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
 
     Download the recommended packages and recheck the configurations.
 
-7. Build Sage using `make`. If you have 4 core processors in your devices, use `make -j4` instead of `make` to speed up the process of building the solution.
+**STEP7:** Build Sage using `make`. If you have 4 core processors in your devices, use `make -j4` instead of `make` to speed up the process of building the solution.
 
     ```
     make
@@ -86,7 +86,7 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
 
     >NOTE: The `make` process might take up to hours even a day.
 
-8. If Sage is successfully built, the last few lines of the output will look like the example below:
+**STEP8:** If Sage is successfully built, the last few lines of the output will look like the example below:
 
     ```
     Sage build/upgrade complete!
@@ -94,7 +94,7 @@ Here is a guide for installing SageMath if the developers had kept the Sage git 
     ```
     If not, you can refer to the [Failed to build Sage](https://pikaroot.github.io/blogs/2023-02-06-Sagemath_Installation_without_git_clone_repo#-failed-to-build-sage) section.
 
-9. Run Sage.
+**STEP9:** Run Sage.
 
     ```
     ./sage
