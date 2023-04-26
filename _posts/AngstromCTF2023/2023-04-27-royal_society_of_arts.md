@@ -1,7 +1,6 @@
 ---
 title: "Royal Society of Arts [CRYPTO]"
 categories: AngstromCTF2023
-permalink: /ctfs/angstromctf2023/royalsocietyofarts
 ---
 A basic RSA challenge with the combination of algebraic equations.
 
