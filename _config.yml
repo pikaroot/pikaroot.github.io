@@ -121,9 +121,9 @@ author:
   bio   : "I like Pokémon."
   email : 
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/p1karoot"
+#    - label: "Twitter"
+#      icon: "fab fa-fw fa-twitter-square"
+#      url: "https://twitter.com/p1karoot"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/pikaroot"
