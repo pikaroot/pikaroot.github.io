@@ -7,3 +7,18 @@ main:
     url: /ctfs/
   - title: 'CV'
     url: /cv/
+    
+docs:
+  - title: WargamesMY 2022
+    children:
+      - title: "Color [STEG]"
+        url: /ctfs/wargamesmy2022#color
+      - title: "Puzzle [STEG]"
+        url: /ctfs/wargamesmy2022#puzzle
+  - title: angstromCTF 2023
+    children:
+      - title: "Royal Society of Arts [CRYPTO]"
+        url: /ctfs/angstromctf2023#royalsocietyofarts
+      - title: "Royal Society of Arts 2 [CRYPTO]"
+        url: /ctfs/angstromctf2023#royalsocietyofarts2
+
