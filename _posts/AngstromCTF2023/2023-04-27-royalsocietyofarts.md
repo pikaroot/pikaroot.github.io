@@ -36,7 +36,7 @@ c = 4054483207272687977066160610341701061898807815853506496731813532564580090549
 ```
 
 ## 👀 Analysis
-From the output, we know the value of `n`, `e`, and `c`. 
+From the output, we know the value of $$n$$, $$e$$, and $$c$$. 
 
 To solve a RSA challenge, the algorithm will be:
 
