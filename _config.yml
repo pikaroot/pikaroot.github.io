@@ -88,6 +88,8 @@ defaults:
       words_per_minute: 120
       show_date: true
       related: false
+      sidebar:
+      nav: "docs"
   # _pages
   - scope:
       path: ""
