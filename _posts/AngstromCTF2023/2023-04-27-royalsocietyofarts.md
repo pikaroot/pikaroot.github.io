@@ -41,13 +41,14 @@ From the output, we know the value of $$n$$, $$e$$, and $$c$$.
 
 To solve a RSA challenge, the algorithm will be:
 
-$$n = pq$$
-
-$$\phi(n) = (p-1)(q-1)$$
-
-$$de = 1\ (mod \phi(n))$$
-
-$$flag = c^d\ (mod\ n)$$
+$$
+\begin{aligned}
+    n &= pq\\
+    \phi(n) &= (p-1)(q-1)\\
+    d &= e^{-1}\ (mod \phi(n))\\
+    flag &= c^d\ (mod\ n)\\
+\end{aligned}
+$$
 
 From the algorithm, we need either $$pq$$ or $$\phi(n)$$ to get private key $$d$$. Obviously, we will not get these values that easily. However, we know the value of $$(p-2)(q-1)$$ and $$(p-1)(q-2)$$.
 
@@ -57,14 +58,24 @@ From the algorithm, we need either $$pq$$ or $$\phi(n)$$ to get private key $$d$
 ```
 If we multiply both equations, we will get the pattern $$(p-1)(q-1)$$ which is $$\phi(n)$$.
 
+$$
+\begin{aligned}
+    (p-2)(q-1) \cdot (p-1)(q-2) &= (p-1)(q-1) \cdot (pq-2p-2q+4)\\
+    &= \phi(n) \cdot (pq-2(p+q)+4)\\
+\end{aligned}
+$$
 
-$$(p-2)(q-1)*(p-1)(q-2)$$ 
+We can see that we have an unknown value $$(p+q)$$. This value can be obtained by adding both equations. 
 
-$$= (p-1)(q-1)*(pq-2p-2q+4)$$ 
+$$
+\begin{aligned}
+    (p-2)(q-1) + (p-1)(q-2) &= pq - p - 2q + 2 + pq - 2p - q + 2\\
+    &= 2pq + 4 - 3p - 3q\\
+    &= 2 \cdot n + 4 - 3(p + q)\\
+\end{aligned}
+$$
 
-$$= \phi(n)*(pq-2(p+q)+4)$$
-
-We can see that we have an unknown value $$(p+q)$$. This value can be obtained by adding both equations. By the end, we can get:
+By the end, we can get:
 
 ```
 p+q = 22499021746195166693397006566713801096034580830176876576349782670139991145031893943925884176860377452600144311990257304731744774130975813748676075912492538
