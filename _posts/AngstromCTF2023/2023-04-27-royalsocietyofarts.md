@@ -45,7 +45,7 @@ $$
 \begin{aligned}
     n &= pq\\
     \phi(n) &= (p-1)(q-1)\\
-    d &= e^{-1}\ (mod \phi(n))\\
+    d &= e^{-1}\ (mod\ \phi(n))\\
     flag &= c^d\ (mod\ n)\\
 \end{aligned}
 $$
@@ -72,7 +72,7 @@ We can see that we have an unknown value $$(p+q)$$. This value can be obtained b
 $$
 \begin{aligned}
     (p-2)(q-1) + (p-1)(q-2) &= 1251\dots8250 \cdot 1251\dots6614\\
-    pq - p - 2q + 2 + pq - 2p - q + 2\\ &= 2503\dots4864\\
+    pq - p - 2q + 2 + pq - 2p - q + 2 &= 2503\dots4864\\
     2pq + 4 - 3p - 3q &= 2503\dots4684\\
     p + q &= {2 \cdot 1251\dots1237 + 4 - 2503\dots4684\over 3}\\
 \end{aligned}
