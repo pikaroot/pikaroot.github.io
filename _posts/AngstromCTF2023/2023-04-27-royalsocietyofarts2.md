@@ -35,9 +35,30 @@ print("m =", pow(c, d, n))
 ```
 
 ## 👀 Analysis
+In this challenge, we need to bypass the conditional statement from preventing us to access the flag.
+
+```python
+if c == m or b"actf{" in long_to_bytes(pow(c, d, n)):
+    print("No flag for you!")
+    exit(1)
+```
+
+By observing both conditions, we can conclude that:
+
+1. `c == m`: This condition preventing the player from brute-forcing the flag. Therefore, even we get the long integer `m`, we did not know the value is literally the flag.
+2. `b"actf{" in long_to_bytes(pow(c, d, n))`: This condition is checking the flag format `actf{`. Therefore, we cannot simply insert the `c` into the input field.
+3. The `if` statement accepts any integer inputs outside of **Condition 1** and **Condition 2**.
+
+$$ c = m^e\ (mod\ n)$$
+
+$$ c^2 = (m^e)^2\ (mod\ n)$$
+
+
 
 
 ## 🚩 Solution
+
+{% include video id="1EJveRZdXDf4eqORdCfoFuR1EapxnvroV" provider="google-drive" %}
 
 solve.py
 ```python
@@ -62,4 +83,4 @@ FLAG = int(sqrt(m_square))
 print(long_to_bytes(FLAG))
 ```
 
-{% include video id="1EJveRZdXDf4eqORdCfoFuR1EapxnvroV" provider="google-drive" %}
+***FLAG***: `actf{rs4_is_sorta_homom0rphic_50c8d344df58322b}`
