@@ -42,9 +42,9 @@ To solve a RSA challenge, the algorithm will be:
 ```math
 n = pq
 ```
-```math
-\phi(n) = (p-1)(q-1)
-```
+
+$$\phi(n) = (p-1)(q-1)$$
+
 ```math
 de = 1\ (mod \phi(n))
 ```
