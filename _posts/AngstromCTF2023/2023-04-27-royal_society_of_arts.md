@@ -9,7 +9,7 @@ A basic RSA challenge with the combination of algebraic equations.
 
 [rsa.py](https://files.actf.co/b41e4a18e2caac4975cd7b50a6527ba2b9f35056056bd89ba9bcd5c54f0251ab/rsa.py)
 
-```Python
+```python
 from Crypto.Util.number import getStrongPrime, bytes_to_long
 f = open("flag.txt").read()
 m = bytes_to_long(f.encode())
@@ -57,7 +57,11 @@ From the algorithm, we need either $$pq$$ or $$\phi(n)$$ to get private key $$d$
 If we multiply both equations, we will get the pattern $$(p-1)(q-1)$$ which is $$\phi(n)$$.
 
 
-$$(p-2)(q-1)*(p-1)(q-2) = (p-1)(q-1)*(pq-2p-2q+4) = \phi(n)*(pq-2(p+q)+4)$$
+$$(p-2)(q-1)*(p-1)(q-2)$$ 
+
+$$= (p-1)(q-1)*(pq-2p-2q+4)$$ 
+
+$$= \phi(n)*(pq-2(p+q)+4)$$
 
 We can see that we have an unknown value $$(p+q)$$. This value can be obtained by adding both equations. By the end, we can get:
 
@@ -73,7 +77,7 @@ phi = 12515223716198010785959665889185108423206590717768216599330007358765310935
 ## 🚩 Solution
 
 solve.py
-```Python
+```python
 #!/usr/bin/env python3
 from Crypto.Util.number import long_to_bytes
 
