@@ -49,6 +49,9 @@ favicon: "favicon.png"
 
 breadcrumbs: true
 
+# Build settings
+markdown: kramdown
+
 collections:
   ctfs:
     output: true
