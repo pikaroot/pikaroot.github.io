@@ -62,6 +62,4 @@ FLAG = int(sqrt(m_square))
 print(long_to_bytes(FLAG))
 ```
 
-<video width="1920" height="1080" controls loop>
-  <source src="https://user-images.githubusercontent.com/107750005/234778322-fdb1a501-13e2-4d5e-9799-6e426832686d.mp4" type="video/mp4">
-</video>
+{% include video id="1EJveRZdXDf4eqORdCfoFuR1EapxnvroV" provider="google-drive" %}
