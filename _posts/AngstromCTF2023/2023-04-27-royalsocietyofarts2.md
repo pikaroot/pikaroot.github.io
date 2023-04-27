@@ -44,9 +44,24 @@ if c == m or b"actf{" in long_to_bytes(pow(c, d, n)):
 ```
 By observing both conditions, we can conclude that:
 
-1. `c == m`: This condition preventing the player from brute-forcing the flag. Therefore, even we get the long integer `m`, we did not know the value is literally the flag.
+1. `c == m`: This condition preventing the player from brute-forcing the flag. Therefore, even we get the long integer `m` ($$flag$$), we did not know the value is literally the flag.
 2. `b"actf{" in long_to_bytes(pow(c, d, n))`: This condition is checking the flag format `actf{`. Therefore, we cannot simply insert the `c` into the input field.
 3. The `if` statement accepts any integer inputs outside of **Condition 1** and **Condition 2**.
+
+We need to submit an integer that is closely related to $$m$$ and $$c$$. Hence, we can encapsulate $$c$$ that is generated every single execution by submitting $$c^2$$. This is because $$c^2$$ will not produce the flag format `actf{` after decryption and it will not tampered the original $$flag$$ value. 
+
+$$
+\begin{aligned}
+    c &= flag^e\ (mod\ n)\\
+    c^2 &= (flag^e)^2\ (mod\ n)\\
+    flag^2 &= (c^2)^d\ (mod\ n)\\
+    flag &= \sqrt(c^2)^d\\ 
+\end{aligned}
+$$
+
+>NOTE: This method only works if `n`, `p`, and `q` are **larger than** `bytes_to_long(flag)`. We can indirectly verify that `flag` is smaller than both `p` and `q`.
+
+From here, we have our solution.
 
 ## 🚩 Solution
 
