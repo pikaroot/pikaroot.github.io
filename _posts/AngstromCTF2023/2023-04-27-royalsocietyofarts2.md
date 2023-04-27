@@ -62,4 +62,4 @@ FLAG = int(sqrt(m_square))
 print(long_to_bytes(FLAG))
 ```
 
-<iframe src="https://giphy.com/embed/dWj5KVfqbPGVjrLIZt" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
+<iframe src="https://giphy.com/embed/dWj5KVfqbPGVjrLIZt" width="640" height="480" frameBorder="0" class="giphy-embed" allowFullScreen>
