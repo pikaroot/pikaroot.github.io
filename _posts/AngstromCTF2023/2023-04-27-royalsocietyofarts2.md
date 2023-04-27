@@ -42,19 +42,11 @@ if c == m or b"actf{" in long_to_bytes(pow(c, d, n)):
     print("No flag for you!")
     exit(1)
 ```
-
 By observing both conditions, we can conclude that:
 
 1. `c == m`: This condition preventing the player from brute-forcing the flag. Therefore, even we get the long integer `m`, we did not know the value is literally the flag.
 2. `b"actf{" in long_to_bytes(pow(c, d, n))`: This condition is checking the flag format `actf{`. Therefore, we cannot simply insert the `c` into the input field.
 3. The `if` statement accepts any integer inputs outside of **Condition 1** and **Condition 2**.
-
-$$ c = m^e\ (mod\ n)$$
-
-$$ c^2 = (m^e)^2\ (mod\ n)$$
-
-
-
 
 ## 🚩 Solution
 
