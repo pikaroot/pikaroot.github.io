@@ -39,35 +39,32 @@ c = 4054483207272687977066160610341701061898807815853506496731813532564580090549
 From the output, we know the value of `n`, `e`, and `c`. 
 
 To solve a RSA challenge, the algorithm will be:
-```math
-n = pq
-```
+
+$$n = pq$$
 
 $$\phi(n) = (p-1)(q-1)$$
 
-```math
-de = 1\ (mod \phi(n))
-```
-```math
-flag = c^d\ (mod\ n)
-```
-From the algorithm, we need either $pq$ or $\phi(n)$ to get private key $d$. Obviously, we will not get these values that easily. However, we know the value of $(p-2)(q-1)$ and $(p-1)(q-2)$.
+$$de = 1\ (mod \phi(n))$$
+
+$$flag = c^d\ (mod\ n)$$
+
+From the algorithm, we need either $$pq$$ or $$\phi(n)$$ to get private key $$d$$. Obviously, we will not get these values that easily. However, we know the value of $$(p-2)(q-1)$$ and $$(p-1)(q-2)$$.
 
 ```
 (p-2)*(q-1) = 125152237161980107859596658891851084232065907177682165993300073587653109353529564397637482758441209445085460664497151026134819384539887509146955251284230125943565148141498300205893475242956903188936949934637477735897301870046234768439825644866543391610507164360506843171701976641285249754264159339017466738250
 (p-1)*(q-2) = 125152237161980107859596658891851084232065907177682165993300073587653109353529564397637482758441209445085460664497151026134819384539887509146955251284230123577760657520479879758538312798938234126141096433998438004751495264208294710150161381066757910797946636886901614307738041629014360829994204066455759806614
 ```
-If we multiply both equations, we will get the pattern $(p-1)(q-1)$ which is $\phi(n)$.
+If we multiply both equations, we will get the pattern $$(p-1)(q-1)$$ which is $$\phi(n)$$.
 
-```math
-(p-2)(q-1)*(p-1)(q-2) = (p-1)(q-1)*(pq-2p-2q+4) = \phi(n)*(pq-2(p+q)+4)
-```
-We can see that we have an unknown value $(p+q)$. This value can be obtained by adding both equations. By the end, we can get:
+
+$$(p-2)(q-1)*(p-1)(q-2) = (p-1)(q-1)*(pq-2p-2q+4) = \phi(n)*(pq-2(p+q)+4)$$
+
+We can see that we have an unknown value $$(p+q)$$. This value can be obtained by adding both equations. By the end, we can get:
 
 ```
 p+q = 22499021746195166693397006566713801096034580830176876576349782670139991145031893943925884176860377452600144311990257304731744774130975813748676075912492538
 ```
-Insert the value to $\phi(n)*(pq-2(p+q)+4)$ and we get $\phi(n)$.
+Insert the value to $$\phi(n)*(pq-2(p+q)+4)$$ and we get $$\phi(n)$$.
 
 ```
 phi = 125152237161980107859596658891851084232065907177682165993300073587653109353529564397637482758441209445085460664497151026134819384539887509146955251284230136010173775928572436680719177377848116674829438272756246045215733637122837255241965475908739081392953200695860223868372375007536870780036056040774569518700
