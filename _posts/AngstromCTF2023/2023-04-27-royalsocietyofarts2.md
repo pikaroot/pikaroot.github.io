@@ -1,5 +1,5 @@
 ---
-title: "Royal Society of Arts [CRYPTO]"
+title: "Royal Society of Arts 2 [CRYPTO]"
 categories: AngstromCTF2023
 permalink: /ctfs/angstromctf2023/royalsocietyofarts2
 ---
@@ -62,4 +62,4 @@ FLAG = int(sqrt(m_square))
 print(long_to_bytes(FLAG))
 ```
 
-![solve.py](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGQ4ZmI2OGZmMmI4YmUyOTViMmZlOWFlMTc0MDBlNDRjMmU1OGYyZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/dWj5KVfqbPGVjrLIZt/giphy.gif)
+<iframe src="https://giphy.com/embed/dWj5KVfqbPGVjrLIZt" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
