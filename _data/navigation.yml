@@ -11,7 +11,7 @@ main:
 docs:
   - title: angstromCTF 2023
     children:
-      - title: "impossible [CRYPTO]"
+      - title: "Impossible [CRYPTO]"
         url: /ctfs/angstromctf2023/impossible
       - title: "Royal Society of Arts [CRYPTO]"
         url: /ctfs/angstromctf2023/royalsocietyofarts
