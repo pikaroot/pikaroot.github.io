@@ -1,5 +1,5 @@
 ---
-title: "impossible [CRYPTO]"
+title: "Impossible [CRYPTO]"
 categories: AngstromCTF2023
 permalink: /ctfs/angstromctf2023/impossible
 ---
