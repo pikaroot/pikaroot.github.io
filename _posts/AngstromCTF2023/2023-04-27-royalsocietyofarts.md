@@ -6,6 +6,8 @@ permalink: /ctfs/angstromctf2023/royalsocietyofarts
 A basic RSA challenge with the combination of algebraic equations.
 
 ## 📁 Challenge Description
+70 points, 445 solves
+
 >RSA strikes strikes strikes strikes again again again again!
 
 [rsa.py](https://files.actf.co/b41e4a18e2caac4975cd7b50a6527ba2b9f35056056bd89ba9bcd5c54f0251ab/rsa.py)
