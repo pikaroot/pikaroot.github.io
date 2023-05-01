@@ -6,6 +6,8 @@ permalink: /ctfs/angstromctf2023/royalsocietyofarts2
 RSA challenge with the combination of flag regex checker. 
 
 ## 📁 Challenge Description
+70 points, 256 solves
+
 >RSA strikes strikes strikes strikes strikes again again again again again!
 
 [rsa2.py](https://files.actf.co/d7936f17479cf876d206846ac79f058b4169e0f890310dfd46465a40d3a030c5/rsa2.py)
