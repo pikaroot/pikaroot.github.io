@@ -91,7 +91,6 @@ defaults:
   - scope:
       path: ""
     values:
-      classes: wide
       sidebar:
         nav: "docs"
   # _pages
