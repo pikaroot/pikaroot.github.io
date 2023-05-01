@@ -6,6 +6,8 @@ permalink: /ctfs/angstromctf2023/impossible
 Binary checker and inequalities with **IF** conditional statement.
 
 ## 📁 Challenge Description
+50 points, 503 solves
+
 >Is this challenge impossible?
 
 [impossible.py](https://files.actf.co/fbb3d3649ac3408c393acd75d08d59c1c52ce87715845251ee34fa212b3dd991/impossible.py)
