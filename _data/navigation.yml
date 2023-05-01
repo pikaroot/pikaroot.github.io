@@ -9,6 +9,10 @@ main:
     url: /cv/
     
 docs:
+  - title: TamuCTF 2023
+    children:
+      - title: "Pick Me Up [MISC]"
+        url: /ctfs/tamuctf2023/pickmeup
   - title: angstromCTF 2023
     children:
       - title: "Impossible [CRYPTO]"
