@@ -45,7 +45,7 @@ permalink: /:collection/:categories/:title
 paginate: 8
 paginate_path: /page:num/
 
-search: true
+# search: true
 
 breadcrumbs: true
 
