@@ -45,7 +45,7 @@ permalink: /:collection/:categories/:title
 paginate: 5
 paginate_path: /page:num/
 
-favicon: "favicon.png"
+search: true
 
 breadcrumbs: true
 
