@@ -76,7 +76,6 @@ from pwn import *
 from Crypto.Util.number import long_to_bytes
 from sage.all import *
 
-print("Use CTRL+B to run code in Sublime Text")
 context.log_level = 'critical'
 
 io = remote("challs.actf.co", 32400)
