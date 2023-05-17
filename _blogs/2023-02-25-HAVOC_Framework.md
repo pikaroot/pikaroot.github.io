@@ -10,7 +10,7 @@ HAVOC C2, Active Directory, and Red Teaming.
 
 ![image](https://user-images.githubusercontent.com/107750005/221825520-4e5e2a23-3deb-435d-8445-30bc0f17bad3.png)
 
-A short recap about the workshop. **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that cover topics about red teaming techniques and Command-and-Control concepts, and it is an honour to host this session as a speaker with [Wesley](https://github.com/WesleyWong420). This workshop covers 3 main chapters:
+A short recap about the workshop. **"Red Team Ops: HAVOC 101"** is a 3-hours workshop that cover topics about red teaming techniques and Command-and-Control concepts, and it is an honour to host this session as a speaker with [@JesusCries](https://jesuscries.gitbook.io/home/). This workshop covers 3 main chapters:
 - Chapter 1: Introduction to Command & Control Framework
 - Chapter 2: OPSEC & Defense Evasion
 - Chapter 3: Compromise Active Directory Domain Services
@@ -182,7 +182,9 @@ HAVOC Vulnerable Service                    C:\Program Files\HAVOC\binary files\
 VMTools                                     "C:\Program Files\VMware\VMware Tools\vmtoolsd.exe"
 ```
 
-We can see that the paths for **ALG**, **AppVClient**, and **GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that the later path has spaces in them. **HAVOC Vulnerable Service** has spaces in the path and is also unquoted.
+We can see that the paths for **ALG** and **GraphicsPerfSvc** are not quoted, but the path for **VMTools** is. The difference is that paths like **ALG** and **GraphicsPerfSvc** are not necessary to quote as the full specified path does not contain spaces. 
+
+However, **HAVOC Vulnerable Service** has spaces in the path and is also unquoted.
 
 When Windows attempts to read the path to this executable, it interprets the space as a terminator. As a result, it will attempt to execute the following (in order):
 
@@ -728,7 +730,7 @@ HAVOC{c7394fc9e54b0e362b5a610e0ef6a3e0}
 
 For additional references, here is a great blog by Rastamouse discussing about [NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/). We will continue to update this section if any method that allows us to pivot without knowing the credentials of Domain Admins are made publicly available.
 
-With NTLM Relaying applied, the whole compromise process should look something similar to the figure below. The figure below is taken from the [youtube video demonstration](https://www.youtube.com/watch?v=a8ghTH_fT_o&t=8s&ab_channel=5pider) by [C5pider](https://github.com/Cracked5pider).
+With NTLM Relaying applied, the whole compromise process should look something similar to the figure below.
 
 ![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
@@ -742,3 +744,4 @@ I hope that this article is detailed enough to benefit people to learn interesti
 2. [GitHub - HAVOC 101 Workshop Course Material](https://github.com/WesleyWong420/RedTeamOps-Havoc-101)
 3. [HackTricks - Unconstrained Delegation](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/unconstrained-delegation)
 4. [RastaMouse - NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/)
+5. [JesusCries's Blog - Malware Development in C# and Rust](https://jesuscries.gitbook.io/home/clown-chronicles/blogs/exploring-dynamic-invocation-for-process-injection-in-c-and-rust)
