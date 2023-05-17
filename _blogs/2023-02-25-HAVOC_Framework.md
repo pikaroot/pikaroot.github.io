@@ -35,7 +35,8 @@ Here are some terminologies that are exclusive to an Active Directory network in
 - `Domain Users`: Clients in a specific domain. They only had limited access in the domain.
 
 ## 🎟️ Kerberoasting
-> Crash course for Kerberos authentication protocol.
+Crash course for Kerberos authentication protocol.
+{: .notice}
 
 ![image](https://user-images.githubusercontent.com/107750005/221415624-f7b2ed9c-c9a9-4ec3-ad85-7583aca1f0f0.png)
 
@@ -46,7 +47,8 @@ Here are some terminologies that are exclusive to an Active Directory network in
 5. The client-to-server ticket can then be used for requesting specific services in the domain.
 6. Access to services are granted by the `network resources` in the domain.
 
-> A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of providing a username and password over and over again.
+A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of providing a username and password over and over again.
+{: .notice--info}
 
 **Kerberos** is a crucial topic and contains some of the more well-known abuse primitives within Active Directory environments. It can also be a bit elusive as to how it works since it has so many complex intricacies.
 
