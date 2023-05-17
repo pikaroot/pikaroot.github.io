@@ -50,7 +50,7 @@ Here are some terminologies that are exclusive to an Active Directory network in
 
 **Kerberos** is a crucial topic and contains some of the more well-known abuse primitives within Active Directory environments. It can also be a bit elusive as to how it works since it has so many complex intricacies.
 
-Services run on a machine under the context of a user account.  These accounts are either local to the machine (NT AUTHORITY\SYSTEM, NT AUTHORITY\LOCAL SERVICE, NT AUTHORITY\NETWORK SERVICE) or domain accounts (e.g. HAVOC\s.chisholm).  A Service Principal Name (SPN) is a unique identifier for a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured as an User Object in AD.
+Services run on a machine under the context of a user account.  These accounts are either local to the machine (`NT AUTHORITY\SYSTEM`, `NT AUTHORITY\LOCAL SERVICE`, `NT AUTHORITY\NETWORK SERVICE`) or domain accounts (e.g. `HAVOC\s.chisholm`).  A Service Principal Name (SPN) is a unique identifier for a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured as an User Object in AD.
 
 Part of the TGS returned by the KDC is encrypted with a secret derived from the password of the user account running that service.  Kerberoasting is a technique for requesting TGS’ for services running under the context of domain accounts, and then cracking them offline to reveal their plaintext passwords.  Rubeus ***kerberoast*** can be used to perform Kerberoasting.  Running it without further arguments will roast every account in the domain that has an SPN (excluding krbtgt).
 
@@ -742,6 +742,7 @@ I hope that this article is detailed enough to benefit people to learn interesti
 
 1. [GitHub - Havoc Framework](https://github.com/HavocFramework/Havoc)
 2. [GitHub - HAVOC 101 Workshop Course Material](https://github.com/WesleyWong420/RedTeamOps-Havoc-101)
-3. [HackTricks - Unconstrained Delegation](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/unconstrained-delegation)
-4. [RastaMouse - NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/)
-5. [JesusCries's Blog - Malware Development in C# and Rust](https://jesuscries.gitbook.io/home/clown-chronicles/blogs/exploring-dynamic-invocation-for-process-injection-in-c-and-rust)
+3. [GitHub - MayorSec Active Directory Generator](https://github.com/dievus/ADGenerator)
+4. [HackTricks - Unconstrained Delegation](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/unconstrained-delegation)
+5. [RastaMouse - NTLM Relaying via Cobalt Strike](https://rastamouse.me/ntlm-relaying-via-cobalt-strike/)
+6. [JesusCries's Blog - Malware Development in C# and Rust](https://jesuscries.gitbook.io/home/clown-chronicles/blogs/exploring-dynamic-invocation-for-process-injection-in-c-and-rust)
