@@ -11,9 +11,9 @@ main:
 docs:
   - title: ByuCTF 2023
     children:
-      -title: "Cipher Madness [CRYPTO]"
+      - title: "Cipher Madness [CRYPTO]"
         url: /ctfs/byuctf2023/ciphermadness
-      -title: "RSA Madness [CRYPTO]"
+      - title: "RSA Madness [CRYPTO]"
         url: /ctfs/byuctf2023/rsamadness
   - title: TamuCTF 2023
     children:
