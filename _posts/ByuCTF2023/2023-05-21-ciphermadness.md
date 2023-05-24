@@ -88,7 +88,7 @@ We know the `FLAG` contains spaces but we don't know how many spaces and where t
 epcndkohlxfgvenkzcllkoclivdckskvpkddcyoceipkvrcslkdhycbcscwcsc
 ```
 
-After attempting a lot of online decoder and cryptographic tools, this [tool](https://quipqiup.com/) gives the most promising result.
+After attempting a lot of online decoders and cryptographic tools, this [tool](https://quipqiup.com/) gives the most possible result.
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/276fe7c9-b647-458b-bb20-08761314a473)
 
@@ -106,12 +106,12 @@ Now, how about we insert the spaces as same as the first result.
 the flag is bductf a message so clear a challenge to hackers a line vere were
 ```
 
-Nice! Getting closer. Based on the phrase above, the last two words `vere were` looks weird. By looking for possible phrases, the phrase `we revere` should be the correct one.
+Nice! Getting closer. Based on the phrase above, the last two words `vere were` looks weird. By looking for possible combinations, the phrase `we revere` should be the correct one.
 
 The tool provides a clue placeholder with example inputs. This time, insert the input `xfgven=byuctf` to tell the application the correct substitution.
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/90edeb90-93fb-4886-9c60-e115a6f05595)
 
-From here, we get the phrase of the `FLAG`.
+From here, we get the correct phrase of the `FLAG`.
 
 ***FLAG***: `byuctf{a message so clear a challenge to hackers a line we revere}`
