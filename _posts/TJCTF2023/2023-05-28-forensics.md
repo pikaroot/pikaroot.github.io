@@ -1,11 +1,12 @@
 ---
-title: "Forensics [FORENSIC]"
+title: "Audio/Image Investigation [FORENSIC]"
 categories: TJCTF2023
 permalink: /ctfs/tjctf2023/forensics
 toc: true
 toc_label: "cat forensics.md"
 toc_icon: "terminal"
 ---
+3 forensic challenges: image and audio investigation
 
 # Challenge 1: Beep-Boop-Robot
 6 points, 558 solves
