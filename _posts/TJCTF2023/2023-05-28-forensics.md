@@ -1,7 +1,7 @@
 ---
-title: "Image Investigation [FORENSIC]"
+title: "Forensics [FORENSIC]"
 categories: TJCTF2023
-permalink: /ctfs/tjctf2023/ciphermadness
+permalink: /ctfs/tjctf2023/forensics
 toc: true
 toc_label: "cat forensics.md"
 toc_icon: "terminal"
