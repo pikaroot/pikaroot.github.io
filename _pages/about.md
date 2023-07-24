@@ -8,19 +8,11 @@ toc_label: "cat about.md"
 toc_icon: "terminal"
 ---
 
-Penetration Testing Enthusiast, Cryptography Hobbyist & CTF Player
+Penetration Tester | CTF Player | Cryptography Baby
 
 ## Introduction
 
-
-
-## Education
-
-
+Hi, I am `David`. Driven, dedicated, passionate, developing Cyber Security enthusiast exploring new and challenging opportunities as a Penetration Tester or Red Teamer. Continuously pursue advancing my knowledge in the profession.
 
 ## Experiences
-
-
-
-## Skills
 
