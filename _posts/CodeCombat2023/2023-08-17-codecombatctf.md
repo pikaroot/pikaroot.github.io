@@ -8,7 +8,7 @@ toc_icon: "terminal"
 ---
 5 challenges: Misc x2, Web x1, Forensic x1, Rev x1
 
-# Challenge 1: Math Master [MISC][QUALS]
+# Math Master [MISC][QUALS]
 50 points, 10 solves
 
 ## 📁 Challenge Description
@@ -101,7 +101,7 @@ The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
 
 ***FLAG***: `sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}`
 
-# Challenge 2: Cryptic Equation Conundrum [MISC][FINALS]
+# Cryptic Equation Conundrum [MISC][FINALS]
 500 points, 1 solve
 
 ## 📁 Challenge Description
@@ -215,7 +215,7 @@ The flag is sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}
 
 ***FLAG***: `sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}`
 
-# Challenge 3: Cloud Storage V2 [WEB][FINALS]
+# Cloud Storage V2 [WEB][FINALS]
 71.42 points, 7 solves
 
 ## 📁 Challenge Description
@@ -232,7 +232,7 @@ Explanation in progress.
 
 ***FLAG***: `sibersiaga{9c44f131b9d72f89d9a1c8520c42468d}`
 
-# Challenge 4: Night Shift Ends Soon [FORENSIC][QUALS]
+# Night Shift Ends Soon [FORENSIC][QUALS]
 250 points, 2 solves
 
 ## 📁 Challenge Description
@@ -249,7 +249,7 @@ Explanation in progress.
 
 ***FLAG***: `sibersiaga{9838471a326513ca81498eb844ade8a9}`
 
-# Challenge 5: Note [REV][QUALS]
+# Note [REV][QUALS]
 33.33 points, 15 solves
 
 ## 📁 Challenge Description
