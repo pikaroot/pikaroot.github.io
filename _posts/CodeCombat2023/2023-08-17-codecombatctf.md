@@ -1,5 +1,5 @@
 ---
-title: "SIBERSIAGA Code Combat 2023 Write-Up"
+title: "SIBERSIAGA CodeCombat 2023 Write-Up"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/codecombatctf
 toc: true
@@ -180,7 +180,6 @@ def calc(x):
 			result = int(result)
 		return result
 	
-	
 s = remote('cryptic.sibersiaga2023.myctf.io', 9999)
 count = 0
 s.recvuntil(b'.\r\n').decode().strip()
@@ -231,6 +230,8 @@ The flag is sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}
 ## 🚩 Solution
 Explanation in progress.
 
+***FLAG***: `sibersiaga{9c44f131b9d72f89d9a1c8520c42468d}`
+
 # Challenge 4: Night Shift Ends Soon [FORENSIC][QUALS]
 250 points, 2 solves
 
@@ -246,6 +247,8 @@ Explanation in progress.
 ## 🚩 Solution
 Explanation in progress.
 
+***FLAG***: `sibersiaga{9838471a326513ca81498eb844ade8a9}`
+
 # Challenge 5: Note [REV][QUALS]
 33.33 points, 15 solves
 
@@ -258,3 +261,5 @@ Explanation in progress.
 
 ## 🚩 Solution
 Explanation in progress.
+
+***FLAG***: `sibersiaga{s4Tu_n0T4_m41w4Re}`
