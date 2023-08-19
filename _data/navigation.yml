@@ -9,6 +9,10 @@ main:
     url: /cv/
     
 docs:
+  - title: CodeCombat 2023
+    children:
+      - title: "CodeCombat Write-Up"
+        url: /ctfs/codecombat2023/codecombatctf
   - title: ByuCTF 2023
     children:
       - title: "Cipher Madness [CRYPTO]"
