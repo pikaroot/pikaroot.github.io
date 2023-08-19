@@ -91,12 +91,12 @@ s.close()
 ```
 Output:
 ```
-[x] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999
-[x] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999: Trying 128.199.224.232
-[+] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999: Done
+[x] Opening connection to math.sibersiaga2023.myctf.io on port 8887
+[x] Opening connection to math.sibersiaga2023.myctf.io on port 8887: Trying 128.199.224.232
+[+] Opening connection to math.sibersiaga2023.myctf.io on port 8887: Done
 Congratulations! You are fast enough!
 The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
-[*] Closed connection to cryptic.sibersiaga2023.myctf.io port 9999
+[*] Closed connection to math.sibersiaga2023.myctf.io port 8887
 ```
 
 ***FLAG***: `sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}`
