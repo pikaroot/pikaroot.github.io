@@ -2,9 +2,6 @@
 title: "Cryptic Equation Conundrum [MISC]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/crypticequationconundrum
-toc: true
-toc_label: "cat cryptic.md"
-toc_icon: "terminal"
 ---
 
 Advanced version of **Math Master**. Calculate 1000 math questions within 5 seconds each.
