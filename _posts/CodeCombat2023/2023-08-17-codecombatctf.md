@@ -158,7 +158,7 @@ I almost ended up giving up solving this challenge until my legend teammate sugg
 
 Hence, my script ended up finding `in` for sine function, `co` for cosine function, `an` for tangent function. Normal arithmetic should be easily calculated with using `eval()`.
 
-Here is my ~~anotehr shamless~~ `solve.py` script.
+Here is my ~~another shamless~~ `solve.py` script.
 
 ```python
 #!/usr/bin/env python3
