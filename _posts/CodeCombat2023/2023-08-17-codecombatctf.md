@@ -14,7 +14,7 @@ toc_icon: "terminal"
 ## 📁 Challenge Description
 >Test your mathematical skills in this rapid-fire math challenge! Solve 100 math problems involving minimum, mode, maximum, average, and median calculations within 3 seconds for each question. Do you have what it takes to be a Math Master?
 >
->nc math.sibersiaga2023.myctf.io 8887
+>`nc math.sibersiaga2023.myctf.io 8887`
 >
 >Flag format: `sibersiaga{strings}`
 
@@ -113,7 +113,7 @@ The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
 ## 📁 Challenge Description
 >You've stumbled upon a mysterious program that claims to test your mathematical skills. The program generates a series of complex mathematical equations and challenges you to solve them within a tight time limit. Are you up for the challenge?
 >
->nc cryptic.sibersiaga2023.myctf.io 9999
+>`nc cryptic.sibersiaga2023.myctf.io 9999`
 >
 >Flag format: `sibersiaga{flag}`
 
@@ -123,15 +123,19 @@ This challenge took my 4 hours to solve it. This is the upgraded version since `
 
 By manually playing around with the encrypted math challenges, we concluded with two major encryption schema.
 
-1. **Base64 + XOR**: Questions that contain **b'{content}'** should be encrypted by this encryption scheme. This can be found via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
-2. **ASCII Shift Cipher**: Questions that not contain **b'{content}'** are belong to this encryption scheme. This can be found via `ROT13` function in [dCode](https://www.dcode.fr/rot-13-cipher). In the ROT function, you will notice the "Find" word is revealed but another portion is remain encrypted. However, some results do reveal the math question due to that it is instead decrypted using ASCII Shift Cipher instead of ROT Cipher.
+{% capture notice-2 %}
+1. **Base64 + XOR**: Questions that contain **b'{base64}'** should be encrypted by this encryption scheme. This can be found via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
+2. **ASCII Shift Cipher**: Remaining formats are belong to this encryption scheme. This can be found via `ROT13` function in [dCode](https://www.dcode.fr/rot-13-cipher). In the ROT function, you will notice the `"Find"` word is revealed but another portion is remain encrypted. However, some results do reveal the math question due to that it is instead decrypted using ASCII Shift Cipher instead of ROT Cipher.
+{% endcapture %}
+
+<div class="notice--info">{{ notice-2 | markdownify }}</div>
 
 After scripting the decryption part, there are 2 types of math questions.
 
+```
 1. **Normal Arithmetic**: e.g., `96 * 2 + 96 * 4`, `8354 / 2 - 763`, etc.
-   [[image]]
 2. **Trigonometry**: e.g., `cos(5)`, `sin(67)`, `tan(54)`, etc.
-   [[image]]
+```
 
 Take note that the value of each trigonometry question was calculated using **radians** instead of **degrees**. This can be concluded from connecting the challenge server as it will print the correct answer when your answer given is incorrect.
 
@@ -143,9 +147,9 @@ e.g., Find <0x38>in(66)
 e.g., Find <0x45>an(79)
 ```
 
-I almost ended up giving up solving this challenge until my legend teammate suggested me to look for patterns of trigonometry questions. Luckily, the result always stay inconsistent on the same letter of each trigonometry function.
+I almost ended up giving up solving this challenge until my legend teammate suggested me to look for patterns of trigonometry questions. Luckily, this method is feasible as the result always stay inconsistent on the same letter of each trigonometry function.
 
-Hence, my script ended up finding `in` for sine function, `co` for cosine function, `an` for tangent function.
+Hence, my script ended up finding `in` for sine function, `co` for cosine function, `an` for tangent function. Normal arithmetic should be easily calculated with using `eval()`.
 
 Here is my ~~anotehr shamless~~ `solve.py` script.
 
