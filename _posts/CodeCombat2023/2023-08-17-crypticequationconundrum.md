@@ -7,7 +7,7 @@ toc_label: "cat cryptic.md"
 toc_icon: "terminal"
 ---
 
-Advanced version of **Math Master**.
+Advanced version of **Math Master**. Calculate 1000 math questions within 5 seconds each.
 
 ## 📁 Challenge Description
 
