@@ -2,9 +2,6 @@
 title: "Math Master [MISC]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/mathmaster
-toc: true
-toc_label: "cat mathmaster.md"
-toc_icon: "terminal"
 ---
 
 Python scripting development to calculate 100 math questions within 3 seconds each.
