@@ -265,7 +265,7 @@ We discovered that every subdomain of `a.thectf.site` can be decoded using **BAS
 
 All of the reconstruction processes can be done by the power of CLI tools.
 
-I will ~use some algebraic representations to~ explain the tools I will be using to get the image easily.
+I will ~~use some algebraic representations to~~ explain the tools I will be using to get the image easily.
 
 ```
 $ cat dns.txt | grep 'a.thectf.site' == cmd1 # filter hostnames that only have a.thectf.site.
