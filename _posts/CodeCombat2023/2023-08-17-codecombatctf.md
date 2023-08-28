@@ -25,7 +25,7 @@ By solving this kind of challenge, 3 requirements need to be met.
 
 1. You must understand how to use `pwntools`. (It is by far the easiest tool to solve it.)
 2. You must understand `Python`. :D
-3. You must know how to deal with data types. (e.g., b'3', '3', 3 are three different data types over here.)
+3. You must know how to deal with data types. (e.g., `b'3'`, `'3'`, `3` are three different data types over here.)
 
 Here is my ~~shamless~~ `solve.py` script.
 
@@ -134,6 +134,7 @@ After completing the decryption part, there are 2 types of math questions were r
    ```
    Find 96 * 2 + 96 * 4
    Find 8354 / 2 - 763
+   Find (7356 - 657) * 34
    ```
 2. **Trigonometry**
    
@@ -148,9 +149,9 @@ Take note that the value of each trigonometry question was calculated using **ra
 Moreover, I had encountered that trigonometry questions generated from ASCII Shift Cipher sometimes will return inconsistent results, causing error during calculation.
 
 ```
-e.g., Find co<0x61>(38)
-e.g., Find <0x38>in(66)
-e.g., Find <0x45>an(79)
+Find co<0x61>(38)
+Find <0x38>in(66)
+Find <0x45>an(79)
 ```
 
 I almost ended up giving up solving this challenge until my legend teammate suggested me to look for patterns of trigonometry questions. Luckily, this method is feasible as the result always stay inconsistent on the same letter of each trigonometry function.
