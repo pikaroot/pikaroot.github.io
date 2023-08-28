@@ -123,19 +123,25 @@ This challenge took my 4 hours to solve it. This is the upgraded version since `
 
 By manually playing around with the encrypted math challenges, we concluded with two major encryption schema.
 
-{% capture notice-2 %}
 1. **Base64 + XOR**: Questions that contain **b'{base64}'** should be encrypted by this encryption scheme. This can be found via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
+
 2. **ASCII Shift Cipher**: Remaining formats are belong to this encryption scheme. This can be found via `ROT13` function in [dCode](https://www.dcode.fr/rot-13-cipher). In the ROT function, you will notice the `"Find"` word is revealed but another portion is remain encrypted. However, some results do reveal the math question due to that it is instead decrypted using ASCII Shift Cipher instead of ROT Cipher.
-{% endcapture %}
 
-<div class="notice--info">{{ notice-2 | markdownify }}</div>
+After completing the decryption part, there are 2 types of math questions were revealed.
 
-After scripting the decryption part, there are 2 types of math questions.
-
-```
-1. **Normal Arithmetic**: e.g., `96 * 2 + 96 * 4`, `8354 / 2 - 763`, etc.
-2. **Trigonometry**: e.g., `cos(5)`, `sin(67)`, `tan(54)`, etc.
-```
+1. **Normal Arithmetic**
+   
+   ```
+   Find 96 * 2 + 96 * 4
+   Find 8354 / 2 - 763
+   ```
+2. **Trigonometry**
+   
+   ```
+   Find cos(5)
+   Find sin(67)
+   Find tan(54)
+   ```
 
 Take note that the value of each trigonometry question was calculated using **radians** instead of **degrees**. This can be concluded from connecting the challenge server as it will print the correct answer when your answer given is incorrect.
 
