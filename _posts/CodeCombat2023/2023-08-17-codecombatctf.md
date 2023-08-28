@@ -2,9 +2,6 @@
 title: "Night Shift Ends Soon [FORENSIC]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/nightshiftendssoon
-toc: true
-toc_label: "cat nightshiftendssoon.md"
-toc_icon: "terminal"
 ---
 
 DNS Packet PCAP Analysis
