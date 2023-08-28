@@ -1,5 +1,5 @@
 ---
-title: "Cryptic Equation Conundrum"
+title: "Cryptic Equation Conundrum [MISC]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/crypticequationconundrum
 toc: true
@@ -7,15 +7,17 @@ toc_label: "cat cryptic.md"
 toc_icon: "terminal"
 ---
 
-# Cryptic Equation Conundrum [MISC][FINALS]
-500 points, 1 solve (1st 🩸 & only 🩸)
+Advanced version of **Math Master**.
 
 ## 📁 Challenge Description
+
 >You've stumbled upon a mysterious program that claims to test your mathematical skills. The program generates a series of complex mathematical equations and challenges you to solve them within a tight time limit. Are you up for the challenge?
 >
 >`nc cryptic.sibersiaga2023.myctf.io 9999`
 >
 >Flag format: `sibersiaga{flag}`
+
+500 points, 1 solve (1st 🩸 & only 🩸)
 
 Connect the instance.
 
