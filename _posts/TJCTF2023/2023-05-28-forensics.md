@@ -79,7 +79,7 @@ warning [nothing.zip]:  14751 extra bytes at beginning or within zipfile
 
 ***FLAG***: `tjctf{the_end_is_not_the_end_4c261b91}`
 
-# Challenge 1: Neofeudalism [EASY]
+# Challenge 3: Neofeudalism [EASY]
 20 points, 178 solves
 
 ## 📁 Challenge Description
