@@ -27,10 +27,10 @@ docs:
         url: /ctfs/byuctf2023/ciphermadness
       - title: "RSA Madness [CRYPTO]"
         url: /ctfs/byuctf2023/rsamadness
-  - title: TamuCTF 2023
-    children:
-      - title: "Pick Me Up [MISC]"
-        url: /ctfs/tamuctf2023/pickmeup
+#  - title: TamuCTF 2023
+#    children:
+#      - title: "Pick Me Up [MISC]"
+#        url: /ctfs/tamuctf2023/pickmeup
   - title: angstromCTF 2023
     children:
       - title: "Impossible [CRYPTO]"
