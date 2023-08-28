@@ -1,358 +1,13 @@
 ---
-title: "SIBERSIAGA CodeCombat 2023 Write-Up"
+title: "Night Shift Ends Soon [FORENSIC]"
 categories: CodeCombat2023
-permalink: /ctfs/codecombat2023/codecombatctf
+permalink: /ctfs/codecombat2023/nightshiftendssoon
 toc: true
-toc_label: "cat codecombatctf.md"
+toc_label: "cat nightshiftendssoon.md"
 toc_icon: "terminal"
 ---
-5 challenges: Misc x2, Web x1, Forensic x1, Rev x1
 
-# Math Master [MISC][QUALS]
-41.67 points, 12 solves
-
-## 📁 Challenge Description
->Test your mathematical skills in this rapid-fire math challenge! Solve 100 math problems involving minimum, mode, maximum, average, and median calculations within 3 seconds for each question. Do you have what it takes to be a Math Master?
->
->`nc math.sibersiaga2023.myctf.io 8887`
->
->Flag format: `sibersiaga{strings}`
-
-Connect the instance.
-
-```
-nc math.sibersiaga2023.myctf.io 8887
-
-░██████╗██╗██████╗░███████╗██████╗░  ░██████╗██╗░█████╗░░██████╗░░█████╗░
-██╔════╝██║██╔══██╗██╔════╝██╔══██╗  ██╔════╝██║██╔══██╗██╔════╝░██╔══██╗
-╚█████╗░██║██████╦╝█████╗░░██████╔╝  ╚█████╗░██║███████║██║░░██╗░███████║
-░╚═══██╗██║██╔══██╗██╔══╝░░██╔══██╗  ░╚═══██╗██║██╔══██║██║░░╚██╗██╔══██║
-██████╔╝██║██████╦╝███████╗██║░░██║  ██████╔╝██║██║░░██║╚██████╔╝██║░░██║
-╚═════╝░╚═╝╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═════╝░╚═╝╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝
-Hi Cyber Troopers!
-I made a math question generator and I would like you to solve every math question within 3 seconds with a total of 100. I will give you the flag when you are done.
-Find: Min of [23, 45, 123, 1, 654, 700, 4]
-<input>
-<repeat your input>
-Wrong answer.
-```
-
-## 🚩 Solution
-The aim of the challenge is to test your custom script development. Basically, when you connect to the instance, it will print out the banner together with the math question one at a time after you have solved it. The challenge description indicates the syllabus of the math questions (`min`, `max`, `mod`, `average`, and `median`). The flag will be printed out when your solve count equals 100. 
-
-To solve this kind of challenge, 3 requirements need to be met.
-
-1. You must understand how to use `pwntools`. (It is by far the easiest tool to solve it.)
-2. You must understand `Python`. :D
-3. You must know how to deal with data types. (e.g., `b'3'`, `'3'`, and `3` are three different data types over here.)
-
-Here is my ~~shamless~~ `solve.py` script.
-
-```python
-#!/usr/bin/env python3
-from pwn import *
-
-def math_func(ques):
-	li = [] # Always clear the list every time the function gets called.
-
-	if "Min from " in ques:
-		element = ques[10:-1]
-		elements = list(element.split(', '))
-		for num in elements:
-			li.append(int(num))
-		li.sort()
-		return li[0] # Return first element.
-			
-	if "Max from " in ques:
-		element = ques[10:-1]
-		elements = list(element.split(', '))
-		for num in elements:
-			li.append(int(num))
-		li.sort()
-		return li[-1] # Return last element
-
-	if "Median of " in ques:
-		element = ques[11:-1]
-		elements = list(element.split(', '))
-		for num in elements:
-			li.append(int(num))
-		li.sort()
-		if len(li) % 2 != 0:
-			ans = li[len(li)//2]
-		else:
-			ans = (li[len(li)//2 - 1] + li[len(li)//2]) / 2 # Median calculation.
-		return ans
-
-	if "Average of " in ques:
-		element = ques[12:-1]
-		elements = list(element.split(', '))
-		total = 0
-		for num in elements:
-			total += int(num)
-		return total/len(elements) # Average calculation.
-
-	if "mod" in ques:
-		element = ques[1:-1]
-		elements = list(element.split(' mod '))
-		ans = int(elements[0]) % int(elements[1]) # Modulus calculation.
-		return ans
-
-s = remote('math.sibersiaga2023.myctf.io', 8887)
-count = 0
-
-while count != 100:
-	s.recvuntil(b':')
-	ques = s.recvline().decode().strip().replace('\r\n', '') # Math question.
-
-	ans = math_func(ques)
-	s.sendline(str(ans).encode())
-	s.recvline() # Repeat the line we sent.
-	s.recvline() # b'Correct! Next Question.'
-	count += 1
-
-print(s.recvline().decode().strip())
-print(s.recvline().decode().strip())
-s.close()
-```
-Output:
-```
-[x] Opening connection to math.sibersiaga2023.myctf.io on port 8887
-[x] Opening connection to math.sibersiaga2023.myctf.io on port 8887: Trying 128.199.224.232
-[+] Opening connection to math.sibersiaga2023.myctf.io on port 8887: Done
-Congratulations! You are fast enough!
-The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
-[*] Closed connection to math.sibersiaga2023.myctf.io port 8887
-```
-
-***FLAG***: `sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}`
-
-# Cryptic Equation Conundrum [MISC][FINALS]
-500 points, 1 solve (1st 🩸 & only 🩸)
-
-## 📁 Challenge Description
->You've stumbled upon a mysterious program that claims to test your mathematical skills. The program generates a series of complex mathematical equations and challenges you to solve them within a tight time limit. Are you up for the challenge?
->
->`nc cryptic.sibersiaga2023.myctf.io 9999`
->
->Flag format: `sibersiaga{flag}`
-
-Connect the instance.
-
-```
-nc cryptic.sibersiaga2023.myctf.io 9999
-
-░██████╗██╗██████╗░███████╗██████╗░  ░██████╗██╗░█████╗░░██████╗░░█████╗░
-██╔════╝██║██╔══██╗██╔════╝██╔══██╗  ██╔════╝██║██╔══██╗██╔════╝░██╔══██╗
-╚█████╗░██║██████╦╝█████╗░░██████╔╝  ╚█████╗░██║███████║██║░░██╗░███████║
-░╚═══██╗██║██╔══██╗██╔══╝░░██╔══██╗  ░╚═══██╗██║██╔══██║██║░░╚██╗██╔══██║
-██████╔╝██║██████╦╝███████╗██║░░██║  ██████╔╝██║██║░░██║╚██████╔╝██║░░██║
-╚═════╝░╚═╝╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═════╝░╚═╝╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝
-Welcome Cyber Troopers!
-See whether you are worthy enough to have the flag by solving every math question within 5 seconds with a total of 1000.
-Decrypt and solve this question: Hkpf **;229 , 452:+ - 597:+
-<input>
-<repeat your input>
-Wrong answer.
-Result: 20791914
-```
-
-## 🚩 Solution
-
-This challenge took me 4 hours to solve it. This is the upgraded version since `Math Master` in the qualifying round. The concept is the same, however, it requires additional things such as trigonometry calculation, encryption, and decryption, and the solve count needs to be reached until 1000 instead of 100 in order to retrieve the flag.
-
-By manually playing around with the encrypted math challenges, we concluded with two major encryption schemas.
-
-1. **Base64 + XOR**: This can be identified via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
-
-   ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/210f0fa1-52d3-4042-a98f-9f1fac2e1570)
-
-   - Before Base64 + XOR.
-
-     ```
-     b'SGdgai4mJj05OT4uIy46Nzg/Jy4lLiY2Oz06LiMuNzo+Nicn'
-     b'YE9IQgYODhIeExcGCQYQEBEXDwYNBg4fERQUBgsGFRYVEg8P'
-     b'Un16cDQgJjQ+NCY0PzQgJjQ7NCY='
-     ```
-   
-   - After Base64 + XOR.
-
-     ```
-     Find ((3770 - 4961) + (8534 - 9408))
-     Find ((4851 / 6671) + (9722 - 3034))
-     Find 42 * 2 + 42 / 2
-     ```
-
-1. **ASCII Shift Cipher**: This can be identified via the `ROT` Cipher function in [dCode](https://www.dcode.fr/rot-cipher).
-
-   ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/ce55428c-ec37-40e2-9924-b5b2f92cd49b)
-
-   - Before ASCII Shift Cipher.
-
-     ```
-     Hkpf **;229 , 452:+ - 597:+
-     Psxn ~kx2;A3
-     Qtyo 33?=;D 5 ==D;4 5 =B=;4
-     ```
-  
-   - After ASCII Shift Cipher.
-
-     ```
-     Find ((9007 * 2308) + 3758)
-     Find tan(17)
-     Find ((4209 * 2290) * 2720)
-     ```
-
-After completing the decryption part, there are 2 types of math questions were revealed.
-
-1. **Normal Arithmetic**
-   
-   ```
-   Find 96 * 2 + 96 * 4
-   Find 8354 / 2 - 763
-   Find (7356 - 657) * 34
-   ```
-2. **Trigonometry**
-   
-   ```
-   Find cos(5)
-   Find sin(67)
-   Find tan(54)
-   ```
-
-Take note that the value of each trigonometry question was calculated using **radians** instead of **degrees**. This can be concluded from connecting the instance as it will return the correct answer when your answer given is incorrect.
-
-Moreover, I encountered that trigonometry questions generated from ASCII Shift Cipher sometimes return inconsistent results, causing errors during calculation.
-
-```
-Find co<0x61>(38)
-Find <0x38>in(66)
-Find <0x45>an(79)
-```
-
-I almost ended up giving up solving this challenge until my legendary teammate suggested I look for patterns of trigonometry questions. Luckily, this method is feasible as the result always stays inconsistent on the same letter of each trigonometry function.
-
-Hence, my script ended up finding `in` for the sine function, `co` for the cosine function, and `an` for the tangent function. Normal arithmetic should be easily calculated using `eval()`.
-
-Here is my ~~other shamless~~ `solve.py` script.
-
-```python
-#!/usr/bin/env python3
-from pwn import *
-from math import *
-from base64 import b64decode
-import string
-
-def apply_ascii_shift(text, shift):
-    result = ""
-    for char in text:
-        if char.isprintable() and char != ' ':
-            ascii_offset = ord('!')
-            shifted = (ord(char) - ascii_offset + shift) % 95 + ascii_offset
-            result += chr(shifted)
-        else:
-            result += char
-    return result
-
-def ascii_func(x):
-	for shift in range(95):  # There are 95 printable ASCII characters
-		decoded_text = apply_ascii_shift(x, shift)
-		if "Find" in decoded_text:
-			return str(decoded_text)
-			break
-
-def base64_xor_func(x):
-	x = x[2:-1]
-	decode = b64decode(x)
-	for i in range(127):
-		a = hex(i)
-		xor = ''.join(chr(b ^ int(a[2:], 16)) for b in decode)
-		if "Find" in xor:
-			return xor
-			break
-
-def calc(x):
-	f = str(x)[5:]
-	if "in" in f: # Sine function
-		angle_in_degrees = f[4:-1]
-		angle_in_radians = math.radians(int(angle_in_degrees))
-		sin_value = math.sin(angle_in_radians)
-		result = round(sin_value, 2) # Round to 2 decimal points
-		return result
-
-	if "co" in f: # Cosine function
-		angle_in_degrees = f[4:-1]
-		angle_in_radians = math.radians(int(angle_in_degrees))
-		cos_value = math.cos(angle_in_radians)
-		result = round(cos_value, 2) # Round to 2 decimal points
-		return result
-
-	if "an" in f: # Tangent function
-		angle_in_degrees = f[4:-1]
-		angle_in_radians = math.radians(int(angle_in_degrees))
-		tan_value = math.tan(angle_in_radians)
-		result = round(tan_value, 2) # Round to 2 decimal points
-		return result
-
-	else: # Normal Arithmetic
-		result = eval(f)
-		if "/" not in str(result):
-			result = int(result)
-		return result
-	
-s = remote('cryptic.sibersiaga2023.myctf.io', 9999)
-count = 0
-s.recvuntil(b'.\r\n').decode().strip()
-
-while count != 1000:
-	test = s.recvline().decode().strip()[19:-2]
-
-	if "b'" in test:
-		ans = base64_xor_func(test)
-		ans = calc(ans)
-	else:
-		ans = ascii_func(test)
-		ans = calc(ans)
-
-	s.sendline(str(ans).encode())
-	s.recvline()
-	s.recvline()
-	count += 1
-
-print(s.recvline().decode().strip())
-print(s.recvline().decode().strip())
-s.close()
-```
-Output:
-```
-[x] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999
-[x] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999: Trying 128.199.224.232
-[+] Opening connection to cryptic.sibersiaga2023.myctf.io on port 9999: Done
-Congratulations! You are worthy!
-The flag is sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}
-[*] Closed connection to cryptic.sibersiaga2023.myctf.io port 9999
-```
-
-***FLAG***: `sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}`
-
-# Cloud Storage V2 [WEB][FINALS]
-55.56 points, 9 solves
-
-## 📁 Challenge Description
->I've upgraded the upload system to a new one. You may no longer exploit it now!
->
->`http://cloudstorage.sibersiaga2023.myctf.io/`
->
->flag is in `/home/flag.txt`
->
->Flag format: `sibersiaga{md5hash}`
-
-## 🚩 Solution
-Explanation in progress.
-
-***FLAG***: `sibersiaga{9c44f131b9d72f89d9a1c8520c42468d}`
-
-# Night Shift Ends Soon [FORENSIC][QUALS]
-125 points, 4 solves (1st 🩸)
+DNS Packet PCAP Analysis
 
 ## 📁 Challenge Description
 >Ahmad was on his night shift when he remotely via the monitoring console, observed an unusual network activity from a user's segment of one of the branch offices. It is strange to see someone still in the branch office at this time. After consulting his other team member on duty, Ahmad decided to run a packet capture, capturing packets from the machine. He did some analysis on the captured packet, but he couldn't find anything suspicious - maybe someone was actually still in office during that time. His shift is ending soon. He needs to get someone from the next shift to help with this. And that someone is you.
@@ -362,6 +17,8 @@ Explanation in progress.
 >Password: `sibersiaga2023`
 >
 >Flag format: `sibersiaga{flag}`
+
+125 points, 4 solves (1st 🩸)
 
 ## 🚩 Solution
 When we have been given a `.pcapng` file, it would always be good to look into the protocol hierarchy to investigate which protocol we are most likely will be dealing with.
@@ -464,6 +121,23 @@ $ cat dns.txt | grep 'a.thectf.site' | uniq | cut -d. -f1 | cut -d- -f2 | tr -d 
 Hence, this proved our path is correct and the flag is revealed.
 
 ***FLAG***: `sibersiaga{9838471a326513ca81498eb844ade8a9}`
+
+# Cloud Storage V2 [WEB][FINALS]
+55.56 points, 9 solves
+
+## 📁 Challenge Description
+>I've upgraded the upload system to a new one. You may no longer exploit it now!
+>
+>`http://cloudstorage.sibersiaga2023.myctf.io/`
+>
+>flag is in `/home/flag.txt`
+>
+>Flag format: `sibersiaga{md5hash}`
+
+## 🚩 Solution
+Explanation in progress.
+
+***FLAG***: `sibersiaga{9c44f131b9d72f89d9a1c8520c42468d}`
 
 # Note [REV][QUALS]
 50 points, 10 solves
