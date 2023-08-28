@@ -9,7 +9,7 @@ toc_icon: "terminal"
 5 challenges: Misc x2, Web x1, Forensic x1, Rev x1
 
 # Math Master [MISC][QUALS]
-50 points, 10 solves
+41.67 points, 12 solves
 
 ## 📁 Challenge Description
 >Test your mathematical skills in this rapid-fire math challenge! Solve 100 math problems involving minimum, mode, maximum, average, and median calculations within 3 seconds for each question. Do you have what it takes to be a Math Master?
@@ -19,7 +19,7 @@ toc_icon: "terminal"
 >Flag format: `sibersiaga{strings}`
 
 ## 🚩 Solution
-Explanation in progress.
+The aim of the challenge is to test your custom script development. 
 
 My `solve.py` script.
 
@@ -102,7 +102,7 @@ The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
 ***FLAG***: `sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}`
 
 # Cryptic Equation Conundrum [MISC][FINALS]
-500 points, 1 solve
+500 points, 1 solve (1st 🩸 & only 🩸)
 
 ## 📁 Challenge Description
 >You've stumbled upon a mysterious program that claims to test your mathematical skills. The program generates a series of complex mathematical equations and challenges you to solve them within a tight time limit. Are you up for the challenge?
@@ -216,7 +216,7 @@ The flag is sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}
 ***FLAG***: `sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}`
 
 # Cloud Storage V2 [WEB][FINALS]
-71.42 points, 7 solves
+55.56 points, 9 solves
 
 ## 📁 Challenge Description
 >I've upgraded the upload system to a new one. You may no longer exploit it now!
@@ -233,7 +233,7 @@ Explanation in progress.
 ***FLAG***: `sibersiaga{9c44f131b9d72f89d9a1c8520c42468d}`
 
 # Night Shift Ends Soon [FORENSIC][QUALS]
-250 points, 2 solves
+125 points, 4 solves (1st 🩸)
 
 ## 📁 Challenge Description
 >Ahmad was on his night shift when he remotely via the monitoring console, observed an unusual network activity from a user's segment of one of the branch offices. It is strange to see someone still in the branch office at this time. After consulting his other team member on duty, Ahmad decided to run a packet capture, capturing packets from the machine. He did some analysis on the captured packet, but he couldn't find anything suspicious - maybe someone is actually still in office during that time. His shift is ending soon. He needs to get someone from the next shift to help with this. And that someone is you.
@@ -245,12 +245,52 @@ Explanation in progress.
 >Flag format: `sibersiaga{flag}`
 
 ## 🚩 Solution
-Explanation in progress.
+When we have been given a `.pcap` file, it would always be good to look into the protocol hierarchy to investigate which protocol we are most likely will be dealing with.
+
+[[Image]]
+
+The most possible protocol will be dealing with `DNS` packets as there are zero `HTTP` packets captured and packets such as `QUIC`, `TLSv1.2`, etc. (without any extra information given) are not worth deep diving in as they are encrypted packets.
+
+Roughly looking on it, there are quite a lot of DNS packets going on in Wireshark. Hence, we can utilize `tshark` to grab every hostname from all DNS packets in the given `.pcap` file and save it into a new file `dns.txt`.
+
+`tshark` is yet another alternative packet analysis tool but in command line interface (CLI). The advantage given is that it can be used together with other advanced tools such as `tr`, `awk`, `sed`, `cut`, `grep`, etc. during packet filtering.  
+
+```
+$ tshark -r pcap01.pcapng -f fields -e dns.qry.name | sed '/^$/d' | uniq > dns.txt
+```
+
+Looking into the `dns.txt` file, there are some hostnames are encoded with random format which possibly lead to potential foothold. By playing around those hostnames, there is one domain utterly interesting and catch my eyes which is `a.thectf.site`.
+
+We discovered that every subdomain of `a.thectf.site` can be decoded using **BASE 32**. The decoded string is actually `PNG` raw binaries. Hence, every subdomain had also been given an identifier stated the order of the string should be placed. Therefore, these raw binary strings can be pieced together to reconstruct a `PNG` image.
+
+All of the reconstruction processes can be done by the power of CLI tools.
+
+I will ~use some algebraic representations to~ explain the tools I will be using to get the image easily.
+
+```
+$ cat dns.txt | grep 'a.thectf.site' == cmd1 # filter hostnames that only have a.thectf.site.
+$ cmd1 | uniq == cmd2                        # filter repetitive hostnames.
+$ cmd2 | cut -d. -f1 | cut -d- -f2 == cmd3   # keep only the encoded subdomains and remove other information.
+$ cmd3 | tr -d "\n\r" == cmd4                # remove new lines.
+$ cmd4 | sed 's/.\{3\}$// == cmd5            # remove the last 3 lines (include the last empty line).
+$ cmd5 | base32 -d > flag.png == cmd6        # decode using base32 and save it to flag.png.
+$ cmd6 && eog flag.png                       # view the content of flag.png.
+```
+
+Final command.
+
+```
+$ cat dns.txt | grep 'a.thectf.site' | uniq | cut -d. -f1 | cut -d- -f2 | tr -d "\n\r" | sed 's/.\{3\}$//' | base32 -d > flag.png && eog flag.png
+```
+
+[[Image]]
+
+Hence, this proved our path is correct and the flag is revealed.
 
 ***FLAG***: `sibersiaga{9838471a326513ca81498eb844ade8a9}`
 
 # Note [REV][QUALS]
-33.33 points, 15 solves
+50 points, 10 solves
 
 ## 📁 Challenge Description
 >Our company recently received a file claiming to contain flags for Sibersiaga 2023. When opening the file, all it showed was a blurred page with a "click here to view" button. So far, nothing has happened to out employees. Yet. Please investigate this one note at your earliest convenience. Disclaimer: -This contains real malware. Please proceed in a safe environment. -Do not upload file on VT or any malware sandbox to avoid fingerprint and bad labelling.
