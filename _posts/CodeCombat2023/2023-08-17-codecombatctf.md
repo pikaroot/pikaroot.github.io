@@ -19,9 +19,15 @@ toc_icon: "terminal"
 >Flag format: `sibersiaga{strings}`
 
 ## 🚩 Solution
-The aim of the challenge is to test your custom script development. 
+The aim of the challenge is to test your custom script development. Basically when you connect to the challenge, it will print out the banner together with the math question one at the time after you had solved it. The challenge description indicates the syllabus of the math questions (`min`, `max`, `mod`, `average`, `median`). The flag will be printed out when your solve count equals 100. 
 
-My `solve.py` script.
+By solving this kind of challenge, 3 requirements need to be met.
+
+1. You must understand how to use `pwntools`. (It is by far the easiest tool to solve it.)
+2. You must understand `Python`. :D
+3. You must know how to deal with data types. (e.g., b'3', '3', 3 are three different data types over here.)
+
+Here is my ~~shamless~~ `solve.py` script.
 
 ```python
 #!/usr/bin/env python3
@@ -112,9 +118,36 @@ The flag is sibersiaga{7h1nk_f4573r_cyb3r_7hr00p3r5}
 >Flag format: `sibersiaga{flag}`
 
 ## 🚩 Solution
-Explanation in progress.
 
-My `solve.py` script.
+This challenge took my 4 hours to solve it. This is the upgraded version since `Math Master` in the qualifying round. The concept is the same, however, it requires additional things such as trigonometry calculation, encryption and decryption, and the solve count needs to be reached until 1000 instead of 100 in order to retrieve the flag.
+
+By manually playing around with the encrypted math challenges, we concluded with two major encryption schema.
+
+1. **Base64 + XOR**: Questions that contain **b'{content}'** should be encrypted by this encryption scheme. This can be found via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
+2. **ASCII Shift Cipher**: Questions that not contain **b'{content}'** are belong to this encryption scheme. This can be found via `ROT13` function in [dCode](https://www.dcode.fr/rot-13-cipher). In the ROT function, you will notice the "Find" word is revealed but another portion is remain encrypted. However, some results do reveal the math question due to that it is instead decrypted using ASCII Shift Cipher instead of ROT Cipher.
+
+After scripting the decryption part, there are 2 types of math questions.
+
+1. **Normal Arithmetic**: e.g., `96 * 2 + 96 * 4`, `8354 / 2 - 763`, etc.
+   [[image]]
+2. **Trigonometry**: e.g., `cos(5)`, `sin(67)`, `tan(54)`, etc.
+   [[image]]
+
+Take note that the value of each trigonometry question was calculated using **radians** instead of **degrees**. This can be concluded from connecting the challenge server as it will print the correct answer when your answer given is incorrect.
+
+Moreover, I had encountered that trigonometry questions generated from ASCII Shift Cipher sometimes will return inconsistent results, causing error during calculation.
+
+```
+e.g., Find co<0x61>(38)
+e.g., Find <0x38>in(66)
+e.g., Find <0x45>an(79)
+```
+
+I almost ended up giving up solving this challenge until my legend teammate suggested me to look for patterns of trigonometry questions. Luckily, the result always stay inconsistent on the same letter of each trigonometry function.
+
+Hence, my script ended up finding `in` for sine function, `co` for cosine function, `an` for tangent function.
+
+Here is my ~~anotehr shamless~~ `solve.py` script.
 
 ```python
 #!/usr/bin/env python3
@@ -263,7 +296,7 @@ Looking into the `dns.txt` file, there are some hostnames are encoded with rando
 
 We discovered that every subdomain of `a.thectf.site` can be decoded using **BASE 32**. The decoded string is actually `PNG` raw binaries. Hence, every subdomain had also been given an identifier stated the order of the string should be placed. Therefore, these raw binary strings can be pieced together to reconstruct a `PNG` image.
 
-All of the reconstruction processes can be done by the power of CLI tools.
+All the reconstruction processes can be done by the power of CLI tools.
 
 I will ~~use some algebraic representations to~~ explain the tools I will be using to get the image easily.
 
@@ -272,7 +305,7 @@ $ cat dns.txt | grep 'a.thectf.site' == cmd1 # filter hostnames that only have a
 $ cmd1 | uniq == cmd2                        # filter repetitive hostnames.
 $ cmd2 | cut -d. -f1 | cut -d- -f2 == cmd3   # keep only the encoded subdomains and remove other information.
 $ cmd3 | tr -d "\n\r" == cmd4                # remove new lines.
-$ cmd4 | sed 's/.\{3\}$// == cmd5            # remove the last 3 lines (include the last empty line).
+$ cmd4 | sed 's/.\{3\}$//' == cmd5            # remove the last 3 lines (include the last empty line).
 $ cmd5 | base32 -d > flag.png == cmd6        # decode using base32 and save it to flag.png.
 $ cmd6 && eog flag.png                       # view the content of flag.png.
 ```
