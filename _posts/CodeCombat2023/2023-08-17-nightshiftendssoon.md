@@ -102,7 +102,7 @@ $ cat dns.txt | grep 'a.thectf.site' == cmd1 # filter hostnames that only have a
 $ cmd1 | uniq == cmd2                        # filter repetitive hostnames.
 $ cmd2 | cut -d. -f1 | cut -d- -f2 == cmd3   # keep only the encoded subdomains and remove other information.
 $ cmd3 | tr -d "\n\r" == cmd4                # remove new lines.
-$ cmd4 | sed 's/.\{3\}$//' == cmd5            # remove the last 3 lines (include the last empty line).
+$ cmd4 | sed 's/.\{3\}$//' == cmd5           # remove the last 3 lines (include the last empty line).
 $ cmd5 | base32 -d > flag.png == cmd6        # decode using base32 and save it to flag.png.
 $ cmd6 && eog flag.png                       # view the content of flag.png.
 ```
