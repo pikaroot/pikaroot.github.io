@@ -29,7 +29,7 @@ nc cryptic.sibersiaga2023.myctf.io 9999
 ╚═════╝░╚═╝╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═════╝░╚═╝╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝
 Welcome Cyber Troopers!
 See whether you are worthy enough to have the flag by solving every math question within 5 seconds with a total of 1000.
-Decrypt and solve this question: Hkpf **;229 , 452:+ - 597:+
+Decrypt and solve: Hkpf **;229 , 452:+ - 597:+
 <input>
 <repeat your input>
 Wrong answer.
@@ -40,7 +40,7 @@ Result: 20791914
 
 This challenge took me 4 hours to solve it. This is the upgraded version since `Math Master` in the qualifying round. The concept is the same, however, it requires additional things such as trigonometry calculation, encryption, and decryption, and the solve count needs to be reached until 1000 instead of 100 in order to retrieve the flag.
 
-By manually playing around with the encrypted math challenges, we concluded with two major encryption schemas.
+By manually playing around with the encrypted math challenges, we concluded 2 types of encryption schemas.
 
 1. **Base64 + XOR**: This can be identified via the `Magic` function in [CyberChef](https://gchq.github.io/CyberChef/).
 
