@@ -28,7 +28,7 @@ nc math.sibersiaga2023.myctf.io 8887
 ╚═════╝░╚═╝╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═════╝░╚═╝╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝
 Hi Cyber Troopers!
 I made a math question generator and I would like you to solve every math question within 3 seconds with a total of 100. I will give you the flag when you are done.
-Find: Min of [23, 45, 123, 1, 654, 700, 4]
+Find: Min from [23, 45, 123, 1, 654, 700, 4]
 <input>
 <repeat your input>
 Wrong answer.
