@@ -11,16 +11,16 @@ main:
 docs:
   - title: CodeCombat 2023
     children:
-      - title: "Note [REV]"
-        url: /ctfs/codecombat2023/note
       - title: "Cloud Storage V2 [WEB]"
         url: /ctfs/codecombat2023/cloudstoragev2
-      - title: "Night Shift Ends Soon [FORENSIC]"
-        url: /ctfs/codecombat2023/nightshiftendssoon
-      - title: "Math Master [MISC]"
-        url: /ctfs/codecombat2023/mathmaster
       - title: "Cryptic Equation Conundrum [MISC]"
         url: /ctfs/codecombat2023/crypticequationconundrum
+      - title: "Math Master [MISC]"
+        url: /ctfs/codecombat2023/mathmaster
+      - title: "Night Shift Ends Soon [FORENSIC]"
+        url: /ctfs/codecombat2023/nightshiftendssoon
+      - title: "Note [REV]"
+        url: /ctfs/codecombat2023/note
   - title: ByuCTF 2023
     children:
       - title: "Cipher Madness [CRYPTO]"
