@@ -4,7 +4,7 @@ categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/nightshiftendssoon
 ---
 
-DNS Packet PCAP Analysis
+DNS Packets Exfiltration in PCAP
 
 ## 📁 Challenge Description
 >Ahmad was on his night shift when he remotely via the monitoring console, observed an unusual network activity from a user's segment of one of the branch offices. It is strange to see someone still in the branch office at this time. After consulting his other team member on duty, Ahmad decided to run a packet capture, capturing packets from the machine. He did some analysis on the captured packet, but he couldn't find anything suspicious - maybe someone was actually still in office during that time. His shift is ending soon. He needs to get someone from the next shift to help with this. And that someone is you.
@@ -26,19 +26,19 @@ The most possible protocol will be dealing with `DNS` packets (3.7% Packets) as 
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/c0d157cd-911f-48bd-8629-5f081b0da011)
 
-Roughly looking at it, there are quite a lot of DNS packets going on in Wireshark. Hence, we can utilize `tshark` to grab every hostname from all DNS packets in the given `.pcapng` file and save it into a new file `dns.txt`.
+Roughly looking at it, there are quite a lot of DNS packets going on in Wireshark. Hence, we can utilize `tshark` to grab every hostname from all DNS packets in the given `.pcapng` file and save it into a new file `dns.txt`. `uniq` command is used for filtering repetitive packets.
 
 `tshark` is yet another alternative packet analysis tool but in command line interface (CLI). The advantage given is that it can be used together with other advanced tools such as `tr`, `awk`, `sed`, `cut`, `grep`, etc. during packet filtering.  
 
 ```
-$ tshark -r pcap01.pcapng -f fields -e dns.qry.name | sed '/^$/d' | uniq > dns.txt
+$ tshark -r pcap01.pcapng -T fields -e dns.qry.name | sed '/^$/d' | uniq > dns.txt
 ```
 
 Looking into the `dns.txt` file, there are some hostnames encoded with a random format which possibly lead to a potential foothold. By playing around with those hostnames, there is one domain utterly interesting and catches my eye which is `a.thectf.site`.
 
 ```
 ┌──(kali㉿kali)-[~/codecombat2023]
-└─$ cat dns.txt | grep 'a.thectf.site' | uniq
+└─$ cat dns.txt | grep 'a.thectf.site'
 01-RFIE4RYNBINAUAAAAAGUSSCEKIAAAAMQAAAAAFQIAYAAAAHOEH.a.thectf.site
 02-FL2AAAAAEXASCZOMAAAFRFAAABMJIBJFJCJ4AAAACW6SKEIFKH.a.thectf.site
 03-RWXNLTWZDIZQBSSQLN2ABO2EAC3JQELGRAIWNCARM2EBCZUCCL.a.thectf.site
@@ -99,18 +99,17 @@ I will ~~use some algebraic representations to~~ explain the tools I will be usi
 
 ```
 $ cat dns.txt | grep 'a.thectf.site' == cmd1 # filter hostnames that only have a.thectf.site.
-$ cmd1 | uniq == cmd2                        # filter repetitive hostnames.
-$ cmd2 | cut -d. -f1 | cut -d- -f2 == cmd3   # keep only the encoded subdomains and remove other information.
-$ cmd3 | tr -d "\n\r" == cmd4                # remove new lines.
-$ cmd4 | sed 's/.\{3\}$//' == cmd5           # remove the last 3 lines (include the last empty line).
-$ cmd5 | base32 -d > flag.png == cmd6        # decode using base32 and save it to flag.png.
-$ cmd6 && eog flag.png                       # view the content of flag.png.
+$ cmd1 | cut -d. -f1 | cut -d- -f2 == cmd2   # keep only the encoded subdomains and remove other information.
+$ cmd2 | tr -d "\n\r" == cmd3                # remove new lines.
+$ cmd3 | sed 's/.\{3\}$//' == cmd4           # remove the last 3 lines (include the last empty line).
+$ cmd4 | base32 -d > flag.png == cmd5        # decode using base32 and save it to flag.png.
+$ cmd5 && eog flag.png                       # view the content of flag.png.
 ```
 
 Final command.
 
 ```
-$ cat dns.txt | grep 'a.thectf.site' | uniq | cut -d. -f1 | cut -d- -f2 | tr -d "\n\r" | sed 's/.\{3\}$//' | base32 -d > flag.png && eog flag.png
+$ cat dns.txt | grep 'a.thectf.site' | cut -d. -f1 | cut -d- -f2 | tr -d "\n\r" | sed 's/.\{3\}$//' | base32 -d > flag.png && eog flag.png
 ```
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/8be47323-77b2-4301-aee6-6abcf0de1a76)
