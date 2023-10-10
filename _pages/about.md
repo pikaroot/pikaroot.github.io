@@ -8,7 +8,7 @@ toc_label: "cat about.md"
 toc_icon: "terminal"
 ---
 
-Penetration Tester / CTF Player / Cryptography Baby
+Penetration Tester / CTF Player
 
 ## Introduction
 
