@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/unsplash-about.jpg
   cta_label: "M53"
   cta_url: "https://m53-ctf.github.io"
-  caption: "Photo credit: Thimo Pedersen on [**Unsplash**](https://unsplash.com)"
+  caption: "Photo credit: Lia on [**Unsplash**](https://unsplash.com)"
 excerpt: "Welcome to **PIKAROOT's** secret base. I am the best Pokémon you can find 
           on the Internet. I am also part of the **M53**, the biggest CTF community 
           full of security experts in Malaysia."
