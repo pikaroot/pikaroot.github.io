@@ -1,18 +1,39 @@
 ---
-layout: single
-author_profile: true
 title: "About Me"
+layout: splash
 permalink: /about/
-toc: true
-toc_label: "cat about.md"
-toc_icon: "terminal"
+header:
+  overlay_image: /assets/images/unsplash-about.jpg
+  overlay_filter: 0.5
+  cta_label: "GitHub"
+  cta_url: "https://github.com/pikaroot"
+  caption: "Photo credit: Thimo Pedersen on [**Unsplash**](https://unsplash.com)"
+excerpt: "Welcome to **PIKAROOT's** secret base. I am the best Pokémon you can find on the internet. I am also part of the **M53**, the biggest CTF community full of security experts in Malaysia.
+intro:
+  - excerpt: "Studied computer science specialized in cyber security in the past history. Now, I am currently working as a penetration tester and actively participating CTF competitions during my free time. I post writeups on CTF challenges, blogs, tutorials, and other general stuffs."
+feature_row:
+  - image_path: /assets/images/unsplash-blogs.jpg
+    alt: "Blogs"
+    title: "Blogs"
+    excerpt: "Contains security blogs, articles, workshops, etc."
+    btn_label: "Read Blogs"
+    btn_class: "btn--inverse"
+    url: "/blogs/"
+  - image_path: /assets/images/unsplash-ctfs.jpg
+    alt: "CTF Writeups"
+    title: "CTF Writeups"
+    excerpt: "Contains beginner to imtermediate level CTF challenges and solutions."
+    btn_label: "Read Writeups"
+    btn_class: "btn--inverse"
+    url: "/ctfs/"
+  - image_path: /assets/images/unsplash-cv.jpg
+    alt: "CV"
+    title: "CV"
+    excerpt: "This will keep here for a while, I'll just make a download button temporarily."
+    btn_label: "Download CV"
+    btn_class: "btn--inverse"
+    url: "/cv/cv.pdf"
 ---
+{% include feature_row id="intro" type="center" %}
 
-Penetration Tester / CTF Player
-
-## Introduction
-
-Hi, I am `David`. Driven, dedicated, passionate, developing Cyber Security enthusiast exploring new and challenging opportunities as a Penetration Tester or Red Teamer. Continuously pursue advancing my knowledge in the profession.
-
-## Experiences
-
+{% include feature_row %}
