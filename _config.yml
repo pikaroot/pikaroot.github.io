@@ -38,10 +38,10 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-permalink: /:collection/:categories/:title
-paginate: 8
-paginate_path: /page:num/
-timezone: Asia/Singapore
+permalink      : /:collection/:categories/:title
+paginate       : 8
+paginate_path  : /page:num/
+timezone       : Asia/Singapore
 
 # search: true
 
@@ -76,37 +76,38 @@ jekyll-archives:
 defaults:
   # _posts
   - scope:
-      path: ""
-      type: posts
+      path            : ""
+      type            : posts
     values:
-      layout: single
-      classes: wide
-      author_profile: true
-      read_time: true
-      show_date: true
-      related: false
+      layout          : single
+      classes         : wide
+      author_profile  : true
+      read_time       : true
+      show_date       : true
+      related         : false
   - scope:
-      path: ""
+      path            : ""
     values:
       sidebar:
-        nav: "docs"
+        nav           : "docs"
   # _pages
   - scope:
-      path: ""
-      type: pages
+      path            : ""
+      type            : pages
     values:
-      layout: category
+      layout          : category
+      author_profile  : true
   # _blogs
   - scope:
-      path: ""
-      type: blogs
+      path            : ""
+      type            : blogs
     values:
-      layout: single
-      classes: wide
-      author_profile: true
-      read_time: true
-      show_date: true
-      related: false
+      layout          : single
+      classes         : wide
+      author_profile  : true
+      read_time       : true
+      show_date       : true
+      related         : false
 
 # Site Author
 author:
@@ -115,18 +116,15 @@ author:
   bio               : "A typical Pokémon fan."
   email             : "asterlwx2001@gmail.com"
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/p1karoot"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/pikaroot"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin-in"
-      url: "https://www.linkedin.com/in/limweixun/"
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:asterlwx2001@gmail.com"
+    - label  : "Twitter"
+      icon   : "fab fa-fw fa-twitter-square"
+      url    : "https://twitter.com/p1karoot"
+    - label  : "GitHub"
+      icon   : "fab fa-fw fa-github"
+      url    : "https://github.com/pikaroot"
+    - label  : "LinkedIn"
+      icon   : "fab fa-fw fa-linkedin-in"
+      url    : "https://www.linkedin.com/in/limweixun/"
 
 atom_feed:
   hide: true
