@@ -6,11 +6,11 @@ header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-about.jpg
-  cta_label: "GitHub"
-  cta_url: "https://github.com/pikaroot/"
+  cta_label: "M53"
+  cta_url: "https://m53-ctf.github.io"
   caption: "Photo credit: Thimo Pedersen on [**Unsplash**](https://unsplash.com)"
 excerpt: "Welcome to **PIKAROOT's** secret base. I am the best Pokémon you can find 
-          on the internet. I am also part of the **M53**, the biggest CTF community 
+          on the Internet. I am also part of the **M53**, the biggest CTF community 
           full of security experts in Malaysia."
 intro:
   - excerpt: "Studied computer science specialized in cyber security in the past history.
