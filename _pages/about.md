@@ -34,6 +34,3 @@ feature_row:
     btn_class: "btn--inverse"
     url: "/cv/cv.pdf"
 ---
-{% include feature_row id="intro" type="center" %}
-
-{% include feature_row %}
