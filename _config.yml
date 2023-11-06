@@ -12,22 +12,19 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 #
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
 
-title: PIKAROOT
-title_separator: "|"
-repository: pikaroot/pikaroot.github.io
-email: asterlwx2001@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Cryptography
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://pikaroot.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: p1karoot
-github_username:  pikaroot
+# Site settings
+locale                   : "en"
+title                    : "PIKAROOT ▌"
+title_separator          : "|"
+name                     : "pikaroot"
+description              : "Yet another site but in Pokémon Theme for cyber security enthusiasts to visit."
+repository               : "pikaroot/pikaroot.github.io"
+url                      : "https://pikaroot.github.io"
+baseurl                  : # the subpath of your site, e.g. /blog
+words_per_minute         : 120
+twitter_username         : "p1karoot"
+github_username          : "pikaroot"
 
 # Build settings
 # theme: minimal-mistakes-jekyll
@@ -44,6 +41,7 @@ plugins:
 permalink: /:collection/:categories/:title
 paginate: 8
 paginate_path: /page:num/
+timezone: Asia/Singapore
 
 # search: true
 
@@ -85,7 +83,6 @@ defaults:
       classes: wide
       author_profile: true
       read_time: true
-      words_per_minute: 120
       show_date: true
       related: false
   - scope:
@@ -99,7 +96,6 @@ defaults:
       type: pages
     values:
       layout: category
-      author_profile: true
   # _blogs
   - scope:
       path: ""
@@ -109,20 +105,19 @@ defaults:
       classes: wide
       author_profile: true
       read_time: true
-      words_per_minute: 120
       show_date: true
       related: false
 
 # Site Author
 author:
-  name  : "David Lim"
-  avatar: "/assets/images/pikaroot.png"
-  bio   : "I like Pokémon."
-  email : 
+  name              : "david lim"
+  avatar            : "/assets/images/pikaroot.png"
+  bio               : "A typical Pokémon fan."
+  email             : "asterlwx2001@gmail.com"
   links:
-#    - label: "Twitter"
-#      icon: "fab fa-fw fa-twitter-square"
-#      url: "https://twitter.com/p1karoot"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/p1karoot"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/pikaroot"
@@ -137,7 +132,9 @@ atom_feed:
   hide: true
 
 # Includes
-include: ["_pages", "_blogs"]
+include: 
+  - _pages
+  - _blogs
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -146,13 +143,12 @@ include: ["_pages", "_blogs"]
 #
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
 #   - node_modules/
 #   - vendor/bundle/
 #   - vendor/cache/
