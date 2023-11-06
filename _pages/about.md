@@ -35,7 +35,7 @@ feature_row:
   - image_path: /assets/images/unsplash-cv.jpg
     title: "CV"
     excerpt: "This will keep here for a while, I'll just make a download button temporarily."
-    url: "/cv/cv.pdf"
+    url: "/cv/"
     btn_label: "Download CV"
     btn_class: "btn--inverse"
 ---
