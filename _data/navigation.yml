@@ -8,37 +8,37 @@ main:
   - title: 'CV'
     url: /cv/
     
-docs:
-  - title: CodeCombat 2023
-    children:
-      - title: "Cloud Storage V2 [WEB]"
-        url: /ctfs/codecombat2023/cloudstoragev2
-      - title: "Cryptic Equation Conundrum [MISC]"
-        url: /ctfs/codecombat2023/crypticequationconundrum
-      - title: "Math Master [MISC]"
-        url: /ctfs/codecombat2023/mathmaster
-      - title: "Night Shift Ends Soon [FORENSIC]"
-        url: /ctfs/codecombat2023/nightshiftendssoon
-      - title: "Note [REV]"
-        url: /ctfs/codecombat2023/note
-  - title: ByuCTF 2023
-    children:
-      - title: "Cipher Madness [CRYPTO]"
-        url: /ctfs/byuctf2023/ciphermadness
-      - title: "RSA Madness [CRYPTO]"
-        url: /ctfs/byuctf2023/rsamadness
+#docs:
+#  - title: CodeCombat 2023
+#    children:
+#      - title: "Cloud Storage V2 [WEB]"
+#        url: /ctfs/codecombat2023/cloudstoragev2
+#      - title: "Cryptic Equation Conundrum [MISC]"
+#        url: /ctfs/codecombat2023/crypticequationconundrum
+#      - title: "Math Master [MISC]"
+#        url: /ctfs/codecombat2023/mathmaster
+#      - title: "Night Shift Ends Soon [FORENSIC]"
+#        url: /ctfs/codecombat2023/nightshiftendssoon
+#      - title: "Note [REV]"
+#        url: /ctfs/codecombat2023/note
+#  - title: ByuCTF 2023
+#    children:
+#      - title: "Cipher Madness [CRYPTO]"
+#        url: /ctfs/byuctf2023/ciphermadness
+#      - title: "RSA Madness [CRYPTO]"
+#        url: /ctfs/byuctf2023/rsamadness
 #  - title: TamuCTF 2023
 #    children:
 #      - title: "Pick Me Up [MISC]"
 #        url: /ctfs/tamuctf2023/pickmeup
-  - title: angstromCTF 2023
-    children:
-      - title: "Impossible [CRYPTO]"
-        url: /ctfs/angstromctf2023/impossible
-      - title: "Royal Society of Arts [CRYPTO]"
-        url: /ctfs/angstromctf2023/royalsocietyofarts
-      - title: "Royal Society of Arts 2 [CRYPTO]"
-        url: /ctfs/angstromctf2023/royalsocietyofarts2
+#  - title: angstromCTF 2023
+#    children:
+#      - title: "Impossible [CRYPTO]"
+#        url: /ctfs/angstromctf2023/impossible
+#      - title: "Royal Society of Arts [CRYPTO]"
+#        url: /ctfs/angstromctf2023/royalsocietyofarts
+#      - title: "Royal Society of Arts 2 [CRYPTO]"
+#       url: /ctfs/angstromctf2023/royalsocietyofarts2
 #  - title: WargamesMY 2022
 #    children:
 #      - title: "Color [STEG]"
