@@ -67,9 +67,6 @@ From here, we have our solution.
 
 ## 🚩 Solution
 
-{% include video id="1EJveRZdXDf4eqORdCfoFuR1EapxnvroV" provider="google-drive" %}
-
-solve.py
 ```python
 #!/usr/bin/env python3
 from pwn import *
