@@ -93,7 +93,6 @@ phi = 12515223716198010785959665889185108423206590717768216599330007358765310935
 
 ## 🚩 Solution
 
-solve.py
 ```python
 #!/usr/bin/env python3
 from Crypto.Util.number import long_to_bytes
