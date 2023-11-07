@@ -16,7 +16,8 @@ intro:
   - excerpt: "Studied computer science specialized in cyber security in the past history.
               Now, I am currently working as a penetration tester and actively participating
               CTF competitions during my free time. I post writeups on CTF challenges, blogs,
-              tutorials, and other general stuffs."
+              tutorials, and other general stuffs. I am also a big Sudoku fan and individual
+              Sudoku player."
 feature_row:
   - image_path: /assets/images/unsplash-blogs.jpg
     alt: "Blogs"
