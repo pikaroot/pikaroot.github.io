@@ -81,7 +81,6 @@ The [impossible.py](https://files.actf.co/fbb3d3649ac3408c393acd75d08d59c1c52ce8
 
 {% include video id="1VMZQpW9KV3Cj2G4XuCm1XLPVdILQLGvV" provider="google-drive" %}
 
-solve.py
 ```python
 #!/usr/bin/env python3
 from pwn import *
