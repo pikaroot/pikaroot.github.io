@@ -6,7 +6,7 @@ toc_icon: "terminal"
 ---
 HAVOC C2, Active Directory, and Red Teaming.
 
-## ☁️ Before we start
+# ☁️ Before we start
 
 ![image](https://user-images.githubusercontent.com/107750005/221825520-4e5e2a23-3deb-435d-8445-30bc0f17bad3.png)
 
@@ -17,7 +17,7 @@ A short recap about the workshop. **"Red Team Ops: HAVOC 101"** is a 3-hours wor
 
 [Chapter 1 & 2](https://github.com/WesleyWong420/RedTeamOps-Havoc-101) had already been conducted by Wesley. However, the last chapter had not yet been completed physically due to time limitation. Therefore, I decided to write a complete guide on how to compromise a simple AD network as an alternative.
 
-## 🪟 Active Directory
+# 🪟 Active Directory
 In an organization or a university, you are able to login into domain computers that you have access with your own credentials. At the same time, you can also access your workstation anytime regardless of their physical location. This is done possible thanks to the capabilities of **Active Directory (AD)**. 
 
 Active Directory is a database or set of services that connects users with the network resources they need to complete their daily work. Critical information is stored in AD, such as **users**, **computers**, and **roles**. In terms of security configurations, AD provides flexibility on different aspects of defense measures and services such as Group Policy Management, Key Distribution Center (KDC), User Access Permissions, for Administrators to reduce their workloads and apply standard protection against potential threats.
@@ -34,7 +34,7 @@ Here are some terminologies that are exclusive to an Active Directory network in
 - `Domain Computers`: Workstations in a specific domain.
 - `Domain Users`: Clients in a specific domain. They only had limited access in the domain.
 
-## 🎟️ Kerberoasting
+# 🎟️ Kerberoasting
 >Crash course for Kerberos authentication protocol.
 
 ![image](https://user-images.githubusercontent.com/107750005/221415624-f7b2ed9c-c9a9-4ec3-ad85-7583aca1f0f0.png)
@@ -92,7 +92,7 @@ $ john --format=krb5tgs --wordlist=wordlist mssql_svc
 Password123!       (mssql_svc$havoc.local)
 ```
 
-## 💻 Network Verification
+# 💻 Network Verification
 Before starting the practical walkthrough, ensure the AD network (**DC01**, **WORKSTATION-01**, **WORKSTATION-02**) are interconnected as intended. Hence, it is recommended to perform the following verifications:
 
 **1) Ensure that Domain Computers are attached to the Domain Controller.**
@@ -141,7 +141,7 @@ Use the command `ipconfig` in both workstations to verify the number of adapters
 ![WORKSTATION-01](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjJlZGE4ZDgxZGI5MWY4MTZmYzU4ODMzZTBhYzJkNDFkZWFmNDE5NCZjdD1n/pDK5hqDduQHjsSh6fX/giphy.gif)
 ![WORKSTATION-02](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWQ1MDM5NTUyYjZmYWFhNjc5OTUxNDg1YjdkYWZjZDg1NzUyZDRlNyZjdD1n/SetYAeAFV0lFBNvdjV/giphy.gif)
 
-## 💉 Compromise AD Walkthrough
+# 💉 Compromise AD Walkthrough
 
 ⚠️ Turn off **Automatic Sample Submission** from the Windows Defender Security settings in all of the VMs.
 {: .notice--warning}
@@ -164,7 +164,7 @@ The Attack Chain is divided into ***5 stages*** as below:
 - Lateral Movement
 - Pivoting
 
-### 📑 Initial Access
+## 📑 Initial Access
 The first video demonstrates steps for prepping our attack from the Havoc Teamserver, which includes connecting to teamserver, creating a listener, and generating a payload.
 
 {% include video id="ORPrpKvO56M" provider="youtube" %}
@@ -182,7 +182,7 @@ The second video will cover detailed walkthrough on how to operate with our cust
 
 {% include video id="gXnUztTydKk" provider="youtube" %}
 
-### 🚩 Local Privilege Escalation
+## 🚩 Local Privilege Escalation
 An unquoted service path is where the path to the service binary is not wrapped in quotes. Why is that a problem? By itself it's not, but under specific conditions it can lead to an elevation of privilege.
 
 For enumeration, WMI can be used to pull a list of services and the path to its executable. Here are some examples:
@@ -371,7 +371,7 @@ At this point, the first flag can be retrieved. Here is a video walkthrough cove
 💡 In the video, you might observe that an extra beacon is spawned in using `shellcode inject x64 <pid> <local/path>`. This is used for get a stable demon if the first demon is dead. This operation is optional.
 {: .notice--info}
 
-### 💠 Kerberos
+## 💠 Kerberos
 Delegation allows a user or machine to act on behalf of another user to another service.  A common implementation of this is where a user authenticates to a front-end web application that serves a back-end database. The front-end application needs to authenticate to the back-end database (using Kerberos) as the authenticated user.
 
 ![image](https://user-images.githubusercontent.com/107750005/223048931-fb1b0686-6abe-4130-bd27-122cd436f4af.png)
@@ -629,7 +629,7 @@ Here is the video walkthrough covering Unconstrained Delegation vulnerability.
 
 {% include video id="sHB_REMIJNQ" provider="youtube" %}
 
-### ⏫ Lateral Movement
+## ⏫ Lateral Movement
 At the end of this section, you will also able to get a demon callback from WORKSTATION-02 using **Server Message Block (SMB)** pivot connect from WORKSTATION-01.
 
 ![image](https://user-images.githubusercontent.com/107750005/222970318-730d3947-bbf5-489e-8e18-38ec3b9f98da.png)
@@ -682,7 +682,7 @@ Here is the video walkthrough to demonstrate Lateral Movement in Havoc Framework
 
 {% include video id="4gy-3BAiQmY" provider="youtube" %}
 
-### ⛓️ Pivoting
+## ⛓️ Pivoting
 Due to the current state of Havoc Framework, many pivoting attacks such as NTLM Relaying, SSH Tunneling, autorouting, etc. are relatively difficult to operate and unstable. However, here is a simple way of getting the final flag using **token impersonation** method. (Assuming that you somehow successfully retrieve the password of any Domain Admins.)
 
 From the demon of WORKSTATION-01 or WORKSTATION-02, type the following commands to retrieve the final flag without logging in the Domain Controller via user interface. 
@@ -764,10 +764,10 @@ With NTLM Relaying applied, the whole compromise process should look something s
 ![image](https://user-images.githubusercontent.com/107750005/223200209-43e2ea67-b5aa-478d-8067-fcd4a9016ca9.png)
 ![image](https://user-images.githubusercontent.com/107750005/223196736-da6a9aac-b6ff-479b-8b27-b5fc9f8d89e5.png)
 
-## 🗣️ Conclusion
+# 🗣️ Conclusion
 I hope that this article is detailed enough to benefit people to learn interesting topics and apply these knowledge to related work such as education, certification exams, projects, home lab practice, and more. (but not for illegal actions 💀 plzzz...) Happy Hacking!
 
-## 🟦 References
+# 🟦 References
 
 1. [GitHub - Havoc Framework](https://github.com/HavocFramework/Havoc)
 2. [GitHub - HAVOC 101 Workshop Course Material](https://github.com/WesleyWong420/RedTeamOps-Havoc-101)
