@@ -5,7 +5,7 @@ permalink: /ctfs/acs2023/escaperoom
 ---
 Python Jail challenge.
 
-# 📁 Challenge Description
+## 📁 Challenge Description
 
 > Can you escape?
 >
@@ -15,7 +15,7 @@ Python Jail challenge.
 import os, sys
 
 def main():
-  filter_list = ['sys', 'import', 'flag', 'open', '/', "sh", "bin", 'eval', 'exec', 'os', 'read', 'system']
+  filter_list = ['sys','import','flag','open','/',"sh","bin",'eval','exec','os','read','system']
 
   print("Please Input your Source code > ")
   user_data = ''
@@ -43,4 +43,4 @@ if __name__ == '__main__':
   main()
 ```
 
-# 🚩 Solution
+## 🚩 Solution
