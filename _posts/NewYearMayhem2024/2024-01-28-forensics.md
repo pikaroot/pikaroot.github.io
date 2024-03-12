@@ -45,9 +45,11 @@ Following `TCP Stream 8`, we can see a full action of how the attacker encapsula
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/9d754b54-4829-47df-837e-bc413298d353)
 
-Here are 2 important things that need to be recorded:
+Here are 3 important things that need to be recorded:
+
 1. The file we need to find is a `.zip` file.
 2. The password of the `.zip` file is `Im4H4ck3rL0rd`.
+3. On the next command, it loops the file into equal hex chunks and sends it along with the `ICMP` requests. From here, we know we need to look at `ICMP` packets.
 
 Filter the `ICMP` packets, we can see a suspicious header `PK` which is a `.zip` file header. 
 
