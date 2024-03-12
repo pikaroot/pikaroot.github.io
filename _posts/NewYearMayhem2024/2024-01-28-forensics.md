@@ -2,6 +2,9 @@
 title: "New Year Mayhem 2024 [FORENSICS]"
 categories: NewYearMayhem2024
 permalink: /ctfs/newyearmayhem2024/forensics
+toc: true
+toc_label: "cat forensics.md"
+toc_icon: "terminal"
 ---
 3 Forensics Challenges: 2 PCAPS, 1 Memory Dump.
 
@@ -54,7 +57,7 @@ The third and fourth packet indicates the `ConfidentialReport.pdf`, which is the
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/9c04039d-22e8-4438-9f54-3002914a14e5)
 
-Therefore, we just need to gather every hex chunk in each `ICMP` packet and piece them together, then obtaining the flag will be trivial.
+Therefore, we only need to gather every hex chunk in each `ICMP` packet and piece them together, then obtaining the flag will be trivial. `tshark` is the best tool here and I've explained every filter means in my previous write-up. The `-e data` is the hex chunks of the `.zip` file.
 
 ```
 $ tshark -r capture.pcap -Y "icmp && ip.src == 192.168.127.131" -T fields -e data | tr -d "\r\n" | xxd -r -p > ConfidentialReport.zip
@@ -83,7 +86,7 @@ $ open ConfidentialReport.pdf
 
 >After a very stressful day at work, after answering thousands of emails, I noticed something bizarre on my computer. During booting, a black window appeared for a second, and something probably locked all my files. I am not sure what happened, but all my files now have the extension .enc. After talking with the IT department, we captured my computer's memory shortly after the incident. Can you analyze the capture and recover my file?
 >
->File(s): `forensic_infected.zip`
+>File(s): `forensics_infected.zip`
 
 ## 🚩 Solution
 
