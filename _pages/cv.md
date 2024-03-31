@@ -7,7 +7,6 @@ classes: wide
 header:
   overlay_image: /assets/images/unsplash-cv.jpg
   overlay_filter: 0.5
-  caption: "Photo credit: Thom Holmes on Unsplash"
 excerpt: "Download if you REALLY want."
 author_profile: true
 ---
