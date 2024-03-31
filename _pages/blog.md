@@ -6,7 +6,6 @@ collection: blogs
 header:
   overlay_image: /assets/images/unsplash-blogs.jpg
   overlay_filter: 0.7
-  caption: "Photo credit: Brenden Skeli on Unsplash"
 excerpt: "Contains security blogs, articles, workshops, etc."
 author_profile: true
 ---
