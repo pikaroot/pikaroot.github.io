@@ -1,0 +1,39 @@
+---
+title: "Cipher Madness [CRYPTO]"
+categories: ByuCTF2023
+permalink: /ctfs/acsc2024/hardware-2024
+toc: true
+toc_label: "cat hardware-2024.md"
+toc_icon: "terminal"
+---
+Solved 3/5 hardware challenges. ᕙ(⇀‸↼‶)ᕗ
+
+# Challenge 1: An4lyz3_1t
+50 points, 140 solves 
+
+## 📁 Challenge Description
+>Our surveillance team has managed to tap into a secret serial communication and capture a digital signal using a Saleae logic analyzer. Your objective is to decode the signal and uncover the hidden message.
+
+## 🚩 Solution
+To be updated
+
+# Challenge 2: Vault
+150 points, 68 solves
+
+## 📁 Challenge Description
+>Can you perform a side-channel attack on this vault? The PIN is a 10-digit number.
+>
+>Python3 is installed on remote. `nc vault.chal.2024.ctf.acsc.asia 9999`
+
+## 🚩 Solution
+To be updated
+
+# Challenge 3: picopico
+200 points, 55 solves
+
+## 📁 Challenge Description
+>Security personnel in our company have spotted a suspicious USB flash drive. They found a Raspberry Pi Pico board inside the case, but no flash drive board. Here's the firmware dump of the Raspberry Pi Pico board. Could you figure out what this 'USB flash drive' is for?
+
+## 🚩 Solution
+To be updated
+
