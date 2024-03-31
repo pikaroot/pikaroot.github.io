@@ -8,15 +8,14 @@ header:
   overlay_image: /assets/images/unsplash-about.jpg
   cta_label: "M53"
   cta_url: "https://m53-ctf.github.io"
-  caption: "Photo credit: Lia on [**Unsplash**](https://unsplash.com)"
 excerpt: "Welcome to **PIKAROOT's** secret base. I am the best Pokémon you can find 
           on the Internet. I am also part of the **M53**, the biggest CTF community 
           full of security experts in Malaysia."
 intro:
-  - excerpt: "Studied computer science specialized in cyber security in the past history.
+  - excerpt: "Studied computer science specialized in cyber security in the history.
               Now, I am currently working as a penetration tester and actively participating
               CTF competitions during my free time. I post writeups on CTF challenges, blogs,
-              tutorials, and other general stuffs. I am also a big Sudoku fan and individual
+              tutorials, and other general stuff. I am also a big Sudoku fan and an individual
               Sudoku player."
 feature_row:
   - image_path: /assets/images/unsplash-blogs.jpg
@@ -29,7 +28,7 @@ feature_row:
   - image_path: /assets/images/unsplash-ctfs.jpg
     alt: "CTF Writeups"
     title: "CTF Writeups"
-    excerpt: "Contains beginner to imtermediate level CTF challenges and solutions."
+    excerpt: "Contains beginner to intermediate level CTF challenges and solutions."
     url: "/ctfs/"
     btn_label: "Read Writeups"
     btn_class: "btn--inverse"
