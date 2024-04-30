@@ -11,4 +11,4 @@ excerpt: "Download if you REALLY want."
 author_profile: true
 ---
 
-<embed src="https://pikaroot.github.io/assets/download/cv.pdf" width="640" height="800" type="application/pdf" />
+<embed src="https://pikaroot.github.io/assets/download/newcv.pdf" width="640" height="800" type="application/pdf" />
