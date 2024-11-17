@@ -11,10 +11,10 @@ Hidden flag in video frames.
 
 ## Walkthrough
 
-Unzip the challenge file, we have been given a video file. 
+Just unzip the challenge file, we've been given a video file. 
 
 <video width="480" height="320" controls="controls">
-  <source src="/files/videos/out-of-the-blue.mp4" type="video/mp4">
+  <source src="out-of-the-blue.mp4" type="video/mp4">
 </video>
 
 Updating...
