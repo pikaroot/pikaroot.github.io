@@ -37,6 +37,8 @@ plugins:
   - jekyll-archives
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-asciinema
 
 permalink      : /:collection/:categories/:title
 paginate       : 8
