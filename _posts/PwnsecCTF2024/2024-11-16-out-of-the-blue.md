@@ -5,11 +5,11 @@ permalink: /ctfs/pwnsecctf2024/out-of-the-blue
 ---
 Hidden flag in video frames.
 
-# Challenge Description
+## Challenge Description
 
 ![image](https://github.com/user-attachments/assets/7606b310-bf93-4bfe-babc-09ece1268bdd)
 
-# Walkthrough
+## Walkthrough
 
 >I played this CTF with Team M53 and got 3rd place after the CTF ended. It was overall a great game with them!
 
@@ -113,7 +113,9 @@ However, we overlooked the challenge by XOR-ing each frame with the same blue to
 ![image](https://github.com/user-attachments/assets/e7479737-9496-4674-82f7-1fa6f76dd761)
 ![image](https://github.com/user-attachments/assets/9c3556b7-a41f-482a-8d53-74847d5f437e)
 
-# Solution
+## Solution
+
+You guessed it, the script from ChatGPT. It is scary useful let's be real.
 
 ```python
 import os
