@@ -76,7 +76,6 @@ def detect_blue_color_mode(image_path):
     if non_zero_pixels.size > 0:
         flattened_pixels = non_zero_pixels.reshape(-1, 3)
         mode_rgb = stats.mode(flattened_pixels, axis=0)[0]  
-        print(mode_rgb)
         mode_rgb = tuple(map(int, mode_rgb))
     else:
         mode_rgb = (0, 0, 0)  # If no blue pixels found, return black
@@ -129,8 +128,8 @@ image_files = [f for f in os.listdir(image_dir) if f.endswith('.png')]
 image_files.sort()
 
 color_to_binary = {
-    (201, 58, 2): '1',
-    (165, 37, 10): '0'
+    (201, 58, 2): '1', # Change to 0 if not work 
+    (165, 37, 10): '0' # Change to 1 if not work
 }
 
 binary_string = ""
