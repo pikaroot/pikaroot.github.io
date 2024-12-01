@@ -55,7 +55,7 @@ cap.release()
 print(f"Total frames extracted: {frame_count}")
 ```
 
-Then, we can use `scipy.mode()` module to find the majority of the blue pixels in a frame. Apply the same technique to other frames. In case you are asking, this is too troublesome, I will let Mr.GPT do the work and a little bit of manual changes.
+Then, we can use `stats.mode()` module from `scipy` library to find all the blue pixels in a frame. The same technique applies to other frames as well. In case you are asking, this is too troublesome, I will let Mr.GPT do the work and a few manual changes.
 
 ```python
 import cv2
@@ -106,7 +106,7 @@ print(f"Detected blues: {s}")
 
 We found two types of blues only! 
 
-That rings a bell that it could be a binary string where the two color codes will be 0 and 1 respectively. Once decoded, it contains the flag value.
+That rings a bell that it could be a binary string where the two color codes will be `0` and `1` respectively. Once decoded, it contains the flag value.
 
 However, we overlooked the challenge by XOR-ing each frame with the same blue together to get two images. (Random thoughts, the images kinda beautiful lol)
 
