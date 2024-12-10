@@ -101,7 +101,7 @@ print(f"Total blues detected: {len(s)}")
 print(f"Detected blues: {s}")
 ```
 
-<script type="text/javascript" src="https://asciinema.org/a/GzWLCHZ8XqGREZz7v40951oNq.js" id="asciicast-GzWLCHZ8XqGREZz7v40951oNq" async="async"></script>
+<script type="text/javascript" src="https://asciinema.org/a/67232asef317WhzkReEA0juZZ.js" id="asciicast-67232asef317WhzkReEA0juZZ" async="async"></script>
 
 We found two types of blues only! 
 
@@ -146,6 +146,6 @@ for i in tqdm(range(len(image_files))):
 print("\nDecoded Binary:\n\n",long_to_bytes(int(binary_string,2)).decode())
 ```
 
-<script type="text/javascript" src="https://asciinema.org/a/BQC5HtVxqg5fjnOoUyYEENXV1.js" id="asciicast-BQC5HtVxqg5fjnOoUyYEENXV1" async="async"></script>
+<script type="text/javascript" src="https://asciinema.org/a/6zATGomZd2GiiKWlwokHBJFzX.js" id="asciicast-6zATGomZd2GiiKWlwokHBJFzX" async="async"></script>
 
 FLAG: `PWNSEC{3xtr4ct_7he_clu3s_0ut_0f_the_b1ues}`
