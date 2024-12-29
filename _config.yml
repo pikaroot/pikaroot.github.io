@@ -114,8 +114,8 @@ defaults:
 # Site Author
 author:
   name              : "david lim"
-  avatar            : "/assets/images/royfuecocowithhat.jpg"
-  bio               : "I usually do crypto and logic games. I love Pokémon too, Fuecoco the GOAT."
+  avatar            : "/assets/images/royfuecocowithhat1.jpg"
+  bio               : "I usually do crypto and sudoku. Fuecoco the GOAT."
   email             : "asterlwx2001@gmail.com"
   links:
     - label  : "Twitter"
