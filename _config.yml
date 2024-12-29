@@ -15,7 +15,7 @@
 
 # Site settings
 locale                   : "en"
-title                    : "PIKAROOT ▌"
+title                    : "⌈ℙiκÅℝøøτ⌋"
 title_separator          : "|"
 name                     : "pikaroot"
 description              : "Yet another site but in Pokémon Theme for cyber security enthusiasts to visit."
@@ -118,9 +118,6 @@ author:
   bio               : "I usually do crypto and sudoku. Fuecoco the GOAT."
   email             : "asterlwx2001@gmail.com"
   links:
-    - label  : "Twitter"
-      icon   : "fab fa-fw fa-twitter-square"
-      url    : "https://twitter.com/p1karoot"
     - label  : "GitHub"
       icon   : "fab fa-fw fa-github"
       url    : "https://github.com/pikaroot"
