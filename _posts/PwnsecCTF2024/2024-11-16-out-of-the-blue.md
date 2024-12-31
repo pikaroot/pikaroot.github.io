@@ -1,5 +1,5 @@
 ---
-title: "Out of the Blue [MISC]"
+title: "out of the blue [misc]"
 categories: PwnsecCTF2024
 permalink: /ctfs/pwnsecctf2024/out-of-the-blue
 ---
@@ -9,7 +9,7 @@ Hidden flag in video frames.
 
 ![image](https://github.com/user-attachments/assets/7606b310-bf93-4bfe-babc-09ece1268bdd)
 
-## Walkthrough
+## Observation
 
 >I played this CTF with Team M53 and got 3rd place after the CTF ended. It was overall a great game with them!
 
@@ -148,4 +148,4 @@ print("\nDecoded Binary:\n\n",long_to_bytes(int(binary_string,2)).decode())
 
 <script type="text/javascript" src="https://asciinema.org/a/6zATGomZd2GiiKWlwokHBJFzX.js" id="asciicast-6zATGomZd2GiiKWlwokHBJFzX" async="async"></script>
 
-FLAG: `PWNSEC{3xtr4ct_7he_clu3s_0ut_0f_the_b1ues}`
+*FLAG:* `PWNSEC{3xtr4ct_7he_clu3s_0ut_0f_the_b1ues}`
