@@ -1,5 +1,5 @@
 ---
-title: "New Year Mayhem 2024 [FORENSICS]"
+title: "new year mayhem 2024 [forensic]"
 categories: NewYearMayhem2024
 permalink: /ctfs/newyearmayhem2024/forensics
 toc: true
@@ -8,16 +8,17 @@ toc_icon: "terminal"
 ---
 3 Forensics Challenges: 2 PCAPS, 1 Memory Dump.
 
-# Challenge 1: Charter [EASY]
+# Charter [easy]
+---
 150 points
 
-## 📁 Challenge Description
+## Challenge Description
 
 >The attackers deleted all our files in a recent breach. We managed to recover almost all of them from offsite backups but are missing some important files that were stored on the compromised file server. We managed to capture the traffic during the attack. Can you please help us with this situation and recover our files?
 >
 >File(s): `charter.zip`
 
-## 🚩 Solution
+## Solution
 
 Extract the ZIP file, we had been given a `.pcapng` file. This challenge actually can be solved by `strings`. The network traffic contains a great number of HTML files, but the flag is hidden inside the PCAP file itself.
 
@@ -26,16 +27,17 @@ $ strings traffic.pcapng | grep "HTB{"
 an class="c12">&nbsp;</span><span class="c4">2021 All rights reserved. HTB{r3cov3ry_1s_fun_409df1!!}</span></p></div></body></html>
 ```
 
-# Challenge 2: Penetrated [MEDIUM]
+# Penetrated [medium]
+---
 250 points
 
-## 📁 Challenge Description
+## Challenge Description
 
 >We detected a strange file in the WordPress uploads folder. Luckily we still have a dump of the network traffic at the same time as the file timestamp. We wonder if it was created by the attacker and did he succeed in his goal?
 >
 >File(s): `penetrated.zip` 
 
-## 🚩 Solution
+## Solution
 
 Extract the ZIP file, we had been given another `.pcap` file. I called this challenge a "hidden in plain sight" challenge because it covers how attackers send malicious data via legitimate protocols through the network. I have done a [similar challenge](https://pikaroot.github.io/ctfs/codecombat2023/nightshiftendssoon), just this challenge is using `ICMP` protocol instead of `DNS`.
 
@@ -81,14 +83,15 @@ $ open ConfidentialReport.pdf
 
 ![image](https://github.com/pikaroot/pikaroot.github.io/assets/107750005/273da095-f597-4e82-b040-d18743aa0c89)
 
-# Challenge 3: Infected [HARD]
+# Infected [hard]
+---
 450 points
 
-## 📁 Challenge Description
+## Challenge Description
 
 >After a very stressful day at work, after answering thousands of emails, I noticed something bizarre on my computer. During booting, a black window appeared for a second, and something probably locked all my files. I am not sure what happened, but all my files now have the extension .enc. After talking with the IT department, we captured my computer's memory shortly after the incident. Can you analyze the capture and recover my file?
 >
 >File(s): `forensics_infected.zip`
 
-## 🚩 Solution
-
+## Solution
+To be updated
