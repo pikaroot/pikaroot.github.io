@@ -1,12 +1,12 @@
 ---
-title: "Math Master [MISC]"
+title: "math master [misc]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/mathmaster
 ---
 
 Python scripting development to calculate 100 math questions within 3 seconds each.
 
-## 📁 Challenge Description
+## Challenge Description
 >Test your mathematical skills in this rapid-fire math challenge! Solve 100 math problems involving minimum, mode, maximum, average, and median calculations within 3 seconds for each question. Do you have what it takes to be a Math Master?
 >
 >`nc math.sibersiaga2023.myctf.io 8887`
@@ -34,14 +34,16 @@ Find: Min from [23, 45, 123, 1, 654, 700, 4]
 Wrong answer.
 ```
 
-## 🚩 Solution
-The aim of the challenge is to test your custom script development. Basically, when you connect to the instance, it will print out the banner together with the math question one at a time after you have solved it. The challenge description indicates the syllabus of the math questions (`min`, `max`, `mod`, `average`, and `median`). The flag will be printed out when your solve count equals 100. 
+## Observation
+The challenge aims to test your custom script development. When you connect to the instance, it will print out the banner together with the math question one at a time after you have solved it. The challenge description indicates the syllabus of the math questions (`min`, `max`, `mod`, `average`, and `median`). The flag will be printed out when your solve count equals 100. 
 
 To solve this kind of challenge, 3 requirements need to be met.
 
 1. You must understand how to use `pwntools`. (It is by far the easiest tool to solve it.)
 2. You must understand `Python`. :D
 3. You must know how to deal with data types. (e.g., `b'3'`, `'3'`, and `3` are three different data types over here.)
+
+## Solution
 
 Here is my ~~shamless~~ `solve.py` script.
 
