@@ -51,6 +51,8 @@ breadcrumbs: true
 
 # Build settings
 markdown: kramdown
+kramdown:
+  math_engine: katex
 
 collections:
   ctfs:
