@@ -1,12 +1,12 @@
 ---
-title: "Cryptic Equation Conundrum [MISC]"
+title: "cryptic equation conundrum [misc]"
 categories: CodeCombat2023
 permalink: /ctfs/codecombat2023/crypticequationconundrum
 ---
 
 Advanced version of **Math Master**. Calculate 1000 math questions within 5 seconds each.
 
-## 📁 Challenge Description
+## Challenge Description
 
 >You've stumbled upon a mysterious program that claims to test your mathematical skills. The program generates a series of complex mathematical equations and challenges you to solve them within a tight time limit. Are you up for the challenge?
 >
@@ -36,7 +36,7 @@ Wrong answer.
 Result: 20791914
 ```
 
-## 🚩 Solution
+## Observation
 
 This challenge took me 4 hours to solve it. This is the upgraded version since `Math Master` in the qualifying round. The concept is the same, however, it requires additional things such as trigonometry calculation, encryption, and decryption, and the solve count needs to be reached until 1000 instead of 100 in order to retrieve the flag.
 
@@ -112,6 +112,8 @@ Find <0x45>an(79)
 I almost ended up giving up solving this challenge until my legendary teammate suggested I look for patterns of trigonometry questions. Luckily, this method is feasible as the result always stays inconsistent on the same letter of each trigonometry function.
 
 Hence, my script ended up finding `in` for the sine function, `co` for the cosine function, and `an` for the tangent function. Normal arithmetic should be easily calculated using `eval()`.
+
+## Solution
 
 Here is my ~~other shamless~~ `solve.py` script.
 
@@ -212,4 +214,4 @@ The flag is sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}
 [*] Closed connection to cryptic.sibersiaga2023.myctf.io port 9999
 ```
 
-***FLAG***: `sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}`
+*FLAG*: `sibersiaga{cyb3r_7hr00p3r5_y0u_4r3_w0rthy_3n0ugh}`
