@@ -1,7 +1,7 @@
 ---
 title: "LaTeX Symbols"
 ---
-List of LaTeX. Wrap `$$\yourlatex$$` around your code.
+List of LaTeX. Wrap `$$` around your code.
 
 # 1. Greek and Hebrew Letters
 ---
