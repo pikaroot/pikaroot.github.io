@@ -1,11 +1,11 @@
 ---
-title: "Escape Room [Code Audit]"
+title: "escape room [code-audit]"
 categories: Acs2023
 permalink: /ctfs/acs2023/escaperoom
 ---
 Python Jail challenge for bypassing condition checks and performing code execution.
 
-## 📁 Challenge Description
+## Challenge Description
 
 > Can you escape?
 >
@@ -43,7 +43,7 @@ if __name__ == '__main__':
   main()
 ```
 
-## 🚩 Solution
+## Solution
 
 The program accepts multi-line inputs until it detects the word `'EOF'` at the end of the input. The flag is placed somewhere in the instance. So, we need to figure out how to bypass the condition checks and successfully execute our commands.
 
