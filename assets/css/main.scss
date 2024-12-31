@@ -44,5 +44,14 @@ a {
     background-color: #a8bbbf;
 }
 
+table, table th, table td {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+table {
+  font-family: inherit; /* Inherit the default font-family */
+}
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
