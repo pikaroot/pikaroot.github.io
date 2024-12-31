@@ -279,7 +279,7 @@ Custom matrix can be created together with the plain matrix.
 
 `$$\left\langle\begin{matrix}1&2&3\\a&b&c\end{matrix}\right\rangle$$`
 
-$$\left\langle\begin{matrix}1&2&3\\a&b&c\end{matrix}\right\rvert$$
+$$\left\langle\begin{matrix}1&2&3\\a&b&c\end{matrix}\right\rangle$$
 
 # 12. Other Styles
 ---
