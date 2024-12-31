@@ -49,9 +49,5 @@ table, table th, table td {
   line-height: 1.5;
 }
 
-table {
-  font-family: inherit; /* Inherit the default font-family */
-}
-
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
