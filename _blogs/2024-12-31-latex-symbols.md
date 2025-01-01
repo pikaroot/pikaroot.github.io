@@ -75,8 +75,8 @@ $$\lfloor\frac{q}{2}\rceil$$
 
 | ------- | ----- | ------- | ----- | ------- | ----- |
 |$$\sum$$|`\sum`|$$\iint$$|`\iint`|$$\bigoplus$$|`\bigoplus`|
-|$$\prod$$|`\prod`|$$\biguplus$$|`\biguplus`|$$\bigotimes$$|`\biguplus`|
-|$$\coprod$$|`\coprod`|$$\bigcap$$|`\bigcap`|$$\bigodot$$|`bigodot`|
+|$$\prod$$|`\prod`|$$\biguplus$$|`\biguplus`|$$\bigotimes$$|`\bigotimes`|
+|$$\coprod$$|`\coprod`|$$\bigcap$$|`\bigcap`|$$\bigodot$$|`\bigodot`|
 |$$\int$$|`\int`|$$\bigcup$$|`\bigcup`|$$\bigvee$$|`\bigvee`|
 |$$\oint$$|`\oint`|$$\bigsqcup$$|`bigsqcup`|$$\bigwedge$$|`\bigwedge`|
 
