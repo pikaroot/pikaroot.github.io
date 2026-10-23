@@ -134,6 +134,7 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {to: '/sudoku', label: 'Sudoku', position: 'left'},
+          {to: '/about', label: 'About', position: 'right'},
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
