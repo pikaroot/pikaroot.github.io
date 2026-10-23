@@ -1,0 +1,11 @@
+{
+  "label": "2023",
+  "position": 3,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "slug": "/2023",
+    "title": "CTFs of 2023",
+    "description": "7 events \u00b7 16 writeups. Topics: code auditing, misc, reverse engineering, forensics, web and crypto."
+  }
+}

@@ -1,0 +1,289 @@
+@import 'katex/dist/katex.min.css';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+/**
+ * Light mode: Rosé Pine Dawn. Dark mode: Catppuccin Frappé.
+ * Palettes: https://rosepinetheme.com/palette, https://catppuccin.com/palette
+ *
+ * Each mode only defines the --ctp-* palette. The shared mapping to
+ * Infima variables further down uses those, so both modes stay in sync.
+ */
+
+/* Rosé Pine Dawn (light), mapped onto the --ctp-* names */
+:root {
+  --ctp-rosewater: #d7827e;
+  --ctp-flamingo: #d7827e;
+  --ctp-pink: #d7827e;
+  --ctp-mauve: #7e6a9a;
+  --ctp-red: #b4637a;
+  --ctp-maroon: #b4637a;
+  --ctp-peach: #d7827e;
+  --ctp-yellow: #ea9d34;
+  --ctp-green: #56949f;
+  --ctp-teal: #56949f;
+  --ctp-sky: #56949f;
+  --ctp-sapphire: #286983;
+  --ctp-blue: #286983;
+  --ctp-lavender: #907aa9;
+  --ctp-text: #575279;
+  --ctp-subtext1: #6a6585;
+  --ctp-subtext0: #797593;
+  --ctp-overlay2: #797593;
+  --ctp-overlay1: #8a8599;
+  --ctp-overlay0: #9893a5;
+  --ctp-surface2: #bfb9c3;
+  --ctp-surface1: #cecacd;
+  --ctp-surface0: #e4dcd6;
+  --ctp-base: #faf4ed;
+  --ctp-mantle: #fffaf3;
+  --ctp-crust: #f2e9e1;
+
+  /* Accent: soft iris purple */
+  --ifm-color-primary: #7e6a9a;
+  --ifm-color-primary-dark: #725f8c;
+  --ifm-color-primary-darker: #6c5a85;
+  --ifm-color-primary-darkest: #594a6e;
+  --ifm-color-primary-light: #8a76a6;
+  --ifm-color-primary-lighter: #907aa9;
+  --ifm-color-primary-lightest: #a591ba;
+
+  --ctp-hero-text: #fffaf3;
+  --ctp-selection: rgba(144, 122, 169, 0.25);
+  --ifm-table-stripe-background: rgba(228, 220, 214, 0.45);
+  --docusaurus-highlighted-code-line-bg: rgba(206, 202, 205, 0.4);
+}
+
+/* Frappé (dark) */
+[data-theme='dark'] {
+  --ctp-rosewater: #f2d5cf;
+  --ctp-flamingo: #eebebe;
+  --ctp-pink: #f4b8e4;
+  --ctp-mauve: #ca9ee6;
+  --ctp-red: #e78284;
+  --ctp-maroon: #ea999c;
+  --ctp-peach: #ef9f76;
+  --ctp-yellow: #e5c890;
+  --ctp-green: #a6d189;
+  --ctp-teal: #81c8be;
+  --ctp-sky: #99d1db;
+  --ctp-sapphire: #85c1dc;
+  --ctp-blue: #8caaee;
+  --ctp-lavender: #babbf1;
+  --ctp-text: #c6d0f5;
+  --ctp-subtext1: #b5bfe2;
+  --ctp-subtext0: #a5adce;
+  --ctp-overlay2: #949cbb;
+  --ctp-overlay1: #838ba7;
+  --ctp-overlay0: #737994;
+  --ctp-surface2: #626880;
+  --ctp-surface1: #51576d;
+  --ctp-surface0: #414559;
+  --ctp-base: #303446;
+  --ctp-mantle: #292c3c;
+  --ctp-crust: #232634;
+
+  /* Accent: mauve */
+  --ifm-color-primary: #ca9ee6;
+  --ifm-color-primary-dark: #b97fde;
+  --ifm-color-primary-darker: #b170da;
+  --ifm-color-primary-darkest: #9741ce;
+  --ifm-color-primary-light: #cfa8e8;
+  --ifm-color-primary-lighter: #d2adea;
+  --ifm-color-primary-lightest: #dabbed;
+
+  --ctp-hero-text: var(--ctp-crust);
+  --ctp-selection: rgba(202, 158, 230, 0.3);
+  --ifm-table-stripe-background: rgba(65, 69, 89, 0.4);
+  --docusaurus-highlighted-code-line-bg: rgba(98, 104, 128, 0.35);
+}
+
+/* Shared mapping from the palette to Infima */
+:root,
+[data-theme='dark'] {
+  --ifm-color-secondary: var(--ctp-surface1);
+  --ifm-color-success: var(--ctp-green);
+  --ifm-color-info: var(--ctp-sapphire);
+  --ifm-color-warning: var(--ctp-yellow);
+  --ifm-color-danger: var(--ctp-red);
+
+  /* Surfaces and text */
+  --ifm-background-color: var(--ctp-base);
+  --ifm-background-surface-color: var(--ctp-mantle);
+  --ifm-navbar-background-color: var(--ctp-mantle);
+  --ifm-footer-background-color: var(--ctp-crust);
+  --ifm-footer-color: var(--ctp-subtext0);
+  --ifm-footer-link-color: var(--ctp-subtext1);
+  --ifm-footer-title-color: var(--ctp-text);
+  --ifm-font-color-base: var(--ctp-text);
+  --ifm-font-color-secondary: var(--ctp-subtext0);
+  --ifm-heading-color: var(--ctp-text);
+  --ifm-color-emphasis-300: var(--ctp-surface1);
+  --ifm-toc-border-color: var(--ctp-surface0);
+  --ifm-hr-background-color: var(--ctp-surface0);
+  --ifm-table-border-color: var(--ctp-surface1);
+  --ifm-menu-color: var(--ctp-subtext1);
+  --ifm-menu-color-background-active: var(--ctp-surface0);
+  --ifm-menu-color-background-hover: var(--ctp-surface0);
+  --ifm-card-background-color: var(--ctp-mantle);
+  --ifm-dropdown-background-color: var(--ctp-mantle);
+
+  /* Code */
+  --ifm-code-font-size: 95%;
+  --ifm-code-background: var(--ctp-surface0);
+  --ifm-pre-background: var(--ctp-mantle);
+
+  /* Search */
+  --docsearch-searchbox-background: var(--ctp-surface0);
+  --docsearch-modal-background: var(--ctp-base);
+  --docsearch-hit-background: var(--ctp-mantle);
+  --docsearch-footer-background: var(--ctp-crust);
+}
+
+::selection {
+  background: var(--ctp-selection);
+}
+
+.navbar,
+.navbar-sidebar {
+  background-color: var(--ctp-mantle);
+}
+
+/* The template's footer uses style: 'dark'; keep it on the palette */
+.footer--dark {
+  --ifm-footer-background-color: var(--ctp-crust);
+  --ifm-footer-color: var(--ctp-subtext0);
+  --ifm-footer-link-color: var(--ctp-subtext1);
+  --ifm-footer-title-color: var(--ctp-text);
+}
+
+/* Buttons on the homepage hero */
+.button--secondary {
+  --ifm-button-background-color: var(--ctp-surface0);
+  --ifm-button-border-color: var(--ctp-surface0);
+  --ifm-button-color: var(--ctp-text);
+}
+.button--secondary:hover {
+  --ifm-button-background-color: var(--ctp-surface1);
+  --ifm-button-border-color: var(--ctp-surface1);
+}
+
+/* Homepage hero: mauve banner */
+.hero--primary {
+  --ifm-hero-background-color: var(--ctp-mauve);
+  --ifm-hero-text-color: var(--ctp-hero-text);
+}
+
+/* ---- Typography ---- */
+
+:root {
+  --ifm-font-family-base: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ifm-font-size-base: 106.25%; /* 17px */
+  --ifm-line-height-base: 1.7;
+  --ifm-heading-font-weight: 700;
+  --ifm-heading-line-height: 1.25;
+  --ifm-code-font-size: 88%;
+  --ifm-pre-line-height: 1.6;
+}
+
+body {
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.015em;
+}
+
+/* Docs and blog articles: calmer heading scale, more breathing room */
+.markdown > h1 {
+  --ifm-h1-font-size: 2.4rem;
+}
+.markdown > h2 {
+  --ifm-h2-font-size: 1.75rem;
+  margin-top: 2.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+.markdown > h3 {
+  --ifm-h3-font-size: 1.3rem;
+  margin-top: 1.8rem;
+}
+.markdown > h4 {
+  --ifm-h4-font-size: 1.1rem;
+}
+.markdown p,
+.markdown li {
+  line-height: 1.75;
+}
+.markdown > p {
+  margin-bottom: 1.1rem;
+}
+.markdown blockquote {
+  font-size: 0.97em;
+}
+.markdown code {
+  font-feature-settings: 'calt' 1, 'zero' 1;
+}
+
+/* Code blocks */
+pre code,
+[class*='codeBlockContent'] code {
+  font-size: 0.86rem;
+}
+
+/* Sidebar and table of contents */
+.menu__link {
+  font-size: 0.95rem;
+}
+.table-of-contents__link {
+  font-size: 0.88rem;
+}
+
+/* ---- Blog tables (e.g. the LaTeX Symbols reference) ---- */
+/* Docs use `.theme-doc-markdown markdown`; blog uses a plain `.markdown`,
+   so this scopes to blog posts only. The LaTeX tables alternate a narrow
+   "symbol" column with a wider "command" column. Let the columns size to
+   their content so each command stays on one line, and only scroll a table
+   within its own block if it is genuinely too wide to fit. */
+.markdown:not(.theme-doc-markdown) table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  table-layout: auto;
+}
+
+/* These reference tables are dense, so compress them so more columns fit
+   the (narrow) content column before any horizontal scroll kicks in. */
+.markdown:not(.theme-doc-markdown) table {
+  font-size: 0.8rem;
+}
+
+.markdown:not(.theme-doc-markdown) table th,
+.markdown:not(.theme-doc-markdown) table td {
+  padding: 0.3rem 0.5rem;
+  vertical-align: middle;
+}
+
+/* Keep each LaTeX command on one line (never split \varepsilon mid-word);
+   cells with several commands still wrap between them. */
+.markdown:not(.theme-doc-markdown) table code {
+  white-space: nowrap;
+  font-size: 0.86em;
+  padding: 0.1rem 0.35rem;
+}
+
+/* Long display equations scroll within their own block, not the whole page
+   (e.g. the full-alphabet examples in the LaTeX Symbols post on mobile). */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}

@@ -1,0 +1,11 @@
+{
+  "label": "2022",
+  "position": 4,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "slug": "/2022",
+    "title": "CTFs of 2022",
+    "description": "1 event \u00b7 2 writeups. Topics: steganography."
+  }
+}

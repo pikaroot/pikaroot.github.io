@@ -1,0 +1,54 @@
+ctf:
+  label: CTF
+  permalink: /ctf
+  description: Capture The Flag competitions and what I learned from them.
+
+attack-defense:
+  label: Attack & Defense
+  permalink: /attack-defense
+  description: Attack & Defense format competitions, where you patch your own services while attacking others.
+
+malaysia:
+  label: Malaysia
+  permalink: /malaysia
+  description: Events and competitions in Malaysia.
+
+installation:
+  label: Installation
+  permalink: /installation
+  description: Step-by-step installation guides.
+
+sagemath:
+  label: SageMath
+  permalink: /sagemath
+  description: SageMath, the open-source mathematics software system.
+
+debian:
+  label: Debian
+  permalink: /debian
+  description: Debian-based Linux systems.
+
+red-team:
+  label: Red Team
+  permalink: /red-team
+  description: Offensive security and adversary simulation.
+
+havoc:
+  label: HAVOC
+  permalink: /havoc
+  description: The HAVOC command and control (C2) framework.
+
+active-directory:
+  label: Active Directory
+  permalink: /active-directory
+  description: Attacking and understanding Windows Active Directory.
+
+latex:
+  label: LaTeX
+  permalink: /latex
+  description: LaTeX typesetting and math notation.
+
+cheatsheet:
+  label: Cheatsheet
+  permalink: /cheatsheet
+  description: Quick reference lists.

