@@ -259,15 +259,13 @@ pre code,
   table-layout: auto;
 }
 
-/* These reference tables are dense, so compress them so more columns fit
-   the (narrow) content column before any horizontal scroll kicks in. */
 .markdown:not(.theme-doc-markdown) table {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
 }
 
 .markdown:not(.theme-doc-markdown) table th,
 .markdown:not(.theme-doc-markdown) table td {
-  padding: 0.3rem 0.5rem;
+  padding: 0.4rem 0.7rem;
   vertical-align: middle;
 }
 
@@ -286,4 +284,16 @@ pre code,
   overflow-y: hidden;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+/* ---- Justify body text in the blog posts and CTF writeups ---- */
+/* Scoped by the plugin classes Docusaurus puts on <html>, so the tutorial
+   docs (plugin-id-default) are left untouched. Only paragraphs and list
+   items are justified; headings, code blocks and tables are not. */
+.plugin-blog .markdown p,
+.plugin-blog .markdown li,
+.plugin-id-ctfs .markdown p,
+.plugin-id-ctfs .markdown li {
+  text-align: justify;
+  text-justify: inter-word;
 }
