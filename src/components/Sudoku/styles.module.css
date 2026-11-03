@@ -103,6 +103,19 @@
   gap: 0.5rem;
 }
 
+.tabGroup {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Killer mode: keep the difficulty tabs' space so the row doesn't re-centre */
+.tabGroupHidden {
+  visibility: hidden;
+}
+
 .tabDivider {
   width: 1px;
   height: 1.4rem;
@@ -161,6 +174,83 @@
   overflow: hidden;
   background: var(--ifm-background-surface-color);
   outline: none;
+}
+
+/* ---- pause ---- */
+
+.gridWrap {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+/* Opaque cover, so the board can't be studied while the clock is stopped */
+.pauseOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 2px solid var(--ifm-color-emphasis-600, var(--ifm-font-color-secondary));
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 14px, var(--ifm-color-emphasis-200, rgba(127, 127, 127, 0.08)) 14px 15px),
+    var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  cursor: pointer;
+  animation: pauseIn 0.18s ease-out;
+}
+
+.pauseOverlay:focus-visible {
+  outline: 3px solid var(--ifm-color-primary-lighter);
+  outline-offset: 2px;
+}
+
+.pauseIcon {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.pauseTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.pauseHint {
+  color: var(--ifm-font-color-secondary);
+  font-size: 0.9rem;
+}
+
+@keyframes pauseIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.timerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.timerPaused {
+  color: var(--ifm-font-color-secondary);
+  animation: timerBlink 1.2s steps(2, start) infinite;
+}
+
+@keyframes timerBlink {
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pauseOverlay,
+  .timerPaused {
+    animation: none;
+  }
 }
 
 .grid:focus-visible {
@@ -334,6 +424,15 @@
   color: var(--ifm-color-primary);
 }
 
+/* Locked while paused */
+.padKey:disabled,
+.padKey:disabled:hover {
+  border-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-font-color-base);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .padNote {
   font-size: 0.95rem;
   border-style: dashed;
@@ -352,6 +451,15 @@
 
 .actions :global(.button--sm) {
   padding: 0.3rem 0.6rem;
+}
+
+/* Infima's secondary button hardcodes a near-black label colour, which is
+   unreadable on the dark theme. Use the themed body-text colour instead so
+   the labels stay legible (and a touch brighter) in both light and dark. */
+.actions :global(.button--secondary),
+.actions :global(.button--secondary:hover),
+.actions :global(.button--secondary:active) {
+  color: var(--ifm-font-color-base);
 }
 
 .solved {

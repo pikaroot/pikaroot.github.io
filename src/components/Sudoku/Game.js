@@ -14,6 +14,9 @@ import Settings, {DEFAULT_PREFS} from './Settings';
 import styles from './styles.module.css';
 
 const PREFS_KEY = 'sudoku-prefs';
+const HISTORY_LIMIT = 200;
+
+const sameCells = (a, b) => a === b || a.every((v, i) => v === b[i]);
 
 // Cells sharing a row, column or box with each cell.
 const PEERS = Array.from({length: 81}, (_, i) => {
@@ -192,6 +195,7 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   const [showMistakes, setShowMistakes] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
+  const [paused, setPaused] = useState(false);
   const gridRef = useRef(null);
 
   useEffect(() => {
@@ -199,6 +203,62 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   }, [progress, dateKey, variant, game.id]);
 
   const update = setProgress;
+
+  // Undo history: snapshots of entries/notes taken before each edit. Read and
+  // written through refs so quick successive edits never see stale state.
+  const [history, setHistory] = useState([]);
+  const historyRef = useRef(history);
+  const progressRef = useRef(progress);
+  progressRef.current = progress;
+
+  const pushHistory = (snap) => {
+    historyRef.current = [...historyRef.current.slice(-(HISTORY_LIMIT - 1)), snap];
+    setHistory(historyRef.current);
+  };
+
+  // Apply `change(progress) -> {entries, notes}`; records an undo step if it changed anything.
+  const edit = useCallback((change) => {
+    const p = progressRef.current;
+    const next = change(p);
+    if (!next || (sameCells(next.entries, p.entries) && sameCells(next.notes, p.notes))) return;
+    pushHistory({entries: p.entries, notes: p.notes});
+    progressRef.current = {...p, entries: next.entries, notes: next.notes};
+    setProgress((cur) => ({...cur, entries: next.entries, notes: next.notes}));
+  }, []);
+
+  const undo = useCallback(() => {
+    const h = historyRef.current;
+    if (!h.length || revealed || paused) return;
+    const prev = h[h.length - 1];
+    historyRef.current = h.slice(0, -1);
+    setHistory(historyRef.current);
+    const restore = (cur) => ({
+      ...cur,
+      entries: prev.entries,
+      notes: prev.notes,
+      elapsed: prev.elapsed ?? cur.elapsed, // undoing a reset brings the time back too
+    });
+    progressRef.current = restore(progressRef.current);
+    setProgress(restore);
+  }, [revealed, paused]);
+
+  // Ctrl+Z / Cmd+Z anywhere on the page (except while typing in a text field).
+  useEffect(() => {
+    const onKey = (e) => {
+      if (!(e.ctrlKey || e.metaKey) || e.shiftKey || e.altKey || e.key.toLowerCase() !== 'z') return;
+      const t = e.target;
+      const typing =
+        t instanceof HTMLElement &&
+        (t.isContentEditable ||
+          t.tagName === 'TEXTAREA' ||
+          (t.tagName === 'INPUT' && !['checkbox', 'radio', 'button'].includes(t.type)));
+      if (typing) return;
+      e.preventDefault();
+      undo();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [undo]);
 
   const values = useMemo(
     () => game.puzzle.map((v, i) => v || progress.entries[i] || 0),
@@ -220,8 +280,34 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
     gridRef.current?.focus();
   }, []);
 
-  // Timer: counts seconds while the puzzle is open, visible and unsolved.
-  const running = !solved && !revealed;
+  // Pause: stops the timer and locks (and hides) the board until resumed.
+  const canPause = !solved && !revealed;
+  const togglePause = useCallback(() => {
+    if (!canPause) return;
+    setPaused((p) => !p);
+    gridRef.current?.focus();
+  }, [canPause]);
+
+  // Spacebar pauses / resumes from anywhere on the page, except form controls.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || !canPause) return;
+      const t = e.target;
+      if (
+        t instanceof HTMLElement &&
+        (t.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT', 'SUMMARY'].includes(t.tagName))
+      ) {
+        return;
+      }
+      e.preventDefault(); // no page scroll, and no "click" on a focused button
+      togglePause();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [canPause, togglePause]);
+
+  // Timer: counts seconds while the puzzle is open, visible, unsolved and not paused.
+  const running = !solved && !revealed && !paused;
   useEffect(() => {
     if (!running) return undefined;
     const id = setInterval(() => {
@@ -305,17 +391,17 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
     gridRef.current?.focus();
   }, []);
 
-  const canEdit = selected !== null && !game.puzzle[selected] && !revealed;
+  const canEdit = selected !== null && !game.puzzle[selected] && !revealed && !paused;
 
   const enterDigit = useCallback(
     (digit, asNote) => {
       if (!canEdit) return;
       const i = selected;
-      update((p) => {
+      edit((p) => {
         const entries = p.entries.slice();
         const notes = p.notes.slice();
         if (asNote) {
-          if (entries[i]) return p;
+          if (entries[i]) return null;
           notes[i] ^= 1 << (digit - 1);
         } else if (entries[i] === digit) {
           entries[i] = 0;
@@ -329,27 +415,27 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
             });
           }
         }
-        return {...p, entries, notes};
+        return {entries, notes};
       });
     },
-    [canEdit, selected, update, prefs.autoClearNotes, related],
+    [canEdit, selected, edit, prefs.autoClearNotes, related],
   );
 
   const erase = useCallback(() => {
     if (!canEdit) return;
     const i = selected;
-    update((p) => {
+    edit((p) => {
       const entries = p.entries.slice();
       const notes = p.notes.slice();
       if (entries[i]) entries[i] = 0;
       else notes[i] = 0;
-      return {...p, entries, notes};
+      return {entries, notes};
     });
-  }, [canEdit, selected, update]);
+  }, [canEdit, selected, edit]);
 
   const fillNotes = () => {
-    if (revealed) return;
-    update((p) => {
+    if (revealed || paused) return;
+    edit((p) => {
       const v = game.puzzle.map((g, i) => g || p.entries[i]);
       const notes = v.map((val, i) => {
         if (val) return 0;
@@ -359,12 +445,12 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
         });
         return mask;
       });
-      return {...p, notes};
+      return {entries: p.entries, notes};
     });
   };
 
   const onKeyDown = (e) => {
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || paused) return;
     const shiftDigit = e.shiftKey && /^Digit[1-9]$/.test(e.code);
     if (shiftDigit) {
       enterDigit(Number(e.code.slice(5)), true);
@@ -394,6 +480,11 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   };
 
   const reset = () => {
+    const p = progressRef.current;
+    if (p.entries.some(Boolean) || p.notes.some(Boolean)) {
+      pushHistory({entries: p.entries, notes: p.notes, elapsed: p.elapsed});
+    }
+    progressRef.current = blank();
     setProgress(blank());
     setShowMistakes(false);
     setRevealed(false);
@@ -410,42 +501,54 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
-        <div
-          ref={gridRef}
-          className={styles.grid}
-          tabIndex={0}
-          onKeyDown={onKeyDown}
-          role="grid"
-          aria-label={killer ? 'Killer sudoku grid' : 'Sudoku grid'}>
-          {shown.map((v, i) => {
-            const given = game.puzzle[i] !== 0;
-            const g = game.cageOf ? game.cageOf[i] : -1;
-            return (
-              <Cell
-                key={i}
-                index={i}
-                value={v}
-                notes={revealed ? 0 : progress.notes[i]}
-                given={given}
-                killer={killer}
-                inCage={g >= 0}
-                sum={cageInfo ? cageInfo.sums[i] : 0}
-                edges={cageInfo ? cageInfo.edges[i] : 0}
-                selected={selected === i}
-                related={!!relatedSet && relatedSet.has(i)}
-                sameDigit={prefs.highlightSame && !!selValue && v === selValue}
-                sameCage={prefs.highlightCage && g >= 0 && g === selCage}
-                wrong={
-                  !revealed &&
-                  !given &&
-                  !!v &&
-                  ((prefs.showConflicts && conflicts.has(i)) ||
-                    (showMistakes && v !== game.solution[i]))
-                }
-                onSelect={onSelect}
-              />
-            );
-          })}
+        <div className={styles.gridWrap}>
+          <div
+            ref={gridRef}
+            className={styles.grid}
+            tabIndex={0}
+            onKeyDown={onKeyDown}
+            role="grid"
+            aria-hidden={paused || undefined}
+            aria-label={killer ? 'Killer sudoku grid' : 'Sudoku grid'}>
+            {shown.map((v, i) => {
+              const given = game.puzzle[i] !== 0;
+              const g = game.cageOf ? game.cageOf[i] : -1;
+              return (
+                <Cell
+                  key={i}
+                  index={i}
+                  value={v}
+                  notes={revealed ? 0 : progress.notes[i]}
+                  given={given}
+                  killer={killer}
+                  inCage={g >= 0}
+                  sum={cageInfo ? cageInfo.sums[i] : 0}
+                  edges={cageInfo ? cageInfo.edges[i] : 0}
+                  selected={selected === i}
+                  related={!!relatedSet && relatedSet.has(i)}
+                  sameDigit={prefs.highlightSame && !!selValue && v === selValue}
+                  sameCage={prefs.highlightCage && g >= 0 && g === selCage}
+                  wrong={
+                    !revealed &&
+                    !given &&
+                    !!v &&
+                    ((prefs.showConflicts && conflicts.has(i)) ||
+                      (showMistakes && v !== game.solution[i]))
+                  }
+                  onSelect={onSelect}
+                />
+              );
+            })}
+          </div>
+          {paused && (
+            <button type="button" className={styles.pauseOverlay} onClick={togglePause}>
+              <span className={styles.pauseIcon} aria-hidden="true">
+                ⏸
+              </span>
+              <span className={styles.pauseTitle}>Paused</span>
+              <span className={styles.pauseHint}>Press Space or click to resume</span>
+            </button>
+          )}
         </div>
 
         <div className={styles.pad}>
@@ -457,6 +560,7 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
                 noteMode && styles.padNote,
                 prefs.dimDone && digitCounts[d] >= 9 && styles.padDone,
               )}
+              disabled={paused}
               onClick={() => enterDigit(d, noteMode)}>
               {d}
             </button>
@@ -467,31 +571,43 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
           <button
             className={clsx('button button--sm', noteMode ? 'button--primary' : 'button--secondary')}
             aria-pressed={noteMode}
+            disabled={paused}
             onClick={() => setNoteMode((m) => !m)}
             title="Toggle pencil marks (N)">
             ✎ Pencil {noteMode ? 'on' : 'off'}
           </button>
-          <button className="button button--sm button--secondary" onClick={erase}>
+          <button
+            className="button button--sm button--secondary"
+            onClick={undo}
+            disabled={!history.length || revealed || paused}
+            title="Undo (Ctrl+Z)">
+            ↶ Undo
+          </button>
+          <button className="button button--sm button--secondary" disabled={paused} onClick={erase}>
             ⌫ Erase
           </button>
-          <button className="button button--sm button--secondary" onClick={fillNotes}>
+          <button className="button button--sm button--secondary" disabled={paused} onClick={fillNotes}>
             Fill pencil marks
           </button>
         </div>
 
         <div className={styles.actions}>
-          <button className="button button--sm button--secondary" onClick={() => setShowMistakes((m) => !m)}>
+          <button
+            className="button button--sm button--secondary"
+            disabled={paused}
+            onClick={() => setShowMistakes((m) => !m)}>
             {showMistakes ? 'Hide mistakes' : 'Check mistakes'}
           </button>
           <button
             className="button button--sm button--secondary"
+            disabled={paused}
             onClick={() => {
               setRevealed(true);
               setShowMistakes(false);
             }}>
             Show solution
           </button>
-          <button className="button button--sm button--secondary" onClick={reset}>
+          <button className="button button--sm button--secondary" disabled={paused} onClick={reset}>
             Reset
           </button>
         </div>
@@ -505,11 +621,21 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
           {solved && !revealed && (
             <div className={styles.solved}>✅ Solved in {formatTime(progress.elapsed)}</div>
           )}
-          {prefs.showTimer && (
-            <div className={styles.timer} aria-label="Time spent">
-              ⏱ {formatTime(progress.elapsed)}
-            </div>
-          )}
+          <div className={styles.timerRow}>
+            {prefs.showTimer && (
+              <div className={clsx(styles.timer, paused && styles.timerPaused)} aria-label="Time spent">
+                ⏱ {formatTime(progress.elapsed)}
+              </div>
+            )}
+            <button
+              className={clsx('button button--sm', paused ? 'button--primary' : 'button--secondary')}
+              aria-pressed={paused}
+              disabled={!canPause}
+              onClick={togglePause}
+              title="Pause / resume (Space)">
+              {paused ? '▶ Resume' : '⏸ Pause'}
+            </button>
+          </div>
           {prefs.showCountdown && (
             <div className={styles.infoDate}>
               New puzzles in <Countdown />
@@ -526,8 +652,8 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
         <Settings prefs={prefs} setPref={setPref} reset={resetPrefs} mode={prefs.mode} />
 
         <p className={styles.hint}>
-          Keys: 1–9 enter a digit · Shift+1–9 or N toggles pencil marks · Backspace erases · arrows
-          move
+          Keys: 1–9 enter a digit · Shift+1–9 or N toggles pencil marks · Backspace erases · Ctrl+Z
+          undoes · Space pauses · arrows move
         </p>
       </aside>
 
@@ -618,18 +744,24 @@ export default function Game() {
             {label}
           </button>
         ))}
-        {!killer && <span className={styles.tabDivider} aria-hidden="true" />}
-        {!killer &&
-          Object.entries(DIFFICULTIES).map(([key, {label}]) => (
+        {/* Always laid out (just hidden in killer mode) so Classic/Killer never shift. */}
+        <span
+          className={clsx(styles.tabGroup, killer && styles.tabGroupHidden)}
+          aria-hidden={killer || undefined}>
+          <span className={styles.tabDivider} aria-hidden="true" />
+          {Object.entries(DIFFICULTIES).map(([key, {label}]) => (
             <button
               key={key}
               role="tab"
               aria-selected={prefs.difficulty === key}
+              tabIndex={killer ? -1 : undefined}
+              disabled={killer}
               className={clsx(styles.tab, styles.tabSmall, prefs.difficulty === key && styles.tabActive)}
               onClick={() => setPref('difficulty', key)}>
               {label}
             </button>
           ))}
+        </span>
       </div>
 
       {game ? (
