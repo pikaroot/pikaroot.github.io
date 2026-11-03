@@ -1,23 +1,692 @@
 /**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
+ * Landing page. Uses the site palette tokens (--ctp-*, --ifm-color-primary)
+ * so it follows Rosé Pine Dawn (light) and Catppuccin Frappé (dark).
  */
 
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
+.page {
+  --page-pad: clamp(1.25rem, 4vw, 2.5rem);
+  --content-max: 1240px;
+  overflow-x: clip;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero                                                               */
+/* ------------------------------------------------------------------ */
+
+.hero {
   position: relative;
+  padding: clamp(3rem, 8vh, 6rem) var(--page-pad) clamp(3rem, 7vh, 5rem);
   overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid var(--ctp-surface0);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+/* Dotted paper with a soft colour wash */
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(40rem 26rem at 12% 0%, color-mix(in srgb, var(--ctp-mauve) 22%, transparent), transparent 70%),
+    radial-gradient(36rem 24rem at 95% 30%, color-mix(in srgb, var(--ctp-sapphire) 18%, transparent), transparent 70%),
+    radial-gradient(circle, var(--ctp-surface1) 1px, transparent 1.4px) 0 0 / 22px 22px;
+  mask-image: linear-gradient(to bottom, black 60%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent);
 }
 
-.buttons {
+.heroInner {
+  /* the hero pads outside this box, sections pad inside theirs: line them up */
+  max-width: calc(var(--content-max) - 2 * var(--page-pad));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--ctp-subtext0);
+  animation: rise 0.6s ease both;
+}
+
+.prompt {
+  color: var(--ctp-green);
+  font-weight: 600;
+}
+
+.title {
+  margin: 0 0 1.1rem;
+  font-size: clamp(2.4rem, 5.2vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  animation: rise 0.6s ease 0.08s both;
+}
+
+.accent {
+  background: linear-gradient(100deg, var(--ctp-mauve), var(--ctp-sapphire), var(--ctp-teal), var(--ctp-mauve));
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 9s linear infinite;
+}
+
+.lead {
+  max-width: 54ch;
+  margin: 0 0 1.6rem;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--ctp-subtext1);
+  animation: rise 0.6s ease 0.16s both;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 2.2rem;
+  animation: rise 0.6s ease 0.24s both;
+}
+
+.ctaPrimary,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.ctaPrimary {
+  color: var(--ctp-hero-text);
+  background: linear-gradient(120deg, var(--ctp-mauve), var(--ctp-sapphire));
+  box-shadow: 0 8px 22px -8px var(--ctp-mauve);
+}
+.ctaPrimary:hover {
+  color: var(--ctp-hero-text);
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -10px var(--ctp-mauve);
+}
+.ctaGhost {
+  color: var(--ifm-color-primary);
+  background: var(--ctp-surface0);
+  border: 1px solid var(--ctp-surface1);
+}
+.ctaGhost:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  background: var(--ctp-surface1);
+  transform: translateY(-3px);
+}
+
+/* Stats strip, read like a key/value listing */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: start;
+  gap: 0 2.2rem;
+  margin: 0;
+  animation: rise 0.6s ease 0.32s both;
+}
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.stat dt {
+  font-size: 0.8rem;
+  color: var(--ctp-subtext0);
+}
+.stat dd {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ctp-text);
+}
+
+/* ---- fanned card deck ---- */
+
+.deck {
+  position: relative;
+  height: 25rem;
+  animation: rise 0.8s ease 0.2s both;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: min(19rem, 80%);
+  min-height: 15rem;
+  padding: 1.2rem 1.25rem;
+  border-radius: 16px;
+  background: var(--ctp-mantle);
+  border: 1px solid var(--ctp-surface1);
+  box-shadow: 0 22px 50px -26px rgba(0, 0, 0, 0.55);
+  color: var(--ctp-text);
+  text-decoration: none;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  color: var(--ctp-text);
+  text-decoration: none;
+  border-color: var(--ctp-mauve);
+  box-shadow: 0 26px 60px -24px color-mix(in srgb, var(--ctp-mauve) 55%, black);
+}
+
+.cardBack {
+  z-index: 1;
+  transform: translate(-50%, -50%) translate(-3.2rem, -1.2rem) rotate(-9deg);
+}
+.cardMid {
+  z-index: 2;
+  align-items: center;
+  transform: translate(-50%, -50%) translate(3.4rem, -1.6rem) rotate(7deg);
+}
+.cardFront {
+  z-index: 3;
+  transform: translate(-50%, -50%) translate(0, 1.6rem) rotate(-1.5deg);
+}
+
+/* Spread the deck out on hover; lift the card under the pointer */
+.deck:hover .cardBack {
+  transform: translate(-50%, -50%) translate(-8.5rem, -2.5rem) rotate(-13deg);
+}
+.deck:hover .cardMid {
+  transform: translate(-50%, -50%) translate(8.5rem, -2.6rem) rotate(11deg);
+}
+.deck:hover .cardFront {
+  transform: translate(-50%, -50%) translate(0, 2.6rem) rotate(0deg);
+}
+.deck .card:hover {
+  z-index: 4;
+}
+
+.cardKind {
+  align-self: flex-start;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+  background: var(--ctp-surface0);
+}
+.cardMid .cardKind {
+  align-self: center;
+}
+.cardEvent {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--ctp-subtext0);
+}
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.cardMeta {
+  font-size: 0.8rem;
+  color: var(--ctp-subtext0);
+}
+.cardDesc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ctp-subtext1);
+}
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.tag {
+  padding: 0.08rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ctp-subtext1);
+  border: 1px solid var(--ctp-surface1);
+}
+
+/* ---- mini sudoku board ---- */
+
+.mini {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: 11.5rem;
+  aspect-ratio: 1;
+  border: 2px solid var(--ctp-overlay1);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--ctp-base);
+}
+.miniCell {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-right: 1px solid var(--ctp-surface0);
+  border-bottom: 1px solid var(--ctp-surface0);
+}
+.miniCell:nth-child(9n + 3),
+.miniCell:nth-child(9n + 6) {
+  border-right: 1.5px solid var(--ctp-overlay0);
+}
+.miniCell:nth-child(n + 19):nth-child(-n + 27),
+.miniCell:nth-child(n + 46):nth-child(-n + 54) {
+  border-bottom: 1.5px solid var(--ctp-overlay0);
+}
+.miniGiven {
+  color: var(--ifm-color-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Sections                                                           */
+/* ------------------------------------------------------------------ */
+
+.section {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: clamp(2.8rem, 7vh, 4.5rem) var(--page-pad) 0;
+}
+.section:last-child {
+  padding-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+.sectionHead {
+  margin-bottom: 1.8rem;
+}
+.sectionKicker {
+  margin: 0 0 0.3rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  color: var(--ctp-green);
+}
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+}
+.sectionSub {
+  margin: 0.4rem 0 0;
+  color: var(--ctp-subtext0);
+}
+
+/* ---- bento gallery ---- */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    'ctf ctf blog sudoku'
+    'ctf ctf about sudoku';
+  gap: 1rem;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.4rem;
+  border-radius: 18px;
+  background: var(--ctp-mantle);
+  border: 1px solid var(--ctp-surface0);
+  color: var(--ctp-text);
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+/* Pointer-following glow is overkill; a corner wash on hover is enough */
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(22rem 14rem at 100% 0%, color-mix(in srgb, var(--ctp-mauve) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.tile:hover {
+  color: var(--ctp-text);
+  text-decoration: none;
+  transform: translateY(-5px);
+  border-color: var(--ctp-mauve);
+  box-shadow: 0 18px 40px -22px var(--ctp-mauve);
+}
+.tile:hover::after {
+  opacity: 1;
+}
+
+.tileCtf {
+  grid-area: ctf;
+}
+.tileBlog {
+  grid-area: blog;
+}
+.tileSudoku {
+  grid-area: sudoku;
+  align-items: flex-start;
+}
+.tileAbout {
+  grid-area: about;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tileIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 12px;
+  font-size: 1.35rem;
+  background: var(--ctp-surface0);
+  border: 1px solid var(--ctp-surface1);
+}
+.tileTitle {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.tileCtf .tileTitle {
+  font-size: 1.6rem;
+}
+.tileText {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: var(--ctp-subtext1);
+}
+.tileGo {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  transition: transform 0.2s ease;
+}
+.tile:hover .tileGo {
+  transform: translateX(4px);
+}
+
+.yearRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.year {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 10px;
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 700;
+  background: var(--ctp-surface0);
+}
+.year small {
+  font-weight: 500;
+  color: var(--ctp-subtext0);
+}
+
+.miniList {
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px dashed var(--ctp-surface1);
+}
+.miniList li {
+  padding: 0.5rem 0;
+  font-size: 0.92rem;
+  border-bottom: 1px dashed var(--ctp-surface1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.miniEvent {
+  margin-right: 0.5rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  color: var(--ctp-subtext0);
+}
+
+.tileBoard {
+  width: 100%;
+  max-width: 12.5rem;
+  align-self: center;
+}
+.countdown {
+  align-self: center;
+  font-size: 0.82rem;
+  color: var(--ctp-subtext0);
+}
+.countdown strong {
+  font-family: var(--ifm-font-family-monospace);
+  color: var(--ctp-text);
+}
+
+.tileAvatar {
+  flex: none;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ctp-mauve);
+}
+.tileAbout .tileText {
+  margin: 0.25rem 0 0.2rem;
+}
+
+/* ---- recently published ---- */
+
+.feed {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ctp-surface0);
+}
+.feedItem {
+  display: grid;
+  grid-template-columns: 7.5rem 5rem minmax(0, 1fr) auto 1.2rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 0.6rem;
+  border-bottom: 1px solid var(--ctp-surface0);
+  color: var(--ctp-text);
+  text-decoration: none;
+  transition: background 0.18s ease, padding 0.18s ease;
+}
+.feedItem:hover {
+  color: var(--ctp-text);
+  text-decoration: none;
+  background: var(--ctp-mantle);
+  padding-left: 1rem;
+}
+.feedDate {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  color: var(--ctp-subtext0);
+}
+.badge {
+  justify-self: start;
+  padding: 0.1rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ctp-green);
+  background: color-mix(in srgb, var(--ctp-green) 14%, transparent);
+}
+.badgePost {
+  color: var(--ctp-sapphire);
+  background: color-mix(in srgb, var(--ctp-sapphire) 14%, transparent);
+}
+.feedTitle {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.feedEvent {
+  font-weight: 400;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--ctp-subtext0);
+}
+.feedArrow {
+  color: var(--ifm-color-primary);
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.feedItem:hover .feedArrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ---- topic cloud ---- */
+
+.cloud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.7rem;
+}
+.topic {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: calc(0.9rem * var(--weight));
+  color: var(--ctp-subtext1);
+  background: var(--ctp-mantle);
+  border: 1px solid var(--ctp-surface0);
+  text-decoration: none;
+  transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.topic:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-2px);
+}
+.topicCount {
+  font-size: 0.75em;
+  color: var(--ctp-subtext0);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes shimmer {
+  to { background-position: 300% center; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                         */
+/* ------------------------------------------------------------------ */
+
+@media screen and (max-width: 996px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+  .deck {
+    height: 24rem;
+    max-width: 34rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'ctf ctf'
+      'blog sudoku'
+      'about sudoku';
+  }
+  .feedItem {
+    grid-template-columns: 6.5rem 4.6rem minmax(0, 1fr) 1.2rem;
+  }
+  .feedItem .tags {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .stats {
+    grid-template-columns: repeat(2, auto);
+    gap: 0.8rem 2.2rem;
+  }
+  /* The deck becomes a plain stack of cards on phones */
+  .deck {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .card,
+  .deck:hover .card {
+    position: static;
+    width: 100%;
+    min-height: 0;
+    transform: none;
+  }
+  .bento {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'ctf' 'blog' 'sudoku' 'about';
+  }
+  .feedItem {
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem 0.8rem;
+  }
+  .feedDate {
+    grid-column: 1;
+  }
+  .badge {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+  .feedTitle {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+  .feedArrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kicker,
+  .title,
+  .accent,
+  .lead,
+  .ctas,
+  .stats,
+  .deck {
+    animation: none;
+  }
+  .card {
+    transition: none;
+  }
 }

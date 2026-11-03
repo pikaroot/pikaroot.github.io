@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
+import Reveal from '@site/src/components/Reveal';
 import styles from './styles.module.css';
 
 /* ------------------------------------------------------------------ */
@@ -20,7 +21,7 @@ const PROFILE = {
     'CTF Player',
     'Challenge Author',
   ],
-  location: 'Batu Caves, Selangor, Malaysia',
+  location: 'Malaysia',
   company: 'Intertek NTA',
   blurb:
     "David here — a Malaysia-based offensive security practitioner. I break things on purpose: web application and AI/LLM security assessments by day, capture-the-flag by night. I author cryptography challenges for the local CTF scene and love turning tricky bugs into clear, actionable findings.",
@@ -143,43 +144,6 @@ const LANGUAGES = [
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
-// Reveal children with a fade/slide once they scroll into view.
-function Reveal({children, className = '', delay = 0, as: Tag = 'div'}) {
-  const ref = useRef(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return undefined;
-    if (typeof IntersectionObserver === 'undefined') {
-      setShown(true);
-      return undefined;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShown(true);
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      {threshold: 0.15},
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <Tag
-      ref={ref}
-      className={`${styles.reveal} ${shown ? styles.revealIn : ''} ${className}`}
-      style={{transitionDelay: `${delay}ms`}}>
-      {children}
-    </Tag>
-  );
-}
-
 // Count a number up from 0 when it first scrolls into view.
 function CountUp({value, decimals = 0, suffix = ''}) {
   const ref = useRef(null);
@@ -246,54 +210,153 @@ function Hero() {
       <div className={styles.blob2} aria-hidden="true" />
       <div className={styles.gridOverlay} aria-hidden="true" />
 
-      <div className={`container ${styles.heroInner}`}>
-        <div className={styles.avatarWrap}>
-          <span className={styles.avatarRing} aria-hidden="true" />
-          <img className={styles.avatar} src={avatar} alt={PROFILE.name} />
+      <div className={styles.heroInner}>
+        {/* Left: identity + call to action */}
+        <div className={styles.heroIntro}>
+          <div className={styles.heroId}>
+            <div className={styles.avatarWrap}>
+              <span className={styles.avatarRing} aria-hidden="true" />
+              <img className={styles.avatar} src={avatar} alt={PROFILE.name} />
+            </div>
+            <div>
+              <p className={styles.kicker}>
+                <span className={styles.statusDot} aria-hidden="true" />
+                Available for offensive security work
+              </p>
+              <Heading as="h1" className={styles.name}>
+                {PROFILE.name}
+              </Heading>
+              <span className={styles.alias}>@{PROFILE.alias}</span>
+            </div>
+          </div>
+
+          <div className={styles.roleSwap} aria-live="polite">
+            <span className={styles.rolePrompt}>~$</span>
+            <span key={roleIdx} className={styles.role}>
+              {PROFILE.roles[roleIdx]}
+            </span>
+            <span className={styles.caret} aria-hidden="true" />
+          </div>
+
+          <p className={styles.blurb}>{PROFILE.blurb}</p>
+
+          <p className={styles.meta}>
+            <span>📍 {PROFILE.location}</span>
+            <span>💼 {PROFILE.company}</span>
+          </p>
+
+          <div className={styles.ctaRow}>
+            <Link className={styles.ctaPrimary} to="/ctfs">
+              View CTF Writeups
+            </Link>
+            <Link className={styles.ctaGhost} to="/blog">
+              Read the Blog
+            </Link>
+            <Link
+              className={styles.ctaGhost}
+              href="https://www.linkedin.com/in/limweixun/">
+              LinkedIn ↗
+            </Link>
+          </div>
         </div>
 
-        <p className={styles.kicker}>Hi, I&apos;m</p>
-        <Heading as="h1" className={styles.name}>
-          {PROFILE.name}
-          <span className={styles.alias}>@{PROFILE.alias}</span>
-        </Heading>
-
-        <div className={styles.roleSwap} aria-live="polite">
-          <span className={styles.rolePrompt}>~$</span>
-          <span key={roleIdx} className={styles.role}>
-            {PROFILE.roles[roleIdx]}
-          </span>
-          <span className={styles.caret} aria-hidden="true" />
-        </div>
-
-        <p className={styles.blurb}>{PROFILE.blurb}</p>
-
-        <p className={styles.meta}>
-          <span>📍 {PROFILE.location}</span>
-          <span>💼 {PROFILE.company}</span>
-        </p>
-
-        <div className={styles.ctaRow}>
-          <Link className={styles.ctaPrimary} to="/ctfs">
-            View CTF Writeups
-          </Link>
-          <Link className={styles.ctaGhost} to="/blog">
-            Read the Blog
-          </Link>
-          <Link
-            className={styles.ctaGhost}
-            href="https://www.linkedin.com/in/limweixun/">
-            LinkedIn ↗
-          </Link>
-        </div>
+        {/* Right: terminal window */}
+        <Terminal />
       </div>
     </header>
   );
 }
 
+const TERMINAL_LINES = [
+  {type: 'cmd', text: 'whoami'},
+  {type: 'out', text: 'wei_xun_lim — offensive security engineer @ Intertek NTA'},
+  {type: 'cmd', text: 'cat ~/focus.txt'},
+  {type: 'out', text: 'web_app_security   ai_llm_red_teaming   cryptography_ctf'},
+  {type: 'cmd', text: 'sudo ./break_things.sh --scope web,ai,infra'},
+  {type: 'ok', text: '[+] foothold acquired → turning bugs into clear findings'},
+  {type: 'cmd', text: ''},
+];
+
+function Terminal() {
+  // Reveal the lines one by one, like a live session.
+  const [shown, setShown] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    let timer;
+    const start = () => {
+      let i = 0;
+      const step = () => {
+        i += 1;
+        setShown(i);
+        if (i < TERMINAL_LINES.length) {
+          timer = setTimeout(step, TERMINAL_LINES[i - 1].type === 'cmd' ? 650 : 420);
+        }
+      };
+      step();
+    };
+    if (typeof IntersectionObserver === 'undefined') {
+      setShown(TERMINAL_LINES.length);
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          io.unobserve(el);
+          start();
+        }
+      },
+      {threshold: 0.3},
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className={styles.terminal}>
+      <div className={styles.termBar}>
+        <span className={`${styles.termDot} ${styles.termRed}`} />
+        <span className={`${styles.termDot} ${styles.termYellow}`} />
+        <span className={`${styles.termDot} ${styles.termGreen}`} />
+        <span className={styles.termTitle}>root@pikaroot: ~ — zsh</span>
+      </div>
+      <div className={styles.termBody}>
+        {TERMINAL_LINES.slice(0, shown).map((line, i) => {
+          const isLast = i === shown - 1 && i === TERMINAL_LINES.length - 1;
+          if (line.type === 'cmd') {
+            return (
+              <div key={i} className={styles.termLine}>
+                <span className={styles.termPrompt}>
+                  root@pikaroot<span className={styles.termPath}>:~$</span>
+                </span>{' '}
+                <span className={styles.termCmd}>{line.text}</span>
+                {isLast && <span className={styles.termCaret} aria-hidden="true" />}
+              </div>
+            );
+          }
+          return (
+            <div
+              key={i}
+              className={`${styles.termOut} ${
+                line.type === 'ok' ? styles.termOk : ''
+              }`}>
+              {line.text}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Stats() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <div className={styles.statsGrid}>
         {STATS.map((s, i) => (
           <Reveal key={s.label} className={styles.statCard} delay={i * 90}>
@@ -321,7 +384,7 @@ function SectionTitle({children, sub}) {
 
 function Focus() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <SectionTitle sub="Where I spend most of my offensive security time.">
         Focus Areas
       </SectionTitle>
@@ -349,7 +412,7 @@ function Focus() {
 
 function Journey() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <SectionTitle sub="Where I work, build and learn.">Journey</SectionTitle>
       <div className={styles.timeline}>
         <span className={styles.timelineLine} aria-hidden="true" />
@@ -381,7 +444,7 @@ function Journey() {
 
 function Certs() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <SectionTitle sub="Offensive security, red teaming and cloud.">
         Certifications
       </SectionTitle>
@@ -400,7 +463,7 @@ function Certs() {
 
 function Ctf() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <SectionTitle sub="A few highlights from the scoreboard.">
         CTF Trophy Cabinet
       </SectionTitle>
@@ -427,7 +490,7 @@ function Ctf() {
 
 function SkillsAndLangs() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <div className={styles.twoCol}>
         <div>
           <SectionTitle>Toolkit</SectionTitle>
@@ -469,7 +532,7 @@ function SkillsAndLangs() {
 
 function Outro() {
   return (
-    <section className={`container ${styles.section}`}>
+    <section className={styles.section}>
       <Reveal className={styles.outro}>
         <h2 className={styles.outroTitle}>Let&apos;s connect</h2>
         <p className={styles.outroText}>

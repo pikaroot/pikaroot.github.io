@@ -12,8 +12,8 @@ import {latteTheme, frappeTheme} from './src/theme/prism-catppuccin.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'pikaroot',
+  tagline: 'Offensive security notes, CTF writeups and a daily sudoku.',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -49,6 +49,8 @@ const config = {
   },
 
   plugins: [
+    // Feeds the landing page with the CTF writeups and blog posts
+    './plugins/site-index.js',
     [
       // Second docs instance for /ctfs, laid out like the /docs tutorial
       '@docusaurus/plugin-content-docs',
@@ -113,18 +115,12 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'My Site',
+        title: 'pikaroot',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'pikaroot Logo',
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
           {
             type: 'docSidebar',
             sidebarId: 'ctfsSidebar',
@@ -136,7 +132,7 @@ const config = {
           {to: '/sudoku', label: 'Sudoku', position: 'left'},
           {to: '/about', label: 'About', position: 'right'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/pikaroot',
             label: 'GitHub',
             position: 'right',
           },
@@ -146,50 +142,33 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Explore',
             items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-              {
-                label: 'CTFs',
-                to: '/ctfs',
-              },
+              {label: 'CTF Writeups', to: '/ctfs'},
+              {label: 'Blog', to: '/blog'},
+              {label: 'Daily Sudoku', to: '/sudoku'},
+              {label: 'About', to: '/about'},
             ],
           },
           {
-            title: 'Community',
+            title: 'Browse',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
-              },
+              {label: 'Writeups by tag', to: '/ctfs/tags'},
+              {label: 'Posts by tag', to: '/blog/tags'},
+              {label: 'Blog archive', to: '/blog/archive'},
+              // pathname:// marks a static file (not a page route) for the link checker
+              {label: 'RSS feed', href: 'pathname:///blog/rss.xml'},
             ],
           },
           {
-            title: 'More',
+            title: 'Connect',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
+              {label: 'LinkedIn', href: 'https://www.linkedin.com/in/limweixun/'},
+              {label: 'GitHub', href: 'https://github.com/pikaroot'},
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} pikaroot · Built with Docusaurus.`,
       },
       prism: {
         theme: latteTheme,
