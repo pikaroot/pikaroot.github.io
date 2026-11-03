@@ -321,3 +321,45 @@ pre code,
   text-align: justify;
   text-justify: inter-word;
 }
+
+/* ============================================================
+   Wider, GitBook-style layout + split-screen responsiveness
+   ============================================================ */
+
+:root {
+  /* Use more horizontal space (Infima defaults are 1140 / 1416). */
+  --ifm-container-width: 1280px;
+  --ifm-container-width-xl: 1600px;
+}
+
+/* Medium / split-screen widths — e.g. the browser taking half a monitor.
+   A 300px nav rail plus the right-hand "On this page" list squeeze the
+   article into a cramped middle column. Slim the rail and drop the TOC so
+   the reading column stays wide, the way GitBook keeps content front and
+   centre. Scoped to the docs plugins (tutorial + CTFs); the blog keeps its
+   own layout. */
+@media (min-width: 997px) and (max-width: 1340px) {
+  :root {
+    --doc-sidebar-width: 255px;
+  }
+
+  /* Hide the right-hand table-of-contents column (normal declaration, so
+     an unlayered rule like this one wins on the cascade). */
+  .plugin-docs .row > .col:has(.theme-doc-toc-desktop) {
+    display: none;
+  }
+}
+
+/* …and let the article take the full width of the freed row. Docusaurus
+   caps this column at `max-width: 75% !important` inside its theme-classic
+   cascade layer, and a layered !important beats an unlayered one at any
+   specificity. For !important the layer order is reversed, so the earliest
+   layer (infima) wins — place the override there. */
+@layer docusaurus.infima {
+  @media (min-width: 997px) and (max-width: 1340px) {
+    html.plugin-docs .row > .col[class*='docItemCol'] {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+}
