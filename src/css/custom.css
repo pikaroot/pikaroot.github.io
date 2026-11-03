@@ -3,99 +3,110 @@
 @import '@fontsource-variable/jetbrains-mono';
 
 /**
- * Light mode: Rosé Pine Dawn. Dark mode: Catppuccin Frappé.
- * Palettes: https://rosepinetheme.com/palette, https://catppuccin.com/palette
+ * KEVlar theme — zinc + indigo.
+ * Dark mode mirrors the KEVlar app (zinc-950 base, indigo-500 accent, rose
+ * highlights). Light mode is the same accent family on light zinc neutrals.
  *
- * Each mode only defines the --ctp-* palette. The shared mapping to
+ * Each mode only defines the --ctp-* palette slots; the shared mapping to
  * Infima variables further down uses those, so both modes stay in sync.
  */
 
-/* Rosé Pine Dawn (light), mapped onto the --ctp-* names */
+/* Light: zinc neutrals + indigo accent (matched to KEVlar) */
 :root {
-  --ctp-rosewater: #d7827e;
-  --ctp-flamingo: #d7827e;
-  --ctp-pink: #d7827e;
-  --ctp-mauve: #7e6a9a;
-  --ctp-red: #b4637a;
-  --ctp-maroon: #b4637a;
-  --ctp-peach: #d7827e;
-  --ctp-yellow: #ea9d34;
-  --ctp-green: #56949f;
-  --ctp-teal: #56949f;
-  --ctp-sky: #56949f;
-  --ctp-sapphire: #286983;
-  --ctp-blue: #286983;
-  --ctp-lavender: #907aa9;
-  --ctp-text: #575279;
-  --ctp-subtext1: #6a6585;
-  --ctp-subtext0: #797593;
-  --ctp-overlay2: #797593;
-  --ctp-overlay1: #8a8599;
-  --ctp-overlay0: #9893a5;
-  --ctp-surface2: #bfb9c3;
-  --ctp-surface1: #cecacd;
-  --ctp-surface0: #e4dcd6;
-  --ctp-base: #faf4ed;
-  --ctp-mantle: #fffaf3;
-  --ctp-crust: #f2e9e1;
+  /* Neutrals — zinc (light) */
+  --ctp-base: #fafafa;      /* page background  — zinc-50  */
+  --ctp-mantle: #ffffff;    /* navbar / cards              */
+  --ctp-crust: #f4f4f5;     /* footer           — zinc-100 */
+  --ctp-surface0: #f4f4f5;  /* code bg          — zinc-100 */
+  --ctp-surface1: #e4e4e7;  /* borders          — zinc-200 */
+  --ctp-surface2: #d4d4d8;  /* stronger borders — zinc-300 */
+  --ctp-overlay0: #a1a1aa;  /* zinc-400 */
+  --ctp-overlay1: #71717a;  /* zinc-500 */
+  --ctp-overlay2: #52525b;  /* zinc-600 */
+  --ctp-subtext0: #52525b;  /* muted text       — zinc-600 */
+  --ctp-subtext1: #3f3f46;  /* zinc-700 */
+  --ctp-text: #18181b;      /* body text        — zinc-900 */
 
-  /* Accent: soft iris purple */
-  --ifm-color-primary: #7e6a9a;
-  --ifm-color-primary-dark: #725f8c;
-  --ifm-color-primary-darker: #6c5a85;
-  --ifm-color-primary-darkest: #594a6e;
-  --ifm-color-primary-light: #8a76a6;
-  --ifm-color-primary-lighter: #907aa9;
-  --ifm-color-primary-lightest: #a591ba;
+  /* Accents */
+  --ctp-mauve: #6366f1;     /* indigo-500 — hero / brand accent */
+  --ctp-red: #e11d48;       /* rose-600  */
+  --ctp-maroon: #e11d48;
+  --ctp-peach: #ea580c;
+  --ctp-yellow: #d97706;    /* amber-600 */
+  --ctp-green: #059669;     /* emerald-600 */
+  --ctp-teal: #0d9488;
+  --ctp-sky: #0284c7;
+  --ctp-sapphire: #4f46e5;  /* info — indigo-600 */
+  --ctp-blue: #4f46e5;
+  --ctp-lavender: #818cf8;
 
-  --ctp-hero-text: #fffaf3;
-  --ctp-selection: rgba(144, 122, 169, 0.25);
-  --ifm-table-stripe-background: rgba(228, 220, 214, 0.45);
-  --docusaurus-highlighted-code-line-bg: rgba(206, 202, 205, 0.4);
+  /* Primary accent: indigo (deepened for contrast on white) */
+  --ifm-color-primary: #4f46e5;
+  --ifm-color-primary-dark: #4338ca;
+  --ifm-color-primary-darker: #3730a3;
+  --ifm-color-primary-darkest: #312e81;
+  --ifm-color-primary-light: #6366f1;
+  --ifm-color-primary-lighter: #818cf8;
+  --ifm-color-primary-lightest: #a5b4fc;
+
+  --ctp-hero-text: #ffffff;
+  --ctp-selection: rgba(99, 102, 241, 0.18);
+  --ifm-table-stripe-background: rgba(244, 244, 245, 0.7);
+  --docusaurus-highlighted-code-line-bg: rgba(228, 228, 231, 0.6);
+
+  /* KEVlar body glow (light) */
+  --kev-glow-1: rgba(99, 102, 241, 0.06);
+  --kev-glow-2: rgba(225, 29, 72, 0.035);
+  --kev-grid-line: rgba(63, 63, 70, 0.05);
 }
 
-/* Frappé (dark) */
+/* Dark: KEVlar (zinc-950 base + indigo accent) */
 [data-theme='dark'] {
-  --ctp-rosewater: #f2d5cf;
-  --ctp-flamingo: #eebebe;
-  --ctp-pink: #f4b8e4;
-  --ctp-mauve: #ca9ee6;
-  --ctp-red: #e78284;
-  --ctp-maroon: #ea999c;
-  --ctp-peach: #ef9f76;
-  --ctp-yellow: #e5c890;
-  --ctp-green: #a6d189;
-  --ctp-teal: #81c8be;
-  --ctp-sky: #99d1db;
-  --ctp-sapphire: #85c1dc;
-  --ctp-blue: #8caaee;
-  --ctp-lavender: #babbf1;
-  --ctp-text: #c6d0f5;
-  --ctp-subtext1: #b5bfe2;
-  --ctp-subtext0: #a5adce;
-  --ctp-overlay2: #949cbb;
-  --ctp-overlay1: #838ba7;
-  --ctp-overlay0: #737994;
-  --ctp-surface2: #626880;
-  --ctp-surface1: #51576d;
-  --ctp-surface0: #414559;
-  --ctp-base: #303446;
-  --ctp-mantle: #292c3c;
-  --ctp-crust: #232634;
+  /* Neutrals — zinc (dark) */
+  --ctp-base: #09090b;      /* page background  — zinc-950 */
+  --ctp-mantle: #121214;    /* navbar / cards              */
+  --ctp-crust: #060607;     /* footer (darkest)           */
+  --ctp-surface0: #1c1c20;  /* code bg                     */
+  --ctp-surface1: #27272a;  /* borders          — zinc-800 */
+  --ctp-surface2: #3f3f46;  /* stronger borders — zinc-700 */
+  --ctp-overlay0: #52525b;  /* zinc-600 */
+  --ctp-overlay1: #71717a;  /* zinc-500 */
+  --ctp-overlay2: #8b8b93;
+  --ctp-subtext0: #a1a1aa;  /* muted text       — zinc-400 */
+  --ctp-subtext1: #d4d4d8;  /* zinc-300 */
+  --ctp-text: #e4e4e7;      /* body text        — zinc-200 */
 
-  /* Accent: mauve */
-  --ifm-color-primary: #ca9ee6;
-  --ifm-color-primary-dark: #b97fde;
-  --ifm-color-primary-darker: #b170da;
-  --ifm-color-primary-darkest: #9741ce;
-  --ifm-color-primary-light: #cfa8e8;
-  --ifm-color-primary-lighter: #d2adea;
-  --ifm-color-primary-lightest: #dabbed;
+  /* Accents */
+  --ctp-mauve: #6366f1;     /* indigo-500 — hero / brand accent */
+  --ctp-red: #f43f5e;       /* rose-500  */
+  --ctp-maroon: #fb7185;
+  --ctp-peach: #fb923c;
+  --ctp-yellow: #f59e0b;    /* amber-500 */
+  --ctp-green: #10b981;     /* emerald-500 */
+  --ctp-teal: #2dd4bf;
+  --ctp-sky: #38bdf8;
+  --ctp-sapphire: #818cf8;  /* info — indigo-400 */
+  --ctp-blue: #818cf8;
+  --ctp-lavender: #a5b4fc;
 
-  --ctp-hero-text: var(--ctp-crust);
-  --ctp-selection: rgba(202, 158, 230, 0.3);
-  --ifm-table-stripe-background: rgba(65, 69, 89, 0.4);
-  --docusaurus-highlighted-code-line-bg: rgba(98, 104, 128, 0.35);
+  /* Primary accent: indigo-500 (KEVlar) */
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+
+  --ctp-hero-text: #f4f4f5;
+  --ctp-selection: rgba(99, 102, 241, 0.3);
+  --ifm-table-stripe-background: rgba(39, 39, 42, 0.5);
+  --docusaurus-highlighted-code-line-bg: rgba(63, 63, 70, 0.4);
+
+  /* KEVlar body glow (dark) — radial indigo + rose, like the app */
+  --kev-glow-1: rgba(99, 102, 241, 0.08);
+  --kev-glow-2: rgba(225, 29, 72, 0.05);
+  --kev-grid-line: rgba(63, 63, 70, 0.15);
 }
 
 /* Shared mapping from the palette to Infima */
@@ -142,6 +153,19 @@
 
 ::selection {
   background: var(--ctp-selection);
+}
+
+/* KEVlar signature backdrop: fixed radial glows (indigo + rose) over a faint
+   44px grid, layered on top of the Infima background colour. */
+body {
+  background-image:
+    radial-gradient(60rem 40rem at 50% -8%, var(--kev-glow-1), transparent 70%),
+    radial-gradient(42rem 30rem at 92% 4%, var(--kev-glow-2), transparent 70%),
+    linear-gradient(var(--kev-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--kev-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+  background-position: center top;
+  background-attachment: fixed;
 }
 
 .navbar,
