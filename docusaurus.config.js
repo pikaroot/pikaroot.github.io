@@ -10,6 +10,13 @@ import {latteTheme, frappeTheme} from './src/theme/prism-catppuccin.js';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// KEVlar isn't exposed to the internet yet, so its tab points at the local
+// instance during `npm start` and is left out of production builds. Once it
+// has a public address, build with KEVLAR_URL=https://... to include it.
+const kevlarUrl =
+  process.env.KEVLAR_URL ||
+  (process.env.NODE_ENV === 'production' ? null : 'http://localhost:3100');
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'pikaroot',
@@ -130,6 +137,7 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {to: '/sudoku', label: 'Sudoku', position: 'left'},
+          ...(kevlarUrl ? [{href: kevlarUrl, label: 'KEVlar', position: 'left'}] : []),
           {to: '/about', label: 'About', position: 'right'},
           {
             href: 'https://github.com/pikaroot',
