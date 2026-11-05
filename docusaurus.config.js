@@ -55,6 +55,20 @@ const config = {
     format: 'detect',
   },
 
+  // Page-to-page transition on client-side navigation
+  clientModules: ['./src/clientModules/routeTransition.js'],
+
+  // Runs before first paint: the landing-page intro plays once per session,
+  // so returning visitors never see it flash.
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML:
+        "try{if(sessionStorage.getItem('pk-intro'))document.documentElement.setAttribute('data-intro-seen','')}catch(e){}",
+    },
+  ],
+
   plugins: [
     // Feeds the landing page with the CTF writeups and blog posts
     './plugins/site-index.js',

@@ -4,6 +4,7 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Heading from '@theme/Heading';
 import Reveal from '@site/src/components/Reveal';
+import CountUp from '@site/src/components/CountUp';
 import styles from './styles.module.css';
 
 /* ------------------------------------------------------------------ */
@@ -144,49 +145,6 @@ const LANGUAGES = [
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
-// Count a number up from 0 when it first scrolls into view.
-function CountUp({value, decimals = 0, suffix = ''}) {
-  const ref = useRef(null);
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return undefined;
-    if (typeof IntersectionObserver === 'undefined') {
-      setDisplay(value);
-      return undefined;
-    }
-    let raf;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        io.unobserve(el);
-        const duration = 1400;
-        const start = performance.now();
-        const tick = (now) => {
-          const t = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-          setDisplay(value * eased);
-          if (t < 1) raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-      },
-      {threshold: 0.4},
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [value]);
-
-  return (
-    <span ref={ref}>
-      {display.toFixed(decimals)}
-      {suffix}
-    </span>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Sections                                                           */

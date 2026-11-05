@@ -1,12 +1,118 @@
 /**
  * Landing page. Uses the site palette tokens (--ctp-*, --ifm-color-primary)
- * so it follows Rosé Pine Dawn (light) and Catppuccin Frappé (dark).
+ * for the light/dark sections; the full-bleed bands stay dark in both themes.
+ *
+ * Motion timeline: everything in the hero starts after --intro, the length
+ * of the one-per-session intro (0 once it has been seen).
  */
 
 .page {
   --page-pad: clamp(1.25rem, 4vw, 2.5rem);
   --content-max: 1240px;
+  --inner-max: calc(var(--content-max) - 2 * var(--page-pad));
+  --intro: 0s;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow-x: clip;
+}
+
+:global(html:not([data-intro-seen])) .page {
+  --intro: 1.3s;
+}
+
+/* ------------------------------------------------------------------ */
+/* Intro: wordmark draws itself, then a diagonal wipe                 */
+/* ------------------------------------------------------------------ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  background:
+    radial-gradient(36rem 22rem at 50% 45%, rgba(99, 102, 241, 0.22), transparent 70%),
+    #09090b;
+  cursor: pointer;
+  animation: intro-out 0.65s cubic-bezier(0.7, 0, 0.3, 1) 1.15s forwards;
+}
+.introSkipped {
+  animation: intro-out 0.35s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+:global(html[data-intro-seen]) .intro {
+  display: none;
+}
+
+@keyframes intro-out {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% -25%, 0 -5%);
+    visibility: hidden;
+  }
+}
+
+.introMark {
+  width: min(520px, 82vw);
+  overflow: visible;
+}
+.introMark text {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 92px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  fill: transparent;
+  stroke: #818cf8;
+  stroke-width: 1.4;
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  animation:
+    intro-draw 1s ease-in-out forwards,
+    intro-fill 0.4s ease 0.75s forwards;
+}
+@keyframes intro-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes intro-fill {
+  to {
+    fill: #f4f4f5;
+    stroke: transparent;
+  }
+}
+
+.introBar {
+  position: relative;
+  width: min(260px, 60vw);
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+.introBar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #6366f1, #e11d48);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: intro-bar 1.05s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+@keyframes intro-bar {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.introHint {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #a1a1aa;
+  animation: flicker 1s linear 0.2s 1;
 }
 
 /* ------------------------------------------------------------------ */
@@ -15,10 +121,13 @@
 
 .hero {
   position: relative;
-  padding: clamp(3rem, 8vh, 6rem) var(--page-pad) clamp(3rem, 7vh, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--ifm-navbar-height));
+  padding: clamp(2.5rem, 6vh, 4.5rem) var(--page-pad) 1.25rem;
   overflow: hidden;
   isolation: isolate;
-  border-bottom: 1px solid var(--ctp-surface0);
 }
 
 /* Dotted paper with a soft colour wash */
@@ -35,8 +144,8 @@
 }
 
 .heroInner {
-  /* the hero pads outside this box, sections pad inside theirs: line them up */
-  max-width: calc(var(--content-max) - 2 * var(--page-pad));
+  width: 100%;
+  max-width: var(--inner-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -49,22 +158,63 @@
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.9rem;
   color: var(--ctp-subtext0);
-  animation: rise 0.6s ease both;
+  animation: rise 0.6s ease var(--intro) both;
 }
-
 .prompt {
   color: var(--ctp-green);
   font-weight: 600;
 }
+/* "cat README.md" types itself out */
+.typed {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  border-right: 2px solid var(--ctp-green);
+  animation:
+    typing 0.8s steps(13) calc(var(--intro) + 0.25s) forwards,
+    caret 1s step-end infinite;
+}
+@keyframes typing {
+  to {
+    width: 13.2ch;
+  }
+}
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
 
+/* Each word rises out of its own mask */
 .title {
   margin: 0 0 1.1rem;
   font-size: clamp(2.4rem, 5.2vw, 4rem);
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.03em;
-  animation: rise 0.6s ease 0.08s both;
+}
+.wordMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.word {
+  display: inline-block;
+  animation: word-rise 0.9s var(--ease-out) calc(var(--intro) + 0.15s + var(--i) * 0.08s) both;
+}
+@keyframes word-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
 }
 
+/* "offensive side." — gradient, a neon flicker on arrival, then a slow shimmer */
 .accent {
   background: linear-gradient(100deg, var(--ctp-mauve), var(--ctp-sapphire), var(--ctp-teal), var(--ctp-mauve));
   background-size: 300% auto;
@@ -72,7 +222,34 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: shimmer 9s linear infinite;
+  animation:
+    word-rise 0.9s var(--ease-out) calc(var(--intro) + 0.15s + var(--i) * 0.08s) both,
+    flicker 1.1s linear calc(var(--intro) + 1.05s) 1,
+    shimmer 9s linear infinite;
+}
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--ctp-mauve) 55%, transparent));
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.25;
+    filter: none;
+  }
+}
+@keyframes shimmer {
+  to {
+    background-position: 300% center;
+  }
 }
 
 .lead {
@@ -81,15 +258,14 @@
   font-size: 1.12rem;
   line-height: 1.7;
   color: var(--ctp-subtext1);
-  animation: rise 0.6s ease 0.16s both;
+  animation: rise 0.7s ease calc(var(--intro) + 0.6s) both;
 }
 
 .ctas {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
-  margin-bottom: 2.2rem;
-  animation: rise 0.6s ease 0.24s both;
+  animation: rise 0.7s ease calc(var(--intro) + 0.72s) both;
 }
 
 .ctaPrimary,
@@ -125,37 +301,11 @@
   transform: translateY(-3px);
 }
 
-/* Stats strip, read like a key/value listing */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  justify-content: start;
-  gap: 0 2.2rem;
-  margin: 0;
-  animation: rise 0.6s ease 0.32s both;
-}
-.stat {
-  display: flex;
-  flex-direction: column-reverse;
-}
-.stat dt {
-  font-size: 0.8rem;
-  color: var(--ctp-subtext0);
-}
-.stat dd {
-  margin: 0;
-  font-size: 1.7rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--ctp-text);
-}
-
 /* ---- fanned card deck ---- */
 
 .deck {
   position: relative;
   height: 25rem;
-  animation: rise 0.8s ease 0.2s both;
 }
 
 .card {
@@ -174,7 +324,16 @@
   box-shadow: 0 22px 50px -26px rgba(0, 0, 0, 0.55);
   color: var(--ctp-text);
   text-decoration: none;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, box-shadow 0.3s ease;
+  transition: transform 0.45s var(--ease-out), border-color 0.2s ease, box-shadow 0.3s ease;
+  /* deal the cards in; `translate`/`rotate` compose with the layout transform */
+  animation: card-in 0.9s var(--ease-out) both;
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    translate: 90px 30px;
+    rotate: 10deg;
+  }
 }
 .card:hover {
   color: var(--ctp-text);
@@ -186,15 +345,18 @@
 .cardBack {
   z-index: 1;
   transform: translate(-50%, -50%) translate(-3.2rem, -1.2rem) rotate(-9deg);
+  animation-delay: calc(var(--intro) + 0.45s);
 }
 .cardMid {
   z-index: 2;
   align-items: center;
   transform: translate(-50%, -50%) translate(3.4rem, -1.6rem) rotate(7deg);
+  animation-delay: calc(var(--intro) + 0.6s);
 }
 .cardFront {
   z-index: 3;
   transform: translate(-50%, -50%) translate(0, 1.6rem) rotate(-1.5deg);
+  animation-delay: calc(var(--intro) + 0.75s);
 }
 
 /* Spread the deck out on hover; lift the card under the pointer */
@@ -263,6 +425,128 @@
   border: 1px solid var(--ctp-surface1);
 }
 
+/* ---- attack path: draws itself recon → root ---- */
+
+.routeWrap {
+  width: 100%;
+  max-width: var(--inner-max);
+  margin: clamp(1.5rem, 5vh, 3.5rem) auto 0;
+}
+.route {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.routeGhost {
+  fill: none;
+  stroke: var(--ctp-surface2);
+  stroke-width: 2;
+  stroke-dasharray: 2 9;
+  stroke-linecap: round;
+  animation: fade-in 0.6s ease calc(var(--intro) + 0.5s) both;
+}
+.routeLine {
+  fill: none;
+  stroke: var(--ifm-color-primary);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.4s cubic-bezier(0.45, 0, 0.2, 1) calc(var(--intro) + 0.9s) forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.node {
+  opacity: 0;
+  animation: fade-in 0.4s ease calc(var(--intro) + 0.9s + var(--n) * 0.55s) forwards;
+}
+.node text {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 18px;
+  fill: var(--ctp-subtext0);
+}
+.nodeDot {
+  fill: var(--ctp-base);
+  stroke: var(--ifm-color-primary);
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) calc(var(--intro) + 0.9s + var(--n) * 0.55s) both;
+}
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+}
+.nodeRoot .nodeDot {
+  fill: var(--ctp-red);
+  stroke: var(--ctp-red);
+}
+.nodeRoot text {
+  fill: var(--ctp-red);
+  font-weight: 700;
+}
+/* root keeps pinging once the path reaches it */
+.nodePulse {
+  fill: none;
+  stroke: var(--ctp-red);
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 1.8s ease-out calc(var(--intro) + 3.4s) infinite;
+}
+@keyframes ping {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+/* ---- scroll cue ---- */
+
+.scrollCue {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ctp-subtext0);
+  text-decoration: none;
+  animation: fade-in 0.8s ease calc(var(--intro) + 2.2s) both;
+}
+.scrollCue:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+.chevron {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  animation: bob 1.6s ease-in-out infinite;
+}
+@keyframes bob {
+  50% {
+    translate: 0 6px;
+  }
+}
+
 /* ---- mini sudoku board ---- */
 
 .mini {
@@ -295,6 +579,135 @@
 }
 .miniGiven {
   color: var(--ifm-color-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Full-bleed bands: dark in both themes, slanted edges, spotlight    */
+/* ------------------------------------------------------------------ */
+
+.band {
+  --slant: clamp(24px, 4vw, 64px);
+  position: relative;
+  color: #f4f4f5;
+  background-color: #09090b;
+  clip-path: polygon(0 var(--slant), 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+}
+
+.numbers {
+  scroll-margin-top: var(--ifm-navbar-height);
+  padding: calc(var(--slant) + clamp(2.5rem, 7vh, 4.5rem)) var(--page-pad);
+  background-image:
+    radial-gradient(40rem 20rem at 18% 50%, rgba(99, 102, 241, 0.3), transparent 70%),
+    radial-gradient(30rem 18rem at 88% 40%, rgba(225, 29, 72, 0.18), transparent 70%);
+}
+.bandInner {
+  max-width: var(--inner-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+.number {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.2rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+.numberValue {
+  font-size: clamp(3rem, 7vw, 5.6rem);
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.numberLabel {
+  margin-top: 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a1a1aa;
+}
+
+/* The quote holds still while the band (and its fixed grid) scroll past */
+.quoteBand {
+  height: 130vh;
+  min-height: 38rem;
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+  padding: 32vh var(--page-pad) 0;
+  background:
+    radial-gradient(48rem 30rem at 72% 50%, rgba(99, 102, 241, 0.26), transparent 70%) fixed,
+    radial-gradient(30rem 22rem at 15% 70%, rgba(225, 29, 72, 0.12), transparent 70%) fixed,
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0 / 44px 44px fixed,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0 / 44px 44px fixed,
+    #09090b;
+}
+.quoteSticky {
+  position: sticky;
+  top: 34vh;
+  max-width: var(--inner-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* Audio waveform: bars breathe at their own amplitude, quieter to the right */
+.wave {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 11rem;
+}
+.wave span {
+  width: 3px;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(to bottom, #e11d48, #6366f1 50%, #e11d48);
+  opacity: calc(0.35 + var(--amp) * 0.6);
+  transform: scaleY(calc(var(--amp) * 0.9));
+  animation: breathe 1.1s ease-in-out infinite alternate;
+}
+@keyframes breathe {
+  from {
+    transform: scaleY(calc(var(--amp) * 0.25));
+  }
+  to {
+    transform: scaleY(var(--amp));
+  }
+}
+.quote {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(1.9rem, 4.4vw, 3.5rem);
+}
+.quote blockquote {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: 250;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+}
+.quote blockquote::before {
+  content: '“';
+  position: absolute;
+  left: -0.6em;
+  top: -0.12em;
+  color: #6366f1;
+  font-weight: 700;
+}
+.quote figcaption {
+  margin-top: 1.4rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: #a1a1aa;
 }
 
 /* ------------------------------------------------------------------ */
@@ -351,9 +764,10 @@
   color: var(--ctp-text);
   text-decoration: none;
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
-/* Pointer-following glow is overkill; a corner wash on hover is enough */
 .tile::after {
   content: '';
   position: absolute;
@@ -366,26 +780,38 @@
 .tile:hover {
   color: var(--ctp-text);
   text-decoration: none;
-  transform: translateY(-5px);
   border-color: var(--ctp-mauve);
   box-shadow: 0 18px 40px -22px var(--ctp-mauve);
+  transform: translateY(-5px);
 }
 .tile:hover::after {
   opacity: 1;
 }
 
-.tileCtf {
+/* Reveal wrappers hold the grid areas; the tile inside fills its area */
+.areaCtf,
+.areaBlog,
+.areaSudoku,
+.areaAbout {
+  display: flex;
+  min-width: 0; /* grid items default to min-content; let long titles ellipsize */
+}
+.areaCtf {
   grid-area: ctf;
 }
-.tileBlog {
+.areaBlog {
   grid-area: blog;
 }
-.tileSudoku {
+.areaSudoku {
   grid-area: sudoku;
+}
+.areaAbout {
+  grid-area: about;
+}
+.tileSudoku {
   align-items: flex-start;
 }
 .tileAbout {
-  grid-area: about;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
@@ -401,6 +827,11 @@
   font-size: 1.35rem;
   background: var(--ctp-surface0);
   border: 1px solid var(--ctp-surface1);
+  transition: rotate 0.3s ease, scale 0.3s ease;
+}
+.tile:hover .tileIcon {
+  rotate: -8deg;
+  scale: 1.08;
 }
 .tileTitle {
   margin: 0;
@@ -421,10 +852,10 @@
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--ifm-color-primary);
-  transition: transform 0.2s ease;
+  transition: translate 0.2s ease;
 }
 .tile:hover .tileGo {
-  transform: translateX(4px);
+  translate: 4px 0;
 }
 
 .yearRow {
@@ -495,6 +926,148 @@
   margin: 0.25rem 0 0.2rem;
 }
 
+/* ---- projects: terminal-topped repo cards ---- */
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.1rem;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ctp-mantle);
+  border: 1px solid var(--ctp-surface1);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.project:hover {
+  transform: translateY(-5px);
+  border-color: var(--ctp-mauve);
+  box-shadow: 0 20px 44px -24px var(--ctp-mauve);
+}
+
+/* A single featured project spans the grid and lays out side by side */
+.projectFeatured {
+  grid-column: 1 / -1;
+}
+
+.projectBar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.9rem;
+  background: color-mix(in srgb, var(--ctp-crust) 60%, var(--ctp-surface0));
+  border-bottom: 1px solid var(--ctp-surface1);
+}
+.projectDots {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+.projectDots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--ctp-surface2);
+}
+.projectDots i:nth-child(1) {
+  background: #ed6a5e;
+}
+.projectDots i:nth-child(2) {
+  background: #f4bf4f;
+}
+.projectDots i:nth-child(3) {
+  background: #61c554;
+}
+.projectRepo {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  color: var(--ctp-subtext0);
+}
+
+.projectBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.3rem 1.4rem 1.4rem;
+}
+.projectName {
+  align-self: flex-start;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ctp-text);
+  text-decoration: none;
+}
+.projectName:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+.projectExt {
+  margin-left: 0.3rem;
+  font-size: 0.9em;
+  color: var(--ctp-subtext0);
+}
+.projectName:hover .projectExt {
+  color: var(--ifm-color-primary);
+}
+.projectDesc {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ctp-subtext1);
+}
+.projectTopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.projectTopic {
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--ctp-subtext1);
+  background: var(--ctp-surface0);
+  border: 1px solid var(--ctp-surface1);
+}
+.projectMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.2rem;
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--ctp-subtext0);
+}
+.projectStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+.langDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.projectGo {
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  transition: translate 0.2s ease;
+}
+.projectGo:hover {
+  text-decoration: none;
+  translate: 4px 0;
+}
+
 /* ---- recently published ---- */
 
 .feed {
@@ -555,11 +1128,11 @@
 .feedArrow {
   color: var(--ifm-color-primary);
   opacity: 0;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: opacity 0.18s ease, translate 0.18s ease;
 }
 .feedItem:hover .feedArrow {
   opacity: 1;
-  transform: translateX(3px);
+  translate: 3px 0;
 }
 
 /* ---- topic cloud ---- */
@@ -596,11 +1169,22 @@
 }
 
 @keyframes rise {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-@keyframes shimmer {
-  to { background-position: 300% center; }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -608,6 +1192,9 @@
 /* ------------------------------------------------------------------ */
 
 @media screen and (max-width: 996px) {
+  .hero {
+    min-height: 0;
+  }
   .heroInner {
     grid-template-columns: 1fr;
   }
@@ -616,6 +1203,10 @@
     max-width: 34rem;
     width: 100%;
     margin: 0 auto;
+  }
+  .bandInner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2.5rem;
   }
   .bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -630,14 +1221,17 @@
   .feedItem .tags {
     display: none;
   }
+  .scrollCue {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .stats {
-    grid-template-columns: repeat(2, auto);
-    gap: 0.8rem 2.2rem;
+  /* The route's labels get too small to read on phones */
+  .routeWrap {
+    display: none;
   }
-  /* The deck becomes a plain stack of cards on phones */
+  /* The deck becomes a plain stack of cards */
   .deck {
     height: auto;
     display: flex;
@@ -650,6 +1244,25 @@
     width: 100%;
     min-height: 0;
     transform: none;
+  }
+  .numberValue {
+    font-size: 2.8rem;
+  }
+  .quoteBand {
+    height: 95vh;
+    min-height: 30rem;
+    padding-top: 26vh;
+  }
+  .quote blockquote::before {
+    position: static;
+    display: block;
+    line-height: 0.8;
+  }
+  .quoteSticky {
+    grid-template-columns: 1fr;
+  }
+  .wave {
+    display: none;
   }
   .bento {
     grid-template-columns: 1fr;
@@ -676,17 +1289,42 @@
   }
 }
 
+/* Reduced motion: no intro, everything simply present */
 @media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
   .kicker,
-  .title,
+  .typed,
+  .word,
   .accent,
   .lead,
   .ctas,
-  .stats,
-  .deck {
+  .card,
+  .routeGhost,
+  .routeLine,
+  .node,
+  .nodeDot,
+  .nodePulse,
+  .scrollCue,
+  .chevron,
+  .wave span {
     animation: none;
+  }
+  .typed {
+    width: auto;
+    border-right: 0;
+  }
+  .routeLine {
+    stroke-dashoffset: 0;
+  }
+  .node {
+    opacity: 1;
   }
   .card {
     transition: none;
+  }
+  .quoteBand {
+    background-attachment: scroll;
   }
 }
