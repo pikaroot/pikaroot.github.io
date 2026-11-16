@@ -61,6 +61,16 @@ const config = {
   // Runs before first paint: the landing-page intro plays once per session,
   // so returning visitors never see it flash.
   headTags: [
+    // Sharp vector tab icon for modern browsers (favicon.ico stays as fallback)
+    {
+      tagName: 'link',
+      attributes: {rel: 'icon', type: 'image/svg+xml', href: '/img/logo.svg'},
+    },
+    // Home-screen icon on iOS / iPadOS
+    {
+      tagName: 'link',
+      attributes: {rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png'},
+    },
     {
       tagName: 'script',
       attributes: {},
