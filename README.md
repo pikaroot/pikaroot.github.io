@@ -23,3 +23,7 @@ Repo setting: **Pages → Source: GitHub Actions**.
 This replaced the old Jekyll site (minimal-mistakes theme), which is preserved on the
 `legacy-jekyll` branch. Old URLs (`/ctfs/<event>/...`, `/blogs/...`) redirect to their new
 locations via [`redirects.js`](redirects.js).
+
+## License
+- **Code** (`src/`, `plugins/`, config): [MIT](LICENSE)
+- **Content** (CTF writeups in `ctfs/`, posts in `blog/`, images in `static/img/`): [CC BY 4.0](LICENSE-CONTENT). Reuse freely with credit to pikaroot and a link back.

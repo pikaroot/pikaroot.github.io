@@ -54,7 +54,7 @@ const config = {
   },
 
   // Page-to-page transition on client-side navigation
-  clientModules: ['./src/clientModules/routeTransition.js'],
+  clientModules: ['./src/clientModules/routeTransition.js', './src/clientModules/pageViews.js'],
 
   // Runs before first paint: the landing-page intro plays once per session,
   // so returning visitors never see it flash.
@@ -190,7 +190,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} pikaroot · Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} pikaroot · Code MIT · Content <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · Built with Docusaurus.`,
       },
       prism: {
         theme: latteTheme,
