@@ -9,6 +9,7 @@ import {
   msUntilMalaysiaMidnight,
 } from '../../lib/sudoku';
 import {generateKiller} from '../../lib/killer';
+import {ordinal, reportSolve} from '../../lib/solveCounter';
 import Cell from './Cell';
 import Settings, {DEFAULT_PREFS} from './Settings';
 import styles from './styles.module.css';
@@ -150,7 +151,7 @@ function Countdown() {
   );
 }
 
-function SolvedDialog({time, label, onClose}) {
+function SolvedDialog({time, label, solveStats, onClose}) {
   const closeRef = useRef(null);
   useEffect(() => {
     closeRef.current?.focus();
@@ -178,6 +179,12 @@ function SolvedDialog({time, label, onClose}) {
         <p className={styles.dialogText}>
           You finished today's {label} puzzle in <strong>{time}</strong>.
         </p>
+        {solveStats && (
+          <p className={styles.dialogText}>
+            🏅 You're the <strong>{ordinal(solveStats.rank)}</strong> person to solve it today
+            {solveStats.total > solveStats.rank && <> ({solveStats.total} solvers so far)</>}.
+          </p>
+        )}
         <p className={styles.hint}>New puzzles arrive at 12:00am Malaysia Time.</p>
         <button ref={closeRef} className="button button--primary" onClick={onClose}>
           Close
@@ -195,6 +202,7 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   const [showMistakes, setShowMistakes] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
+  const [solveStats, setSolveStats] = useState(null);
   const [paused, setPaused] = useState(false);
   const gridRef = useRef(null);
 
@@ -272,9 +280,17 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   // Pop up once when the puzzle becomes solved (not when reopening a solved one).
   const wasSolved = useRef(solved);
   useEffect(() => {
-    if (solved && !wasSolved.current) setShowCongrats(true);
+    if (solved && !wasSolved.current) {
+      setShowCongrats(true);
+      // Count the solve; the dialog adds "you're the n-th solver" when the answer arrives.
+      if (!revealed) {
+        reportSolve({date: dateKey, variant, seconds: progressRef.current.elapsed}).then(
+          (stats) => stats && setSolveStats(stats),
+        );
+      }
+    }
     wasSolved.current = solved;
-  }, [solved]);
+  }, [solved, revealed, dateKey, variant]);
   const closeCongrats = useCallback(() => {
     setShowCongrats(false);
     gridRef.current?.focus();
@@ -661,6 +677,7 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
         <SolvedDialog
           time={formatTime(progress.elapsed)}
           label={killer ? 'killer' : prefs.difficulty}
+          solveStats={solveStats}
           onClose={closeCongrats}
         />
       )}
