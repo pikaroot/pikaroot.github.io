@@ -608,3 +608,16 @@
 .toggle input:focus-visible ~ .slider {
   box-shadow: 0 0 0 3px var(--ifm-color-primary-lighter);
 }
+
+/* ---- export to sudokusolver.app ---- */
+.solverExport {
+  margin-top: 0.75rem;
+}
+
+.solverText {
+  display: block;
+  width: 100%;
+  margin: 0.3rem 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+}

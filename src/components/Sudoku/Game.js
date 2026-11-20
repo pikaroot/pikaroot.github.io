@@ -194,6 +194,63 @@ function SolvedDialog({time, label, solveStats, onClose}) {
   );
 }
 
+const SOLVER_URL = 'https://sudokusolver.app/';
+
+// sudokusolver.app has no "load from link" option, only New -> Import with an
+// 81-digit string (0 = empty). So copy that string and open the site in a new tab.
+function SolverExport({puzzle, values, disabled}) {
+  const [msg, setMsg] = useState(null);
+  const hasEntries = values.some((v, i) => v && !puzzle[i]);
+
+  const send = async (cells) => {
+    const text = cells.join('');
+    window.open(SOLVER_URL, '_blank', 'noopener'); // open first: popup blockers need the click
+    try {
+      await navigator.clipboard.writeText(text);
+      setMsg({ok: true});
+    } catch {
+      setMsg({ok: false, text}); // no clipboard access: show it to copy by hand
+    }
+  };
+
+  return (
+    <div className={styles.solverExport}>
+      <div className={styles.actions}>
+        <button
+          className="button button--sm button--secondary"
+          disabled={disabled}
+          onClick={() => send(puzzle)}
+          title="Copy the starting grid and open sudokusolver.app">
+          ↗ Solver: new grid
+        </button>
+        <button
+          className="button button--sm button--secondary"
+          disabled={disabled || !hasEntries}
+          onClick={() => send(values)}
+          title="Copy the grid with your digits filled in and open sudokusolver.app">
+          ↗ Solver: my progress
+        </button>
+      </div>
+      {msg && (
+        <p className={styles.hint} role="status">
+          {msg.ok ? 'Grid copied. ' : 'Copy this grid: '}
+          {!msg.ok && (
+            <input
+              className={styles.solverText}
+              readOnly
+              value={msg.text}
+              onFocus={(e) => e.target.select()}
+              aria-label="Grid as 81 digits"
+            />
+          )}
+          On sudokusolver.app click <strong>New</strong> → <strong>Import</strong>, paste, and Import.
+          Wrong digits in your progress will make it unsolvable.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
   const killer = game.kind === 'killer';
   const [progress, setProgress] = useState(() => loadProgress(dateKey, variant, game.id));
@@ -666,6 +723,8 @@ function Board({game, dateKey, variant, prefs, setPref, resetPrefs}) {
         </div>
 
         <Settings prefs={prefs} setPref={setPref} reset={resetPrefs} mode={prefs.mode} />
+
+        {!killer && <SolverExport puzzle={game.puzzle} values={values} disabled={paused} />}
 
         <p className={styles.hint}>
           Keys: 1–9 enter a digit · Shift+1–9 or N toggles pencil marks · Backspace erases · Ctrl+Z
