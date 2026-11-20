@@ -1,43 +1,25 @@
-# Website
+# pikaroot
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Source for **https://pikaroot.github.io**: a hub for my projects, CTF writeups, blog posts and a daily sudoku.
+Built with [Docusaurus](https://docusaurus.io/).
 
-## Installation
+## Add a project
+Add an entry to [`src/data/projects.js`](src/data/projects.js). Set `live` if it has a running instance
+and the card gets an "Open live app" link. The landing page picks it up on the next build.
 
+## Develop
 ```bash
-npm install
+npm ci
+npm start          # dev server on http://localhost:3000
+npm run build      # static site in ./build
 ```
+No Node on the host? `docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/site -w /site -e HOME=/tmp -p 3000:3000 node:22-bookworm-slim npm start -- --host 0.0.0.0`
 
-**Note**: feel free to use the package manager of your choice.
+## Deploy
+Every push to `main` builds and publishes through GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
+Repo setting: **Pages → Source: GitHub Actions**.
 
-## Local Development
-
-```bash
-npm run start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
-
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+## History
+This replaced the old Jekyll site (minimal-mistakes theme), which is preserved on the
+`legacy-jekyll` branch. Old URLs (`/ctfs/<event>/...`, `/blogs/...`) redirect to their new
+locations via [`redirects.js`](redirects.js).

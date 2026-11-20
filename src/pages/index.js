@@ -514,6 +514,11 @@ function Projects() {
                 {p.license && <span className={styles.projectStat}>{p.license}</span>}
                 {p.since && <span className={styles.projectStat}>since {p.since}</span>}
               </div>
+              {p.live && (
+                <Link to={p.live} className={styles.projectGo}>
+                  Open live app →
+                </Link>
+              )}
               <Link to={p.url} className={styles.projectGo}>
                 View on GitHub →
               </Link>

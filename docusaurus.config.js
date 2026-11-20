@@ -7,15 +7,13 @@
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import {latteTheme, frappeTheme} from './src/theme/prism-catppuccin.js';
+import {KEVLAR_URL} from './src/data/projects.js';
+import {createRedirects} from './redirects.js';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// KEVlar isn't exposed to the internet yet, so its tab points at the local
-// instance during `npm start` and is left out of production builds. Once it
-// has a public address, build with KEVLAR_URL=https://... to include it.
-const kevlarUrl =
-  process.env.KEVLAR_URL ||
-  (process.env.NODE_ENV === 'production' ? null : 'http://localhost:3100');
+// KEVlar is public (homelab, via Tailscale Funnel). Override with KEVLAR_URL=...
+const kevlarUrl = process.env.KEVLAR_URL || KEVLAR_URL;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -29,15 +27,15 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://pikaroot.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'pikaroot',
+  projectName: 'pikaroot.github.io',
 
   onBrokenLinks: 'throw',
 
@@ -82,6 +80,8 @@ const config = {
   plugins: [
     // Feeds the landing page with the CTF writeups and blog posts
     './plugins/site-index.js',
+    // Keep old Jekyll URLs (pikaroot.github.io before Nov 2026) working
+    ['@docusaurus/plugin-client-redirects', {createRedirects}],
     [
       // Second docs instance for /ctfs, laid out like the /docs tutorial
       '@docusaurus/plugin-content-docs',
@@ -101,13 +101,7 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
+        docs: false, // only the /ctfs docs instance is used
         blog: {
           showReadingTime: true,
           remarkPlugins: [remarkMath],
@@ -116,10 +110,6 @@ const config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
