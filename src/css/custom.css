@@ -192,7 +192,13 @@ body {
   --ifm-footer-title-color: var(--ctp-text);
 }
 
-/* Buttons on the homepage hero */
+/* Secondary (grey) buttons. Infima hardcodes a near-black label colour on
+   these, which disappears on the dark theme, so set it explicitly. */
+.button--secondary,
+.button--secondary:hover,
+.button--secondary:active {
+  color: var(--ctp-text);
+}
 .button--secondary {
   --ifm-button-background-color: var(--ctp-surface0);
   --ifm-button-border-color: var(--ctp-surface0);

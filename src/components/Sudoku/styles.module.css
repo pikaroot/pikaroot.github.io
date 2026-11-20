@@ -453,15 +453,6 @@
   padding: 0.3rem 0.6rem;
 }
 
-/* Infima's secondary button hardcodes a near-black label colour, which is
-   unreadable on the dark theme. Use the themed body-text colour instead so
-   the labels stay legible (and a touch brighter) in both light and dark. */
-.actions :global(.button--secondary),
-.actions :global(.button--secondary:hover),
-.actions :global(.button--secondary:active) {
-  color: var(--ifm-font-color-base);
-}
-
 .solved {
   color: var(--ifm-color-success);
   font-weight: 600;
