@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#e11d48"/></linearGradient></defs>
-  <circle cx="32" cy="32" r="30" fill="#18181b"/>
-  <circle cx="32" cy="32" r="29" fill="none" stroke="#6366f1" stroke-width="2.5"/>
-  <g transform="translate(32 32) scale(.8) translate(-33 -32)">
-    <path d="M14 21l11 11-11 11" fill="none" stroke="#818cf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M44 11 31 35h10l-4 18 15-26H42l5-16z" fill="url(#b)"/>
-  </g>
+  <rect x="2" y="2" width="60" height="60" rx="10" fill="#0c0d0d"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="9.25" fill="none" stroke="#363b39" stroke-width="1.5"/>
+  <path d="M16 21l11 11-11 11" fill="none" stroke="#5fc98f" stroke-width="5.5" stroke-linecap="square" stroke-linejoin="miter"/>
+  <rect x="32" y="39" width="16" height="5.5" fill="#e7e5e0"/>
 </svg>

@@ -126,7 +126,7 @@
 .tab {
   padding: 0.4rem 1.2rem;
   border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--ifm-background-surface-color);
   color: var(--ifm-font-color-base);
   font: inherit;
@@ -488,7 +488,7 @@
   width: min(92vw, 380px);
   padding: 1.6rem 2rem 1.8rem;
   border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--ifm-background-surface-color);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
   text-align: center;
@@ -580,7 +580,7 @@
   flex: none;
   width: 42px;
   height: 24px;
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--ifm-color-emphasis-400, var(--ifm-color-emphasis-300));
   transition: background 0.15s;
 }

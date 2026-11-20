@@ -205,7 +205,7 @@
   gap: 0.5rem;
   margin: 0.4rem 0 1.4rem;
   padding: 0.45rem 1rem;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--ctp-surface0);
   border: 1px solid var(--ctp-surface1);
   font-family: var(--ifm-font-family-monospace);
@@ -270,7 +270,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.65rem 1.4rem;
-  border-radius: 999px;
+  border-radius: 3px;
   font-weight: 600;
   font-size: 0.98rem;
   text-decoration: none;
@@ -309,7 +309,7 @@
 
 .terminal {
   position: relative;
-  border-radius: 14px;
+  border-radius: 6px;
   overflow: hidden;
   background: color-mix(in srgb, var(--ctp-crust) 88%, black);
   border: 1px solid var(--ctp-surface1);
@@ -431,7 +431,7 @@
 }
 .statCard {
   padding: 1.6rem 1rem;
-  border-radius: 16px;
+  border-radius: 6px;
   text-align: center;
   background: var(--ctp-mantle);
   border: 1px solid var(--ctp-surface0);
@@ -469,7 +469,7 @@
 .focusCard {
   position: relative;
   padding: 1.6rem 1.4rem;
-  border-radius: 16px;
+  border-radius: 6px;
   background: var(--ctp-mantle);
   border: 1px solid var(--ctp-surface0);
   overflow: hidden;
@@ -501,7 +501,7 @@
   width: 3rem;
   height: 3rem;
   margin-bottom: 0.9rem;
-  border-radius: 14px;
+  border-radius: 6px;
   font-size: 1.5rem;
   background: var(--ctp-surface0);
   border: 1px solid var(--ctp-surface1);
@@ -530,7 +530,7 @@
 }
 .focusTag {
   padding: 0.25rem 0.6rem;
-  border-radius: 999px;
+  border-radius: 3px;
   font-size: 0.76rem;
   font-weight: 600;
   color: var(--ifm-color-primary);
@@ -594,7 +594,7 @@
   display: inline-block;
   text-align: left;
   padding: 1.2rem 1.3rem;
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--ctp-mantle);
   border: 1px solid var(--ctp-surface0);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -608,7 +608,7 @@
   display: inline-block;
   margin-bottom: 0.5rem;
   padding: 0.15rem 0.6rem;
-  border-radius: 999px;
+  border-radius: 3px;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -651,7 +651,7 @@
 .certCard {
   position: relative;
   padding: 1.3rem 1.1rem;
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--ctp-mantle);
   border: 1px solid var(--ctp-surface0);
   overflow: hidden;
@@ -701,7 +701,7 @@
 }
 .ctfCard {
   padding: 1.1rem 1.2rem;
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--ctp-mantle);
   border: 1px solid var(--ctp-surface0);
   border-left: 4px solid var(--ctp-surface2);
@@ -760,7 +760,7 @@
 .chip {
   display: inline-block;
   padding: 0.5rem 0.95rem;
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--ctp-surface0);
   border: 1px solid var(--ctp-surface1);
   color: var(--ctp-subtext1);
@@ -791,7 +791,7 @@
 }
 .langBar {
   height: 8px;
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--ctp-surface0);
   overflow: hidden;
 }
@@ -799,7 +799,7 @@
   display: block;
   height: 100%;
   width: var(--pct);
-  border-radius: 999px;
+  border-radius: 3px;
   background: linear-gradient(90deg, var(--ctp-mauve), var(--ctp-sapphire));
   transform-origin: left;
   animation: grow 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -815,7 +815,7 @@
   max-width: 680px;
   margin: 0 auto;
   padding: 2.8rem 2rem;
-  border-radius: 20px;
+  border-radius: 6px;
   text-align: center;
   background: linear-gradient(130deg, var(--ctp-mantle), var(--ctp-surface0));
   border: 1px solid var(--ctp-surface1);

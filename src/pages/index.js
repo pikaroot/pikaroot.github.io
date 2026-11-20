@@ -379,7 +379,7 @@ function Explore({stats, puzzle}) {
         <Reveal variant="left" className={styles.areaCtf}>
           <Link to="/ctfs" className={clsx(styles.tile, styles.tileCtf)}>
             <span className={styles.tileIcon} aria-hidden="true">
-              🚩
+              ~/ctfs
             </span>
             <h3 className={styles.tileTitle}>CTF Writeups</h3>
             <p className={styles.tileText}>
@@ -409,7 +409,7 @@ function Explore({stats, puzzle}) {
         <Reveal variant="right" className={styles.areaBlog} delay={120}>
           <Link to="/blog" className={styles.tile}>
             <span className={styles.tileIcon} aria-hidden="true">
-              ✍️
+              ~/blog
             </span>
             <h3 className={styles.tileTitle}>Blog</h3>
             <p className={styles.tileText}>
@@ -423,7 +423,7 @@ function Explore({stats, puzzle}) {
         <Reveal variant="right" className={styles.areaSudoku} delay={240}>
           <Link to="/sudoku" className={clsx(styles.tile, styles.tileSudoku)}>
             <span className={styles.tileIcon} aria-hidden="true">
-              🧩
+              ~/sudoku
             </span>
             <h3 className={styles.tileTitle}>Daily Sudoku</h3>
             <p className={styles.tileText}>
