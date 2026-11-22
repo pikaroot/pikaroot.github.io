@@ -19,7 +19,7 @@ const kevlarUrl = process.env.KEVLAR_URL || KEVLAR_URL;
 const config = {
   title: 'pikaroot',
   tagline: 'Offensive security notes, CTF writeups and a daily sudoku.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.ico?v=2',  // bump ?v= when the icon changes (browsers cache favicons hard)
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -62,12 +62,12 @@ const config = {
     // Sharp vector tab icon for modern browsers (favicon.ico stays as fallback)
     {
       tagName: 'link',
-      attributes: {rel: 'icon', type: 'image/svg+xml', href: '/img/logo.svg'},
+      attributes: {rel: 'icon', type: 'image/svg+xml', href: '/img/logo.svg?v=2'},
     },
     // Home-screen icon on iOS / iPadOS
     {
       tagName: 'link',
-      attributes: {rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png'},
+      attributes: {rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png?v=2'},
     },
     {
       tagName: 'script',
