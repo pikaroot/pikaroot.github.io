@@ -176,11 +176,10 @@ function Intro() {
 /* ------------------------------------------------------------------ */
 
 const TITLE = [
-  ['Notes'],
-  ['from'],
-  ['the'],
-  ['offensive', true],
-  ['side.', true],
+  ['From'],
+  ['recon'],
+  ['to'],
+  ['root.', true],
 ];
 
 // recon → root, drawn left to right like a route up a wall

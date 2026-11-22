@@ -214,7 +214,7 @@
   }
 }
 
-/* "offensive side." — the accent colour, nothing more */
+/* "root." — the accent colour, nothing more */
 .accent {
   color: var(--accent);
 }
