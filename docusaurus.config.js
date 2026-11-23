@@ -19,7 +19,8 @@ const kevlarUrl = process.env.KEVLAR_URL || KEVLAR_URL;
 const config = {
   title: 'pikaroot',
   tagline: 'Offensive security notes, CTF writeups and a daily sudoku.',
-  favicon: 'img/favicon.ico?v=2',  // bump ?v= when the icon changes (browsers cache favicons hard)
+  // No `favicon:` here on purpose: the icon links live in headTags below so the
+  // daily-accent script can swap them to the day's colour before first paint.
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -59,15 +60,37 @@ const config = {
   // Runs before first paint: the landing-page intro plays once per session,
   // so returning visitors never see it flash.
   headTags: [
-    // Sharp vector tab icon for modern browsers (favicon.ico stays as fallback)
+    // Tab + home-screen icons. Green is the default; the script below swaps
+    // them to logo-<accent>.svg / favicon-<accent>.ico / apple-touch-icon-<accent>.png.
+    // Bump ?v= when the artwork changes (browsers cache favicons hard).
     {
       tagName: 'link',
-      attributes: {rel: 'icon', type: 'image/svg+xml', href: '/img/logo.svg?v=2'},
+      attributes: {rel: 'icon', href: '/img/favicon.ico?v=3', sizes: '48x48', 'data-pk-icon': '1'},
     },
-    // Home-screen icon on iOS / iPadOS
     {
       tagName: 'link',
-      attributes: {rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png?v=2'},
+      attributes: {rel: 'icon', type: 'image/svg+xml', href: '/img/logo.svg?v=3', 'data-pk-icon': '1'},
+    },
+    {
+      tagName: 'link',
+      attributes: {rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png?v=3', 'data-pk-icon': '1'},
+    },
+    // Daily accent colour: green -> orange -> blue -> violet, switching at the
+    // visitor's local midnight. Runs before first paint (no flash). Must stay
+    // after the icon links above. Preview with ?accent=orange (sticks for the
+    // tab); ?accent=auto resets.
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML:
+        "(function(){var A=['green','orange','blue','violet'],a;" +
+        "try{var q=new URLSearchParams(location.search).get('accent');" +
+        "if(q==='auto')sessionStorage.removeItem('pk-accent');else if(A.indexOf(q)>=0)sessionStorage.setItem('pk-accent',q);" +
+        "a=sessionStorage.getItem('pk-accent')}catch(e){}" +
+        "if(A.indexOf(a)<0){var d=new Date();a=A[Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)%A.length]}" +
+        "if(a==='green')return;document.documentElement.setAttribute('data-accent',a);" +
+        "var L=document.querySelectorAll('link[data-pk-icon]');for(var i=0;i<L.length;i++)" +
+        "L[i].href=L[i].getAttribute('href').replace(/(favicon|logo|apple-touch-icon)\\./,'$1-'+a+'.')})()",
     },
     {
       tagName: 'script',

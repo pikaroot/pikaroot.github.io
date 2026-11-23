@@ -29,6 +29,10 @@
   --ctp-text: #161615;      /* body text  */
 
   --accent: #17734a;
+  --accent-rgb: 23 115 74;
+  /* dark-theme accent, used by the always-dark bands in both themes */
+  --accent-dark: #5fc98f;
+  --accent-dark-rgb: 95 201 143;
   --ctp-mauve: var(--accent);
   --ctp-sapphire: var(--accent);
   --ctp-blue: var(--accent);
@@ -50,7 +54,7 @@
   --ifm-color-primary-lightest: #1f9562;
 
   --ctp-hero-text: #fdfcfa;
-  --ctp-selection: rgba(23, 115, 74, 0.16);
+  --ctp-selection: rgb(var(--accent-rgb) / 0.16);
   --ifm-table-stripe-background: rgba(236, 235, 229, 0.7);
   --docusaurus-highlighted-code-line-bg: rgba(220, 218, 210, 0.6);
 
@@ -73,6 +77,7 @@
   --ctp-text: #e7e5e0;
 
   --accent: #5fc98f;
+  --accent-rgb: 95 201 143;
   --ctp-lavender: #8ddbb0;
   --ctp-red: #e5534b;
   --ctp-maroon: #e5534b;
@@ -88,7 +93,7 @@
   --ifm-color-primary-lightest: #a3e1be;
 
   --ctp-hero-text: #0c0d0d;
-  --ctp-selection: rgba(95, 201, 143, 0.22);
+  --ctp-selection: rgb(var(--accent-rgb) / 0.22);
   --ifm-table-stripe-background: rgba(38, 42, 40, 0.5);
   --docusaurus-highlighted-code-line-bg: rgba(54, 59, 57, 0.45);
 
@@ -454,3 +459,103 @@ pre code,
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Daily accent rotation: green -> orange -> blue -> violet.            */
+/* data-accent is set on <html> before first paint by the head script   */
+/* in docusaurus.config.js. Green (no attribute) is the default above.   */
+/* ------------------------------------------------------------------ */
+html[data-accent='orange'] {
+  --accent-dark: #f0954a;
+  --accent-dark-rgb: 240 149 74;
+}
+html[data-accent='orange']:not([data-theme='dark']) {
+  --accent: #b4530f;
+  --ctp-lavender: #c96a24;
+  --ifm-color-primary: #b4530f;
+  --ifm-color-primary-dark: #a24b0d;
+  --ifm-color-primary-darker: #99470d;
+  --ifm-color-primary-darkest: #7e3a0a;
+  --ifm-color-primary-light: #c65b10;
+  --ifm-color-primary-lighter: #cf5f11;
+  --ifm-color-primary-lightest: #ea6c13;
+  --accent-rgb: 180 83 15;
+}
+html[data-accent='orange'][data-theme='dark'] {
+  --accent: #f0954a;
+  --ctp-lavender: #f6b884;
+  --ifm-color-primary: #f0954a;
+  --ifm-color-primary-dark: #ee842d;
+  --ifm-color-primary-darker: #ec7c1f;
+  --ifm-color-primary-darkest: #cb6511;
+  --ifm-color-primary-light: #f2a667;
+  --ifm-color-primary-lighter: #f4ae75;
+  --ifm-color-primary-lightest: #f7c8a1;
+  --accent-rgb: 240 149 74;
+}
+html[data-accent='blue'] {
+  --accent-dark: #5aa9f0;
+  --accent-dark-rgb: 90 169 240;
+}
+html[data-accent='blue']:not([data-theme='dark']) {
+  --accent: #1d63b8;
+  --ctp-lavender: #3a7cc9;
+  --ifm-color-primary: #1d63b8;
+  --ifm-color-primary-dark: #1a59a6;
+  --ifm-color-primary-darker: #19549c;
+  --ifm-color-primary-darkest: #144581;
+  --ifm-color-primary-light: #206dca;
+  --ifm-color-primary-lighter: #2172d4;
+  --ifm-color-primary-lightest: #3682df;
+  --accent-rgb: 29 99 184;
+}
+html[data-accent='blue'][data-theme='dark'] {
+  --accent: #5aa9f0;
+  --ctp-lavender: #93c7f6;
+  --ifm-color-primary: #5aa9f0;
+  --ifm-color-primary-dark: #3c99ed;
+  --ifm-color-primary-darker: #2d91ec;
+  --ifm-color-primary-darkest: #1379d4;
+  --ifm-color-primary-light: #78b9f3;
+  --ifm-color-primary-lighter: #87c1f4;
+  --ifm-color-primary-lightest: #b5d8f8;
+  --accent-rgb: 90 169 240;
+}
+html[data-accent='violet'] {
+  --accent-dark: #b28cf0;
+  --accent-dark-rgb: 178 140 240;
+}
+html[data-accent='violet']:not([data-theme='dark']) {
+  --accent: #6d3fc4;
+  --ctp-lavender: #8460cf;
+  --ifm-color-primary: #6d3fc4;
+  --ifm-color-primary-dark: #6237b2;
+  --ifm-color-primary-darker: #5c34a8;
+  --ifm-color-primary-darkest: #4c2b8b;
+  --ifm-color-primary-light: #7c53ca;
+  --ifm-color-primary-lighter: #845dcd;
+  --ifm-color-primary-lightest: #9a7ad6;
+  --accent-rgb: 109 63 196;
+}
+html[data-accent='violet'][data-theme='dark'] {
+  --accent: #b28cf0;
+  --ctp-lavender: #cdb4f6;
+  --ifm-color-primary: #b28cf0;
+  --ifm-color-primary-dark: #9b6aec;
+  --ifm-color-primary-darker: #905ae9;
+  --ifm-color-primary-darkest: #6e27e3;
+  --ifm-color-primary-light: #c9aef4;
+  --ifm-color-primary-lighter: #d4bef7;
+  --ifm-color-primary-lightest: #f6f1fd;
+  --accent-rgb: 178 140 240;
+}
+
+/* Navbar >_ logo follows the accent: keep the <img> box, push its green
+   artwork out of view and paint the day's version as its background. */
+html[data-accent] .navbar__logo img {
+  object-position: -9999px 0;
+  background: center / contain no-repeat;
+}
+html[data-accent='orange'] .navbar__logo img { background-image: url('/img/logo-orange.svg'); }
+html[data-accent='blue'] .navbar__logo img { background-image: url('/img/logo-blue.svg'); }
+html[data-accent='violet'] .navbar__logo img { background-image: url('/img/logo-violet.svg'); }
