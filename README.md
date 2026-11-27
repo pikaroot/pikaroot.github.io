@@ -1,7 +1,13 @@
 # pikaroot
 
-Source for **https://pikaroot.com**: a hub for my projects, CTF writeups, blog posts and a daily sudoku.
-Built with [Docusaurus](https://docusaurus.io/).
+[**pikaroot.com**](https://pikaroot.com) — a hub for my projects, CTF writeups, blog posts and a daily sudoku.
+Built with [Docusaurus](https://docusaurus.io/), published on GitHub Pages.
+
+## What's on the site
+- **Projects**: cards generated from [`src/data/projects.js`](src/data/projects.js), including [KEVlar](https://kevlar.pikaroot.com).
+- **CTF writeups** (`ctfs/`) and **blog** (`blog/`).
+- **Daily sudoku** (`src/pages/sudoku`) with a small solve counter.
+- **Daily accent colour**: the site's accent rotates each day.
 
 ## Add a project
 Add an entry to [`src/data/projects.js`](src/data/projects.js). Set `live` if it has a running instance
@@ -17,7 +23,12 @@ No Node on the host? `docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/site -
 
 ## Deploy
 Every push to `main` builds and publishes through GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
-Repo setting: **Pages → Source: GitHub Actions**.
+Repo settings: **Pages → Source: GitHub Actions**, custom domain `pikaroot.com` (also set in [`static/CNAME`](static/CNAME)).
+
+## Privacy
+No cookies, no third-party trackers. Page views and sudoku solves are counted by my own homelab server
+(`kevlar.pikaroot.com`), skipped when the browser sends Do Not Track / Global Privacy Control.
+IPs are anonymised in the reports; the sudoku counter stores only a per-day pseudonym.
 
 ## History
 This replaced the old Jekyll site (minimal-mistakes theme), which is preserved on the
