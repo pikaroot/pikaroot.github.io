@@ -1,4 +1,4 @@
-# Build the Docusaurus site and publish it to GitHub Pages (https://pikaroot.github.io).
+# Build the Docusaurus site and publish it to GitHub Pages (https://pikaroot.com).
 # Repo settings: Pages -> Source: "GitHub Actions".
 name: Deploy to GitHub Pages
 

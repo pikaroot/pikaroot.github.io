@@ -12,7 +12,7 @@ import {createRedirects} from './redirects.js';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// KEVlar is public (homelab, via Tailscale Funnel). Override with KEVLAR_URL=...
+// KEVlar is public (homelab, via Cloudflare Tunnel). Override with KEVLAR_URL=...
 const kevlarUrl = process.env.KEVLAR_URL || KEVLAR_URL;
 
 /** @type {import('@docusaurus/types').Config} */
@@ -28,7 +28,7 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://pikaroot.github.io',
+  url: 'https://pikaroot.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',

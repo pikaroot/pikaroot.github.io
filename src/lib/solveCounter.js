@@ -7,10 +7,11 @@
 import {KEVLAR_URL} from '../data/projects.js';
 
 const API = `${KEVLAR_URL}/counter`;
-const SITE_HOST = 'pikaroot.github.io';
+// pikaroot.github.io redirects to pikaroot.com once the custom domain is set; keep both until then.
+const SITE_HOSTS = ['pikaroot.com', 'pikaroot.github.io'];
 
 export async function reportSolve({date, variant, seconds}) {
-  if (window.location.hostname !== SITE_HOST) return null;
+  if (!SITE_HOSTS.includes(window.location.hostname)) return null;
   if (navigator.doNotTrack === '1' || navigator.globalPrivacyControl) return null;
   try {
     const res = await fetch(`${API}/sudoku/solve`, {

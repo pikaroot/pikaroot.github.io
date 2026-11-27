@@ -2,7 +2,7 @@
 // section picks it up. Star/fork counts are a snapshot (last checked in the
 // comment by each entry), since the page is a static build.
 // Optional `live`: URL of a running instance — adds an "Open live app" link.
-export const KEVLAR_URL = 'https://pikaroot.tail583cf5.ts.net';
+export const KEVLAR_URL = 'https://kevlar.pikaroot.com';
 
 const projects = [
   {

@@ -1,6 +1,6 @@
 # pikaroot
 
-Source for **https://pikaroot.github.io**: a hub for my projects, CTF writeups, blog posts and a daily sudoku.
+Source for **https://pikaroot.com**: a hub for my projects, CTF writeups, blog posts and a daily sudoku.
 Built with [Docusaurus](https://docusaurus.io/).
 
 ## Add a project

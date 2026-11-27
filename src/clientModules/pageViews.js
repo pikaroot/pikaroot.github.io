@@ -4,11 +4,12 @@
 // nothing is sent from local dev or when the browser asks not to be tracked.
 import {KEVLAR_URL} from '../data/projects.js';
 
-const SITE_HOST = 'pikaroot.github.io';
+// pikaroot.github.io redirects to pikaroot.com once the custom domain is set; keep both until then.
+const SITE_HOSTS = ['pikaroot.com', 'pikaroot.github.io'];
 
 export function onRouteDidUpdate({location, previousLocation}) {
   if (previousLocation && previousLocation.pathname === location.pathname) return; // hash change
-  if (window.location.hostname !== SITE_HOST) return;
+  if (!SITE_HOSTS.includes(window.location.hostname)) return;
   if (navigator.doNotTrack === '1' || navigator.globalPrivacyControl) return;
   const path = location.pathname.replace(/\/+$/, '') || '/';
   fetch(`${KEVLAR_URL}/px${path === '/' ? '' : path}`, {
